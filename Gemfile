@@ -8,43 +8,32 @@ gem "rails", ">= 8.0.1"
 gem "propshaft"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
+gem "bootsnap", require: false
 
 # Asset handling
 gem "jsbundling-rails"
 gem "cssbundling-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
-
-# Shared backend
-gem 'core', path: "../core"
-
-# Templating
-gem 'slim-rails'
-gem 'liquid'
-
-# Pagination
-gem 'pagy', '~> 6.2'
-
-# Security
-gem 'rack-attack'
-
-# JSON
-gem 'oj'
-
-# Search
-gem 'searchkick'
-gem 'elasticsearch'
-
-# Reduces boot times through caching
-gem "bootsnap", require: false
+gem "slim-rails"
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'pry'
   gem 'pry-rails'
   gem 'awesome_print'
+  gem 'factory_bot_rails'
+  gem 'ffaker'
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 end
 
 group :development do
+  gem 'annotate'
+  gem 'bullet'
   gem "web-console"
 end
+
+# ============================================================================
+# Shared Backend (Core)
+# ============================================================================
+gem 'core', path: "../core"
