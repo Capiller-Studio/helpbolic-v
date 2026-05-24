@@ -1,0 +1,111 @@
+- content_for :title do
+  = "#{@category.name} - #{@current_portal.name}"
+
+- content_for :meta_tags do
+  meta name="description" content=@category.description
+  meta property="og:title" content="#{@category.name} - #{@current_portal.name}"
+  meta property="og:description" content=@category.description
+  - if @category.image.attached?
+    meta property="og:image" content=url_for(@category.image)
+  meta property="og:type" content="website"
+
+.page-wrapper
+  .category-page
+    .category-page-header
+      .breadcrumb
+        = link_to "Home", root_path
+        - @category.ancestors.each do |ancestor|
+          span.breadcrumb-sep ›
+          = link_to ancestor.name, category_path(ancestor)
+        span.breadcrumb-sep ›
+        span.breadcrumb-current = @category.name
+
+      h1 = @category.name
+      p = @category.description
+
+      .category-search data-controller="search"
+        input type="text" placeholder=(@current_portal.search_placeholder.presence || "Search within #{@category.name}...") class="category-search-input" data-action="keyup->search#query" data-search-target="input"
+        .search-dropdown.hidden data-search-target="results"
+          .search-dropdown-label ARTICLES
+          .search-dropdown-results id="searchResults"
+
+    .category-page-body
+      .category-main
+        - if @subcategories.any?
+          .subcategory-grid
+            - @subcategories.each do |subcat|
+              = link_to category_path(subcat), class: "subcategory-card" do
+                .subcategory-icon
+                  - if subcat.image.attached?
+                    = lazy_picture_tag subcat.image, img_class: "subcategory-icon-img"
+                  - elsif subcat.icon_key.present?
+                    i data-lucide=subcat.icon_key
+                  - else
+                    i data-lucide="folder"
+                .subcategory-content
+                  h3 = subcat.name
+                  p = subcat.description
+                  
+        - if @articles.any?
+          .article-group
+            .article-group-header
+              .article-group-icon
+                - if @category.image.attached?
+                  = lazy_picture_tag @category.image, img_class: "article-group-icon-img"
+                - elsif @category.icon_key.present?
+                  i.article-group-icon-svg data-lucide=@category.icon_key
+                - else
+                  i.article-group-icon-svg data-lucide="folder"
+              h2 = t('.articles', default: 'Articles')
+              
+            .article-group-list id="articles_list"
+              - @articles.each_with_index do |article, index|
+                = link_to article_path(article, locale: I18n.locale), class: "article-list-item" do
+                  .article-list-left
+                    - if @category.guide_mode?
+                      span.step-badge = (@pagy_articles.offset + index + 1)
+                    - else
+                      svg width="16" height="16" fill="none" stroke="#666" stroke-width="2" viewBox="0 0 24 24"
+                        path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    span = article.title
+                  span.article-list-arrow ›
+                  
+            - if @pagy_articles.next
+              = turbo_frame_tag "articles_pagination" do
+                = link_to "Show More", category_path(@category, page: @pagy_articles.next, format: :turbo_stream), data: { controller: "infinite-scroll", action: "click->infinite-scroll#loadMore intersect->infinite-scroll#loadMore" }, class: "btn-secondary w-full", style: "margin-top: 1.5rem; display: block; text-align: center;"
+
+      .category-sidebar
+        - if @current_portal.show_contact_form?
+          .sidebar-featured-card
+            .sidebar-featured-image
+              svg width="40" height="40" fill="none" stroke="#778DFF" stroke-width="1.5" viewBox="0 0 24 24"
+                path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            .sidebar-featured-content
+              span.pro-tip = t('.support', default: 'Support')
+              h3 = t('.contact_us', default: 'Contact Us')
+              p = t('.contact_us_desc', default: 'Need help? Get in touch with our team.')
+              = link_to t('.submit_request', default: 'Submit Request'), contact_path, class: "btn-contact-support", style: "margin-top: 12px; display: inline-block;"
+
+        - if @sibling_categories.any?
+          .sidebar-quick-links
+            h3 = t('.other_categories', default: 'Other Categories')
+            ul id="sibling_categories_list"
+              - @sibling_categories.each do |cat|
+                li
+                  span ⊙
+                  = link_to cat.name, category_path(cat)
+            - if @pagy_siblings.next
+              = turbo_frame_tag "siblings_pagination" do
+                = link_to "Show More", category_path(@category, sibling_page: @pagy_siblings.next, format: :turbo_stream), class: "btn-secondary w-full", style: "margin-top: 12px; display: block; text-align: center;"
+
+    .category-still-need-help
+      .still-need-help-left
+        h2 = t('.still_need_help', default: 'Still need help?')
+        p = t('.still_need_help_desc', default: 'Our support specialists are available 24/7 to help you troubleshoot.')
+      .still-need-help-right
+        - if @current_portal.show_contact_form?
+          = link_to t('.contact_support', default: 'Contact Support'), contact_path, class: "btn-contact-support"
+        - if @current_portal.show_web_widget? && @current_portal.web_widget_channel.present?
+          a.btn-live-chat href="#" onclick="if(window.DeskbolicWidget){window.DeskbolicWidget.open()}; return false;" = t('.start_live_chat', default: 'Start Live Chat')
+
+= render "help_center/categories/structured_data"

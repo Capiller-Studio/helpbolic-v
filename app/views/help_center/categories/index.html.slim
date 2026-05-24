@@ -1,0 +1,22 @@
+- content_for :title do
+  = t('.all_categories', default: 'All Categories')
+
+.page-wrapper
+  .container
+    .category-page-header
+      h1 = t('.all_categories', default: 'All Categories')
+      p = t('.browse_categories', default: 'Browse our help center by category.')
+
+    .category-grid style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 32px;"
+      - @categories.each do |cat|
+        = link_to category_path(cat), class: "subcategory-card" do
+          .subcategory-icon
+            - if cat.image.attached?
+              = lazy_picture_tag cat.image, img_class: "subcategory-icon-img"
+            - elsif cat.icon_key.present?
+              i data-lucide=cat.icon_key
+            - else
+              i data-lucide="folder"
+          .subcategory-content
+            h3 = cat.name
+            p = cat.description

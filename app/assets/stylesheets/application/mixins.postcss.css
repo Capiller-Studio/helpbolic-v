@@ -1,0 +1,60 @@
+@define-mixin flex-column $justify, $align {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@define-mixin margin-top $value1 {
+  margin-top: calc($value1 * 1vw);
+  @media screen and (min-width: 1920px) {
+    margin-top: calc(($value1 * 1920px) / 100);
+  }
+}
+
+@define-mixin font-size $value {
+  font-size: calc($value * 1vw);
+  @media screen and (min-width: 1920px) {
+    font-size: calc(($value * 1920px) / 100);
+  }
+}
+
+@define-mixin line-height $value {
+  line-height: calc($value * 1vw);
+  @media screen and (min-width: 1920px) {
+    line-height: calc(($value * 1920px) / 100);
+  }
+}
+
+@define-mixin width-size $value {
+  width: calc($value * 1vw);
+  @media screen and (min-width: 1920px) {
+    width: calc(($value * 1920px) / 100);
+  }
+}
+
+@define-mixin height-size $value {
+  height: calc($value * 1vw);
+  @media screen and (min-width: 1920px) {
+    height: calc(($value * 1920px) / 100);
+  }
+}
+
+@define-mixin card {
+  background: $white;
+  border-radius: 10px;
+  box-shadow: $shadow;
+  padding: 25px;
+}
+
+@define-mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@define-mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

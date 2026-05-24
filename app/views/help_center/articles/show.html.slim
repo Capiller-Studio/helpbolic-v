@@ -1,0 +1,128 @@
+.article-page
+  .container.article-container
+    
+    /! Left Sidebar Navigation (Same as category)
+    aside.category-sidebar.hidden-mobile
+      .sidebar-search data-controller="search"
+        .search-wrapper
+          svg.search-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          input.search-input type="text" placeholder="Search..." data-action="keyup->search#query" data-search-target="input"
+          .search-dropdown.hidden data-search-target="results"
+
+      - if @category
+        nav.sidebar-nav
+          - @category.portal.categories.where(visibility: :everyone).order(:position).each do |cat|
+            a.sidebar-nav-item class=("active" if cat.id == @category.id) href=category_path(cat)
+              span.nav-icon
+                - if cat.image.attached?
+                  = lazy_picture_tag cat.image, img_class: "nav-icon-img"
+                - else
+                  i data-lucide=(cat.icon_key || "folder") class="nav-icon-svg"
+              span.nav-text = cat.name
+
+    /! Main Content
+    main.article-main
+      .article-header
+        nav.breadcrumbs
+          a.breadcrumb-link href=root_path Home
+          - if @category
+            - @category.ancestors.each do |ancestor|
+              span.breadcrumb-separator >
+              a.breadcrumb-link href=category_path(ancestor) = ancestor.name
+            span.breadcrumb-separator >
+            a.breadcrumb-link href=category_path(@category) = @category.name
+          span.breadcrumb-current = @article.title
+          
+        h1.article-title = @article.title
+        
+        .article-meta
+          - if @article.author
+            .article-author
+              .author-avatar
+                = @article.author.initials
+              span.author-name = @article.author.name
+              span.meta-separator •
+          
+          span.meta-date Updated #{time_ago_in_words(@article.updated_at)} ago
+          - if @article.configurations["estimated_read_time"].present?
+            span.meta-separator •
+            span.meta-read-time #{@article.configurations["estimated_read_time"]} min read
+
+      - if @article.banner_image.attached?
+        = lazy_picture_tag @article.banner_image, img_class: "article-banner"
+
+      .article-content data-controller="toc"
+        = raw @article.content
+
+      /! Guide Mode Pagination
+      - if @category&.guide_mode? && (@prev_article || @next_article)
+        .guide-pagination
+          - current_index = @category.articles.published.where(visibility: :everyone).order(:position).pluck(:id).index(@article.id) || 0
+          - total_articles = @category.articles.published.where(visibility: :everyone).count
+          - progress_percentage = total_articles > 1 ? ((current_index) / (total_articles - 1).to_f * 100).round : 100
+          
+          .guide-progress-bar
+            .guide-progress-fill style="width: #{progress_percentage}%;"
+          
+          .guide-buttons
+            - if @prev_article
+              a.guide-btn.guide-prev href=article_path(@prev_article)
+                svg.guide-arrow xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+                .guide-text
+                  span.guide-label Previous Step
+                  span.guide-title = @prev_article.title
+            - else
+              div
+              
+            - if @next_article
+              a.guide-btn.guide-next href=article_path(@next_article)
+                .guide-text
+                  span.guide-label Next Step
+                  span.guide-title = @next_article.title
+                svg.guide-arrow xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+      
+      /! Feedback Section
+      .article-feedback
+        p.feedback-question Was this article helpful?
+        .feedback-buttons
+          button.btn-feedback type="button"
+            svg.feedback-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+            | Yes
+          button.btn-feedback type="button"
+            svg.feedback-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
+            | No
+
+      /! Related Resources
+      - if @article.related_articles.any?
+        .article-related-resources
+          h3 Related Articles
+          .related-resources-list
+            - @article.related_articles.each do |related_article|
+              = link_to article_path(related_article, locale: I18n.locale), class: "related-resource-card" do
+                .related-icon
+                  svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                .related-content
+                  h4 = related_article.title
+                  p = strip_tags(related_article.content).to_s.truncate(80)
+
+    /! Table of Contents (Right Sidebar)
+    - if @article.configurations["show_table_of_contents"]
+      aside.article-toc
+        h4.toc-title ON THIS PAGE
+        .toc-list data-toc-target="list"
+          /! Populated dynamically by Stimulus controller based on h2/h3 tags in content
+          
+        .toc-help-box
+          h4.help-box-title Read more help?
+          p.help-box-desc Our support experts are available 24/7 to resolve any questions.
+          - if @current_portal.show_contact_form?
+            a.btn-primary.w-full.mb-2 href=contact_path Contact Support
+          - if @current_portal.show_web_widget? && @current_portal.web_widget_channel.present?
+            button.btn-secondary.w-full Start Live Chat
+= render "structured_data"

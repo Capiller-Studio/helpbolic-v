@@ -23,5 +23,8 @@ module Helpbolic
     
     # Ensure helper and constraint paths are loaded
     config.autoload_paths << Rails.root.join("app", "lib")
+
+    # Disable Host Authorization middleware for multi-tenant domains
+    config.hosts.clear
   end
 end

@@ -1,0 +1,98 @@
+.article-group {
+  margin-bottom: 40px;
+
+  .article-group-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .article-group-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-bg-secondary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-primary);
+
+      img, svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text);
+      margin: 0;
+    }
+  }
+
+  .article-group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .article-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+
+    &:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 4px 12px rgba(119, 141, 255, 0.1);
+      transform: translateY(-1px);
+
+      .article-list-arrow {
+        color: var(--color-primary);
+      }
+    }
+
+    .article-list-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .step-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        background: var(--color-primary);
+        color: #fff;
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      svg {
+        color: var(--color-text-muted);
+      }
+
+      span {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--color-text);
+      }
+    }
+
+    .article-list-arrow {
+      font-size: 18px;
+      color: var(--color-text-muted);
+      transition: color 0.2s ease;
+    }
+  }
+}

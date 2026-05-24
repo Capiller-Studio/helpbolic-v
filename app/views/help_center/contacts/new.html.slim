@@ -1,0 +1,44 @@
+.contact-page
+  .container.contact-container
+    .contact-card
+      .contact-header
+        h1.contact-title Submit a Request
+        p.contact-subtitle Fill out the form below and our support team will get back to you as soon as possible.
+      
+      - if flash[:alert]
+        .alert.alert-error = flash[:alert]
+
+      = form_with url: contact_path, method: :post, local: true, class: "contact-form" do |f|
+        .form-grid
+          - @custom_fields.each do |field|
+            - field_translation = field.translations.find_by(locale: I18n.locale) || field.translations.find_by(locale: "en")
+            - label_text = field_translation&.label || field.key.humanize
+            - width_class = field.configurations["width"] == "half" ? "col-half" : "col-full"
+            
+            .form-group class=width_class
+              label.form-label for="contact_#{field.key}"
+                = label_text
+                - if field.required?
+                  span.required-asterisk *
+              
+              - case field.field_type.to_sym
+              - when :text
+                = f.text_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", required: field.required?
+              - when :email
+                = f.email_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", required: field.required?
+              - when :textarea
+                = f.text_area "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", rows: 5, required: field.required?
+              - when :select
+                - options = field_translation&.options || []
+                - options_array = options.map { |o| [o["label"], o["value"]] }
+                = f.select "contact[#{field.key}]", options_array, { include_blank: "Please select..." }, id: "contact_#{field.key}", class: "form-select", required: field.required?
+              - else
+                = f.text_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", required: field.required?
+
+        .form-group.col-full
+          label.form-label for="attachments" Attachments (optional)
+          = f.file_field :attachments, multiple: true, class: "form-file"
+          p.form-help Upload any screenshots or relevant documents.
+
+        .form-actions
+          = f.submit "Submit Request", class: "btn-primary w-full"

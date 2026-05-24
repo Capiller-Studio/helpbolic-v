@@ -1,0 +1,9 @@
+script type="application/ld+json"
+  |
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "url": "#{category_url(id: @category.slug)}",
+      "name": "#{@category.name}",
+      "description": "#{@category.description}"
+    }

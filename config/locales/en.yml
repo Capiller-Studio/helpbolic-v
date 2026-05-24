@@ -28,4 +28,38 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  marketing:
+    title: "Deskbolic Help Center Platform"
+    brand: "Deskbolic"
+    nav:
+      features: "Features"
+      pricing: "Pricing"
+      docs: "Docs"
+      login: "Log in"
+      signup: "Get Started"
+    hero:
+      badge: "Deskbolic Help Center Platform"
+      title_start: "Deliver exceptional customer support, "
+      title_highlight: "effortlessly."
+      description: "You've reached the root domain of the Deskbolic Help Center Platform. Our customers use this infrastructure to power world-class knowledge bases and support portals."
+    cta:
+      primary: "Create Your Help Center"
+      secondary: "View Documentation"
+    footer:
+      copyright: "© %{year} Techbolic Solutions. All rights reserved."
+
+  help_center:
+    search_placeholder: "Search..."
+    popular_articles: "Popular Articles"
+    need_more_help: "Need more help?"
+    contact_support: "Contact Support"
+    contact_support_subtitle: "Avg. response: 2 hours"
+    live_chat: "Live Chat"
+    live_chat_subtitle: "Available 24/7"
+    submit_request: "Submit Request"
+    submit_request_desc: "Open a ticket for technical issues"
+    articles_count: "%{count} articles"
+    footer:
+      privacy: "Privacy Policy"
+      terms: "Terms of Service"
+      join: "Join Us"

@@ -1,0 +1,72 @@
+- content_for :title do
+  = "Search results for \"#{@query}\" - #{@current_portal.name}"
+
+.search-results-page
+  .container
+    .search-results-header
+      .breadcrumb
+        = link_to "Home", root_path
+        span.breadcrumb-separator ›
+        span.breadcrumb-current Search Results
+      
+      h1 Search Results
+      
+      .search-form-container data-controller="search"
+        input.search-input-large type="text" value=@query placeholder="Search again..." data-action="keyup->search#query" data-search-target="input"
+        .search-dropdown.hidden data-search-target="results"
+
+    .search-results-body
+      - if @query.blank?
+        .search-empty-state
+          i data-lucide="search" class="empty-state-icon"
+          h2 Enter a search term
+          p Please type something in the search box above to find what you're looking for.
+          
+      - elsif @articles.empty? && @categories.empty?
+        .search-empty-state
+          i data-lucide="search-x" class="empty-state-icon"
+          h2 No results found for "#{@query}"
+          p Try adjusting your search or browse our categories.
+          = link_to "Browse Categories", root_path, class: "btn-secondary"
+
+      - else
+        .search-results-stats
+          | Showing results for <strong>#{@query}</strong>
+        
+        .search-results-grid
+          .search-main-column
+            - if @articles.any?
+              h3.search-section-title Articles (#{@pagy_articles.count})
+              .search-article-list
+                - @articles.with_highlights.each do |article, highlights|
+                  = link_to article_path(article), class: "search-result-card" do
+                    h4 = raw(highlights&.dig("translations.title") || article.title)
+                    - if highlights&.dig("translations.content")
+                      p = raw(highlights["translations.content"])
+                    - else
+                      p = strip_tags(article.content).to_s.truncate(150)
+                    .search-result-meta
+                      span.meta-badge Article
+                      - if article.primary_category
+                        span.meta-category in #{article.primary_category.name}
+                      
+              .search-pagination
+                == pagy_nav(@pagy_articles)
+
+          .search-sidebar-column
+            - if @categories.any?
+              h3.search-section-title Collections
+              .search-category-list
+                - @categories.each do |cat|
+                  = link_to category_path(cat), class: "search-category-card" do
+                    .category-icon
+                      i data-lucide=(cat.icon_key || "folder")
+                    .category-content
+                      h4 = cat.name
+                      p = strip_tags(cat.description.to_s).truncate(80)
+            
+            - if @current_portal.show_contact_form?
+              .search-help-box
+                h4 Still need help?
+                p If you couldn't find what you were looking for, our support team is here to help.
+                = link_to "Contact Support", contact_path, class: "btn-primary w-full"

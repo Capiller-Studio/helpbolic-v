@@ -10,7 +10,7 @@ module HelpCenter
       # Only serve portals on verified domains (subdomains are always verified)
       return nil unless domain.dns_verified? || domain.subdomain?
 
-      portal = HelpCenter::Portal.find_by(domain_id: domain.id, status: :active)
+      portal = HelpCenter::Portal.with_attached_logo.with_attached_favicon.with_attached_social_share_image.with_attached_hero_image.includes(:translations, :web_widget_channel).find_by(domain_id: domain.id, status: :active)
       return nil unless portal
 
       {

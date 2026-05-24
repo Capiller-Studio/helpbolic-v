@@ -1,0 +1,16 @@
+script type="application/ld+json"
+  |
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "#{@article.title}",
+      "image": [
+        "#{@current_portal.logo.attached? ? url_for(@current_portal.logo) : ''}"
+       ],
+      "datePublished": "#{@article.created_at}",
+      "dateModified": "#{@article.updated_at}",
+      "author": {
+        "@type": "Organization",
+        "name": "#{@current_portal.name}"
+      }
+    }

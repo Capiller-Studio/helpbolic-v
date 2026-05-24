@@ -1,0 +1,50 @@
+doctype html
+html lang=I18n.locale dir=(I18n.locale.to_s.match?(/^(ar|he|fa|ur)/i) ? "rtl" : "ltr") data-theme=(@current_portal.ui_configurations["theme_mode"] || "light")
+  head
+    title = meta_title
+    meta name="description" content=meta_description
+    meta name="keywords" content=meta_keywords
+    meta property="og:title" content=meta_title
+    meta property="og:description" content=meta_description
+    meta property="og:image" content=meta_image
+    
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    
+    - if @current_portal.indexing_enabled?
+      meta name="robots" content="index, follow"
+    - else
+      meta name="robots" content="noindex, nofollow"
+
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = yield :head
+
+    /! Dynamic Theme CSS Variables
+    style
+      | :root {
+      |   --color-primary: #{@current_portal.ui_configurations["primary_color"] || '#778DFF'};
+      |   --color-secondary: #{@current_portal.ui_configurations["secondary_color"] || '#4F46E5'};
+      |   --font-family: #{@current_portal.ui_configurations["font_family"] || 'Inter, sans-serif'};
+      | }
+      = raw @current_portal.configurations["custom_css"]
+
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+
+    - if @current_portal.configurations["google_analytics_id"].present?
+      script async="" src="https://www.googletagmanager.com/gtag/js?id=#{@current_portal.configurations["google_analytics_id"]}"
+      script
+        | window.dataLayer = window.dataLayer || [];
+        | function gtag(){dataLayer.push(arguments);}
+        | gtag('js', new Date());
+        | gtag('config', '#{@current_portal.configurations["google_analytics_id"]}');
+
+  body
+    = render "layouts/navbar"
+    = yield
+    = render "layouts/footer"
+
+    - if @current_portal.show_web_widget? && @current_portal.web_widget_channel.present?
+      script src="#{ENV.fetch("WIDGET_BASE_URL", "http://embed.deskbolic.localhost:3000")}/w/#{@current_portal.account_id}/#{@current_portal.web_widget_channel.id}/embed.js" data-locale=I18n.locale

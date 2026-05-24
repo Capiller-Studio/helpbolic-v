@@ -1,0 +1,33 @@
+- if params[:page]
+  = turbo_stream.append "articles_list" do
+    - @articles.each_with_index do |article, index|
+      = link_to article_path(article, locale: I18n.locale), class: "article-list-item" do
+        .article-list-left
+          - if @category.guide_mode?
+            span.step-badge = (@pagy_articles.offset + index + 1)
+          - else
+            svg width="16" height="16" fill="none" stroke="#666" stroke-width="2" viewBox="0 0 24 24"
+              path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          span = article.title
+        span.article-list-arrow ›
+
+  - if @pagy_articles.next
+    = turbo_stream.replace "articles_pagination" do
+      = turbo_frame_tag "articles_pagination" do
+        = link_to "Show More", category_path(@category, page: @pagy_articles.next, format: :turbo_stream), data: { controller: "infinite-scroll", action: "click->infinite-scroll#loadMore intersect->infinite-scroll#loadMore" }, class: "btn-secondary w-full", style: "margin-top: 1.5rem; display: block; text-align: center;"
+  - else
+    = turbo_stream.remove "articles_pagination"
+
+- if params[:sibling_page]
+  = turbo_stream.append "sibling_categories_list" do
+    - @sibling_categories.each do |cat|
+      li
+        span ⊙
+        = link_to cat.name, category_path(cat)
+
+  - if @pagy_siblings.next
+    = turbo_stream.replace "siblings_pagination" do
+      = turbo_frame_tag "siblings_pagination" do
+        = link_to "Show More", category_path(@category, sibling_page: @pagy_siblings.next, format: :turbo_stream), data: { controller: "infinite-scroll", action: "click->infinite-scroll#loadMore intersect->infinite-scroll#loadMore" }, class: "btn-secondary w-full", style: "margin-top: 12px; display: block; text-align: center;"
+  - else
+    = turbo_stream.remove "siblings_pagination"
