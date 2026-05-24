@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'Jakarta ExtraBold';
+  src: url('PlusJakartaSans-ExtraBold.ttf');
+}
+@font-face {
+  font-family: 'Jakarta Medium';
+  src: url('PlusJakartaSans-Medium.ttf');
+}
+
+$font-family-primary: 'Open Sans', sans-serif;
+$font-family-secondary: 'Poppins', sans-serif;
+$font-family-jakarta-bold-extra: 'Jakarta ExtraBold', sans-serif;
+$font-family-jakarta-medium: 'Jakarta Medium', sans-serif;
+$font-family-inter: 'Inter', sans-serif;
+$justify-center : center;
+$align-center : center;
+
+$primary: #4f46e5;
+$primary-dark: #4338ca;
+$sidebar-bg: #1e1e2d;
+$sidebar-text: #9899ac;
+$sidebar-active: #2d2d3f;
+$white: #ffffff;
+$bg: #f5f6fa;
+$border: #e8e8e8;
+$text: #333333;
+$text-light: #666666;
+$shadow: 0 2px 8px rgba(0,0,0,0.06);
+$primary-light: #ede9fe;
+$shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+$radius: 10px;
+$radius-sm: 6px;
+$sidebar-width: 240px;
+$danger: #991b1b;
+$danger-bg: #fee2e2;
+$success: #065f46;
+$success-bg: #d1fae5;
+
+$bp-xs: 480px;
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+/* Helpbolic specific */
+$hero-bg: radial-gradient(circle at 50% 50%, rgba(119, 141, 255, 0.05) 0%, rgba(119, 141, 255, 0) 50%, rgba(119, 141, 255, 0) 100%);; 
+$card-border: #e8e8f0;
+$text-muted: #8b8fa8;
+$badge-bg: #eef0ff;
+$badge-text: #4f46e5;
+$btn-login: #778DFF;
+$bg-bg:#f5f6fa;

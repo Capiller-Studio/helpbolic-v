@@ -1,0 +1,12 @@
+doctype html
+html lang="en"
+  head
+    title = t("marketing.title")
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    meta charset="utf-8"
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
+  body.bg-gray-50.text-gray-900.font-sans.antialiased
+    = yield

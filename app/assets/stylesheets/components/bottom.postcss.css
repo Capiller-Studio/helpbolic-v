@@ -1,0 +1,163 @@
+/* components/bottom.postcss.css */
+
+.bottom-section {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .bottom-section {
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.bottom-section h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trend-icon {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+}
+
+.popular-articles ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.popular-articles li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.popular-articles li:last-child {
+  border-bottom: none;
+}
+
+.popular-articles li a {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: background-color 0.2s;
+}
+
+.popular-articles li a:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.article-icon {
+  color: var(--color-text-muted);
+  margin-right: 1rem;
+}
+
+.popular-articles li a span:not(.chevron) {
+  flex-grow: 1;
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.chevron {
+  color: var(--color-text-muted);
+  font-size: 1.25rem;
+  transition: transform 0.2s;
+}
+
+.popular-articles li a:hover .chevron {
+  color: var(--color-primary);
+  transform: translateX(4px);
+}
+
+.help-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.help-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+}
+
+.help-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(119, 141, 255, 0.1);
+}
+
+.help-card.full-width {
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(119, 141, 255, 0.1) 0%, rgba(119, 141, 255, 0.02) 100%);
+  border-color: rgba(119, 141, 255, 0.3);
+}
+
+.help-card.full-width:hover {
+  background: linear-gradient(135deg, rgba(119, 141, 255, 0.15) 0%, rgba(119, 141, 255, 0.05) 100%);
+}
+
+.help-card-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.help-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--color-bg-secondary);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.help-card-icon--small {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.help-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.25rem 0;
+}
+
+.help-card p {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.arrow {
+  color: var(--color-primary);
+  font-weight: bold;
+  font-size: 1.25rem;
+}

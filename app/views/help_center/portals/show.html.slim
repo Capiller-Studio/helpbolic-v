@@ -1,0 +1,87 @@
+- content_for :title do
+  = @current_portal.name
+
+- content_for :meta_tags do
+  meta name="description" content=@current_portal.description
+  meta property="og:title" content=@current_portal.name
+  meta property="og:description" content=@current_portal.description
+  - if @current_portal.social_share_image.attached?
+    meta property="og:image" content=url_for(@current_portal.social_share_image)
+  meta property="og:type" content="website"
+
+.page-wrapper
+  .hero-section
+    - if @current_portal.ui_configurations["hero_style"] == "gradient"
+      .hero-bg.gradient-bg
+    - elsif @current_portal.ui_configurations["hero_style"] == "image" && @current_portal.hero_image.attached?
+      = picture_tag(@current_portal.hero_image, img_class: "hero-bg image-bg")
+
+    .hero-badge
+      span = @current_portal.header_tagline.presence || "✦ Knowledge base updated today"
+
+    h1.hero-title = @current_portal.hero_title.presence || "How can we help you today?"
+    p.hero-subtitle = @current_portal.hero_subtitle.presence || "Search our knowledge base or browse categories below to find quick answers and troubleshooting guides."
+
+    .search-bar data-controller="search"
+      .search-input-wrapper
+        svg.search-icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+          path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        input.search-input type="text" placeholder=(@current_portal.search_placeholder.presence || "Search") data-search-target="input" data-action="keyup->search#query" autocomplete="off"
+        
+      .search-dropdown.hidden data-search-target="results"
+
+  .categories-section
+    .categories-grid class="layout-#{@current_portal.ui_configurations['category_layout'] || 'grid'}"
+      - @categories.each do |category|
+        = link_to category_path(category), class: "category-card" do
+          .category-icon
+            - if category.image.attached?
+              = lazy_picture_tag category.image, img_class: "category-icon-img"
+            - elsif category.icon_key.present?
+              i.category-icon-svg data-lucide=category.icon_key
+            - else
+              i.category-icon-svg data-lucide="folder"
+          h3 = category.name
+          p = category.description
+          .category-meta
+            span.article-count = t('.articles_count', count: (@category_article_counts[category.id] || 0), default: "%{count} articles")
+
+  .bottom-section
+    .popular-articles
+      h2
+        span.trend-icon
+          svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+            path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+        | Popular Articles
+      ul
+        - @popular_articles.each do |article|
+          li
+            = link_to article_path(article, locale: I18n.locale) do
+              svg.article-icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              span = article.title
+              span.chevron ›
+
+    .need-help
+      h2 Need more help?
+      .help-cards
+        .help-card
+          .help-card-icon
+            svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+              path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          div
+            h4 Contact Support
+            p Avg. response: 2 hours
+            
+        - if @current_portal.show_contact_form?
+          = link_to contact_path, class: "help-card full-width" do
+            .help-card-left
+              .help-card-icon.help-card-icon--small
+                svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              div
+                h4 Submit Request
+                p Open a ticket for technical issues
+            span.arrow ↗
+
+= render "help_center/portals/structured_data"
