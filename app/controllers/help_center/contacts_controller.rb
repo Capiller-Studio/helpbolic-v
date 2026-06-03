@@ -25,9 +25,12 @@ module HelpCenter
           form_params: contact_params,
           attachments: params[:attachments] || []
         )
-        redirect_to contact_success_path, notice: I18n.t(@contact_form.configurations["success_message_i18n_key"] || "contact_form.success", default: "Your request has been submitted successfully.")
+        redirect_to contact_success_path, notice: I18n.t(
+          @contact_form.configurations["success_message_i18n_key"] || "help_center.contact.success.notice",
+          default: I18n.t("help_center.contact.success.notice")
+        )
       rescue StandardError => e
-        flash.now[:alert] = "There was an error submitting your request: #{e.message}"
+        flash.now[:alert] = I18n.t("help_center.contact.new.error", message: e.message)
         @custom_fields = @contact_form.custom_fields.order('custom_field_resources.position ASC')
         render :new, status: :unprocessable_entity
       end

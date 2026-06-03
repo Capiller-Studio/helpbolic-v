@@ -43,7 +43,8 @@ html lang=I18n.locale dir=(I18n.locale.to_s.match?(/^(ar|he|fa|ur)/i) ? "rtl" : 
 
   body
     = render "layouts/navbar"
-    = yield
+    main.main-content
+      = yield
     = render "layouts/footer"
 
     - if @current_portal.show_web_widget? && @current_portal.web_widget_channel.present?

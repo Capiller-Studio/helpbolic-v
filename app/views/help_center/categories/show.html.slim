@@ -13,7 +13,7 @@
   .category-page
     .category-page-header
       .breadcrumb
-        = link_to "Home", root_path
+        = link_to t("help_center.common.home"), root_path
         - @category.ancestors.each do |ancestor|
           span.breadcrumb-sep ›
           = link_to ancestor.name, category_path(ancestor)
@@ -24,9 +24,9 @@
       p = @category.description
 
       .category-search data-controller="search"
-        input type="text" placeholder=(@current_portal.search_placeholder.presence || "Search within #{@category.name}...") class="category-search-input" data-action="keyup->search#query" data-search-target="input"
+        input type="text" placeholder=(@current_portal.search_placeholder.presence || t("help_center.category.search_within", category: @category.name)) class="category-search-input" data-action="keyup->search#query" data-search-target="input"
         .search-dropdown.hidden data-search-target="results"
-          .search-dropdown-label ARTICLES
+          .search-dropdown-label = t("help_center.common.articles").upcase
           .search-dropdown-results id="searchResults"
 
     .category-page-body
@@ -56,7 +56,7 @@
                   i.article-group-icon-svg data-lucide=@category.icon_key
                 - else
                   i.article-group-icon-svg data-lucide="folder"
-              h2 = t('.articles', default: 'Articles')
+              h2 = t("help_center.common.articles")
               
             .article-group-list id="articles_list"
               - @articles.each_with_index do |article, index|
@@ -72,23 +72,23 @@
                   
             - if @pagy_articles.next
               = turbo_frame_tag "articles_pagination" do
-                = link_to "Show More", category_path(@category, page: @pagy_articles.next, format: :turbo_stream), data: { controller: "infinite-scroll", action: "click->infinite-scroll#loadMore intersect->infinite-scroll#loadMore" }, class: "btn-secondary w-full", style: "margin-top: 1.5rem; display: block; text-align: center;"
+                = link_to t("help_center.common.show_more"), category_path(@category, page: @pagy_articles.next, format: :turbo_stream), data: { controller: "infinite-scroll", action: "click->infinite-scroll#loadMore intersect->infinite-scroll#loadMore" }, class: "btn-secondary w-full", style: "margin-top: 1.5rem; display: block; text-align: center;"
 
       .category-sidebar
         - if @current_portal.show_contact_form?
           .sidebar-featured-card
-            .sidebar-featured-image
+            / .sidebar-featured-image
               svg width="40" height="40" fill="none" stroke="#778DFF" stroke-width="1.5" viewBox="0 0 24 24"
                 path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
             .sidebar-featured-content
-              span.pro-tip = t('.support', default: 'Support')
-              h3 = t('.contact_us', default: 'Contact Us')
-              p = t('.contact_us_desc', default: 'Need help? Get in touch with our team.')
-              = link_to t('.submit_request', default: 'Submit Request'), contact_path, class: "btn-contact-support", style: "margin-top: 12px; display: inline-block;"
+              span.pro-tip = t("help_center.category.support")
+              h3 = t("help_center.category.contact_us")
+              p = t("help_center.category.contact_us_desc")
+              = link_to t("help_center.common.submit_request"), contact_path, class: "btn-contact-support", style: "margin-top: 12px; display: inline-block;"
 
         - if @sibling_categories.any?
           .sidebar-quick-links
-            h3 = t('.other_categories', default: 'Other Categories')
+            h3 = t("help_center.category.other_categories")
             ul id="sibling_categories_list"
               - @sibling_categories.each do |cat|
                 li
@@ -96,16 +96,16 @@
                   = link_to cat.name, category_path(cat)
             - if @pagy_siblings.next
               = turbo_frame_tag "siblings_pagination" do
-                = link_to "Show More", category_path(@category, sibling_page: @pagy_siblings.next, format: :turbo_stream), class: "btn-secondary w-full", style: "margin-top: 12px; display: block; text-align: center;"
+                = link_to t("help_center.common.show_more"), category_path(@category, sibling_page: @pagy_siblings.next, format: :turbo_stream), class: "btn-secondary w-full", style: "margin-top: 12px; display: block; text-align: center;"
 
     .category-still-need-help
       .still-need-help-left
-        h2 = t('.still_need_help', default: 'Still need help?')
-        p = t('.still_need_help_desc', default: 'Our support specialists are available 24/7 to help you troubleshoot.')
+        h2 = t("help_center.common.still_need_help")
+        p = t("help_center.category.still_need_help_desc")
       .still-need-help-right
         - if @current_portal.show_contact_form?
-          = link_to t('.contact_support', default: 'Contact Support'), contact_path, class: "btn-contact-support"
+          = link_to t("help_center.common.contact_support"), contact_path, class: "btn-contact-support"
         - if @current_portal.show_web_widget? && @current_portal.web_widget_channel.present?
-          a.btn-live-chat href="#" onclick="if(window.DeskbolicWidget){window.DeskbolicWidget.open()}; return false;" = t('.start_live_chat', default: 'Start Live Chat')
+          a.btn-live-chat href="#" onclick="if(window.DeskbolicWidget){window.DeskbolicWidget.open()}; return false;" = t("help_center.common.start_live_chat")
 
 = render "help_center/categories/structured_data"

@@ -1,0 +1,144 @@
+es:
+  marketing:
+    title: "Plataforma de centro de ayuda de Deskbolic"
+    brand: "Deskbolic"
+    nav:
+      features: "Funciones"
+      pricing: "Precios"
+      docs: "Documentación"
+      login: "Iniciar sesión"
+      signup: "Comenzar"
+    hero:
+      badge: "Plataforma de centro de ayuda de Deskbolic"
+      title_start: "Ofrece soporte al cliente excepcional, "
+      title_highlight: "sin esfuerzo."
+      description: "Has llegado al dominio raíz de la plataforma de centro de ayuda de Deskbolic. Nuestros clientes usan esta infraestructura para impulsar bases de conocimiento y portales de soporte de primer nivel."
+    cta:
+      primary: "Crear tu centro de ayuda"
+      secondary: "Ver documentación"
+    footer:
+      copyright: "© %{year} Techbolic Solutions. Todos los derechos reservados."
+
+  help_center:
+    common:
+      home: "Inicio"
+      search: "Buscar"
+      article: "Artículo"
+      articles: "Artículos"
+      collections: "Colecciones"
+      contact_support: "Contactar soporte"
+      submit_request: "Enviar solicitud"
+      show_more: "Mostrar más"
+      still_need_help: "¿Aún necesitas ayuda?"
+      start_live_chat: "Iniciar chat"
+      yes: "Sí"
+      no: "No"
+      privacy_policy: "Política de privacidad"
+
+    portal:
+      hero_badge: "✦ Base de conocimiento actualizada hoy"
+      hero_title: "¿Cómo podemos ayudarte hoy?"
+      hero_subtitle: "Busca en nuestra base de conocimiento o explora las categorías a continuación para encontrar respuestas rápidas y guías de solución de problemas."
+      popular_articles: "Artículos populares"
+      need_more_help: "¿Necesitas más ayuda?"
+      contact_support_subtitle: "Respuesta promedio: 2 horas"
+      submit_request_desc: "Abre un ticket para problemas técnicos"
+      articles_count:
+        one: "%{count} artículo"
+        other: "%{count} artículos"
+
+    category:
+      all_categories: "Todas las categorías"
+      browse_categories: "Explora nuestro centro de ayuda por categoría."
+      search_within: "Buscar en %{category}..."
+      support: "Soporte"
+      contact_us: "Contáctanos"
+      contact_us_desc: "¿Necesitas ayuda? Ponte en contacto con nuestro equipo."
+      other_categories: "Otras categorías"
+      still_need_help_desc: "Nuestros especialistas de soporte están disponibles 24/7 para ayudarte a resolver problemas."
+
+    search:
+      title: "Resultados de búsqueda"
+      title_with_query: "Resultados de búsqueda para \"%{query}\" - %{portal}"
+      search_again: "Buscar de nuevo..."
+      enter_search_term: "Introduce un término de búsqueda"
+      enter_search_term_desc: "Escribe algo en el cuadro de búsqueda de arriba para encontrar lo que buscas."
+      no_results: "No se encontraron resultados para \"%{query}\""
+      no_results_desc: "Intenta ajustar tu búsqueda o explora nuestras categorías."
+      browse_categories: "Explorar categorías"
+      showing_results: "Mostrando resultados para <strong>%{query}</strong>"
+      articles_count: "Artículos (%{count})"
+      in_category: "en %{category}"
+      support_box_desc: "Si no encontraste lo que buscabas, nuestro equipo de soporte está aquí para ayudarte."
+
+    article:
+      updated_ago: "Actualizado hace %{time}"
+      min_read: "%{count} min de lectura"
+      previous_step: "Paso anterior"
+      next_step: "Siguiente paso"
+      feedback_question: "¿Te resultó útil este artículo?"
+      related_articles: "Artículos relacionados"
+      on_this_page: "EN ESTA PÁGINA"
+      read_more_help: "¿Necesitas más ayuda?"
+      help_box_desc: "Nuestros expertos de soporte están disponibles 24/7 para resolver cualquier pregunta."
+
+    contact:
+      fields:
+        full_name:
+          label: "Nombre completo"
+          placeholder: "Juan Pérez"
+        name:
+          label: "Nombre completo"
+          placeholder: "Juan Pérez"
+        email:
+          label: "Correo electrónico"
+          placeholder: "juan@example.com"
+        email_address:
+          label: "Correo electrónico"
+          placeholder: "juan@example.com"
+        subject:
+          label: "Asunto"
+          placeholder: "¿Cómo podemos ayudarte?"
+        category:
+          label: "Categoría"
+          placeholder: "Selecciona una opción..."
+          options:
+            billing: "Facturación"
+            technical_support: "Soporte técnico"
+            account: "Cuenta"
+            product: "Producto"
+            general: "General"
+            other: "Otro"
+        description:
+          label: "Descripción"
+          placeholder: "Proporciona tantos detalles como sea posible..."
+        message:
+          label: "Descripción"
+          placeholder: "Proporciona tantos detalles como sea posible..."
+      new:
+        title: "Enviar una solicitud"
+        select_placeholder: "Selecciona una opción..."
+        attachments_label: "Archivos adjuntos (opcional)"
+        click_to_upload: "Haz clic para subir"
+        drag_and_drop: "o arrastra y suelta archivos aquí"
+        max_file_size: "Tamaño máximo de archivo: 10 MB (PDF, PNG, JPG)"
+        selected_files: "Archivos seleccionados"
+        privacy_prefix: "Al enviar, aceptas nuestra"
+        privacy_suffix: "sobre el manejo de datos."
+        error: "Hubo un error al enviar tu solicitud: %{message}"
+      success:
+        notice: "Tu solicitud se ha enviado correctamente."
+        title: "Tu solicitud ha sido enviada"
+        subtitle: "Nuestro equipo de soporte recibió tu solicitud y te responderá pronto."
+        ticket_id: "ID DEL TICKET"
+        expected_response: "RESPUESTA ESPERADA"
+        response_time: "Normalmente dentro de 24 horas"
+        email_notice: "También recibirás un correo de confirmación con detalles y actualizaciones."
+        track_request: "Seguir tu solicitud"
+        back_to_help_center: "Volver al centro de ayuda"
+        while_you_wait: "Mientras esperas..."
+
+    footer:
+      privacy: "Política de privacidad"
+      terms: "Términos del servicio"
+      join: "Únete"

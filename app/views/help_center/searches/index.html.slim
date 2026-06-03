@@ -1,42 +1,42 @@
 - content_for :title do
-  = "Search results for \"#{@query}\" - #{@current_portal.name}"
+  = t("help_center.search.title_with_query", query: @query, portal: @current_portal.name)
 
 .search-results-page
   .container
     .search-results-header
       .breadcrumb
-        = link_to "Home", root_path
+        = link_to t("help_center.common.home"), root_path
         span.breadcrumb-separator ›
-        span.breadcrumb-current Search Results
+        span.breadcrumb-current = t("help_center.search.title")
       
-      h1 Search Results
+      h1 = t("help_center.search.title")
       
       .search-form-container data-controller="search"
-        input.search-input-large type="text" value=@query placeholder="Search again..." data-action="keyup->search#query" data-search-target="input"
+        input.search-input-large type="text" value=@query placeholder=t("help_center.search.search_again") data-action="keyup->search#query" data-search-target="input"
         .search-dropdown.hidden data-search-target="results"
 
     .search-results-body
       - if @query.blank?
         .search-empty-state
           i data-lucide="search" class="empty-state-icon"
-          h2 Enter a search term
-          p Please type something in the search box above to find what you're looking for.
+          h2 = t("help_center.search.enter_search_term")
+          p = t("help_center.search.enter_search_term_desc")
           
       - elsif @articles.empty? && @categories.empty?
         .search-empty-state
           i data-lucide="search-x" class="empty-state-icon"
-          h2 No results found for "#{@query}"
-          p Try adjusting your search or browse our categories.
-          = link_to "Browse Categories", root_path, class: "btn-secondary"
+          h2 = t("help_center.search.no_results", query: @query)
+          p = t("help_center.search.no_results_desc")
+          = link_to t("help_center.search.browse_categories"), root_path, class: "btn-secondary"
 
       - else
         .search-results-stats
-          | Showing results for <strong>#{@query}</strong>
+          == t("help_center.search.showing_results", query: ERB::Util.html_escape(@query))
         
         .search-results-grid
           .search-main-column
             - if @articles.any?
-              h3.search-section-title Articles (#{@pagy_articles.count})
+              h3.search-section-title = t("help_center.search.articles_count", count: @pagy_articles.count)
               .search-article-list
                 - @articles.with_highlights.each do |article, highlights|
                   = link_to article_path(article), class: "search-result-card" do
@@ -46,16 +46,16 @@
                     - else
                       p = strip_tags(article.content).to_s.truncate(150)
                     .search-result-meta
-                      span.meta-badge Article
+                      span.meta-badge = t("help_center.common.article")
                       - if article.primary_category
-                        span.meta-category in #{article.primary_category.name}
+                        span.meta-category = t("help_center.search.in_category", category: article.primary_category.name)
                       
               .search-pagination
                 == pagy_nav(@pagy_articles)
 
           .search-sidebar-column
             - if @categories.any?
-              h3.search-section-title Collections
+              h3.search-section-title = t("help_center.common.collections")
               .search-category-list
                 - @categories.each do |cat|
                   = link_to category_path(cat), class: "search-category-card" do
@@ -67,6 +67,6 @@
             
             - if @current_portal.show_contact_form?
               .search-help-box
-                h4 Still need help?
-                p If you couldn't find what you were looking for, our support team is here to help.
-                = link_to "Contact Support", contact_path, class: "btn-primary w-full"
+                h4 = t("help_center.common.still_need_help")
+                p = t("help_center.search.support_box_desc")
+                = link_to t("help_center.common.contact_support"), contact_path, class: "btn-primary w-full"
