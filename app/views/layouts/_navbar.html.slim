@@ -20,7 +20,7 @@ nav.navbar data-controller="navbar"
       = link_to cat.name, category_path(cat), class: "nav-link"
             
     - if @current_portal.show_contact_form?
-      = link_to t('.submit_request', default: "Submit Request"), contact_path, class: "nav-link"
+      = link_to t("help_center.common.submit_request"), contact_path, class: "nav-link"
 
   .navbar-mobile-toggle data-action="click->navbar#toggle"
     svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -38,4 +38,4 @@ nav.navbar data-controller="navbar"
       = link_to cat.name, category_path(cat), class: "mobile-nav-link"
       
     - if @current_portal.show_contact_form?
-      = link_to t('.submit_request', default: "Submit Request"), contact_path, class: "mobile-nav-link text-primary"
+      = link_to t("help_center.common.submit_request"), contact_path, class: "mobile-nav-link text-primary"

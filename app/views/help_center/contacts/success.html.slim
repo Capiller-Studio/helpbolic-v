@@ -6,29 +6,29 @@
           svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"
         
-        h1.contact-title = t('contact_form.success.title', default: 'Your request has been submitted')
-        p.contact-subtitle = flash[:notice] || t('contact_form.success.subtitle', default: 'Our support team has received your request and will get back to you shortly.')
+        h1.contact-title = t("help_center.contact.success.title")
+        p.contact-subtitle = flash[:notice] || t("help_center.contact.success.subtitle")
         
         .success-ticket-info
           .ticket-info-block
-            span.ticket-info-label = t('contact_form.success.ticket_id', default: 'TICKET ID')
+            span.ticket-info-label = t("help_center.contact.success.ticket_id")
             span.ticket-info-value.text-primary #12345
           .ticket-info-block
-            span.ticket-info-label = t('contact_form.success.expected_response', default: 'EXPECTED RESPONSE')
-            span.ticket-info-value = t('contact_form.success.response_time', default: 'Usually within 24 hours')
+            span.ticket-info-label = t("help_center.contact.success.expected_response")
+            span.ticket-info-value = t("help_center.contact.success.response_time")
             
-        p.success-email-notice = t('contact_form.success.email_notice', default: "You'll also receive a confirmation email with details and updates.")
+        p.success-email-notice = t("help_center.contact.success.email_notice")
         
         .success-actions
           a.btn-primary href="#"
-            = t('contact_form.success.track_request', default: 'Track Your Request')
+            = t("help_center.contact.success.track_request")
             svg style="width: 16px; height: 16px; margin-left: 8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
               path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-          a.btn-outline href=root_path = t('contact_form.success.back_to_help_center', default: 'Back to Help Center')
+          a.btn-outline href=root_path = t("help_center.contact.success.back_to_help_center")
 
       .while-you-wait
         .while-you-wait-header
-          span.while-you-wait-title = t('contact_form.success.while_you_wait', default: 'While you wait...')
+          span.while-you-wait-title = t("help_center.contact.success.while_you_wait")
           
         .wait-cards-grid
           - @current_portal.articles.published.where(visibility: :everyone).limit(2).each do |article|
@@ -40,5 +40,4 @@
                 h4 = article.title
                 p = strip_tags(article.content).to_s.truncate(60)
                 .wait-card-meta
-                  = article.configurations["estimated_read_time"] || "5"
-                  = " " + t('contact_form.success.min_read', default: 'min read')
+                  = t("help_center.article.min_read", count: article.configurations["estimated_read_time"] || "5")

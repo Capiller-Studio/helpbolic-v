@@ -1,32 +1,3 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
   marketing:
     title: "Deskbolic Help Center Platform"
@@ -49,16 +20,124 @@ en:
       copyright: "© %{year} Techbolic Solutions. All rights reserved."
 
   help_center:
-    search_placeholder: "Search..."
-    popular_articles: "Popular Articles"
-    need_more_help: "Need more help?"
-    contact_support: "Contact Support"
-    contact_support_subtitle: "Avg. response: 2 hours"
-    live_chat: "Live Chat"
-    live_chat_subtitle: "Available 24/7"
-    submit_request: "Submit Request"
-    submit_request_desc: "Open a ticket for technical issues"
-    articles_count: "%{count} articles"
+    common:
+      home: "Home"
+      search: "Search"
+      article: "Article"
+      articles: "Articles"
+      collections: "Collections"
+      contact_support: "Contact Support"
+      submit_request: "Submit Request"
+      show_more: "Show More"
+      still_need_help: "Still need help?"
+      start_live_chat: "Start Live Chat"
+      yes: "Yes"
+      no: "No"
+      privacy_policy: "Privacy Policy"
+
+    portal:
+      hero_badge: "✦ Knowledge base updated today"
+      hero_title: "How can we help you today?"
+      hero_subtitle: "Search our knowledge base or browse categories below to find quick answers and troubleshooting guides."
+      popular_articles: "Popular Articles"
+      need_more_help: "Need more help?"
+      contact_support_subtitle: "Avg. response: 2 hours"
+      submit_request_desc: "Open a ticket for technical issues"
+      articles_count:
+        one: "%{count} article"
+        other: "%{count} articles"
+
+    category:
+      all_categories: "All Categories"
+      browse_categories: "Browse our help center by category."
+      search_within: "Search within %{category}..."
+      support: "Support"
+      contact_us: "Contact Us"
+      contact_us_desc: "Need help? Get in touch with our team."
+      other_categories: "Other Categories"
+      still_need_help_desc: "Our support specialists are available 24/7 to help you troubleshoot."
+
+    search:
+      title: "Search Results"
+      title_with_query: "Search results for \"%{query}\" - %{portal}"
+      search_again: "Search again..."
+      enter_search_term: "Enter a search term"
+      enter_search_term_desc: "Please type something in the search box above to find what you're looking for."
+      no_results: "No results found for \"%{query}\""
+      no_results_desc: "Try adjusting your search or browse our categories."
+      browse_categories: "Browse Categories"
+      showing_results: "Showing results for <strong>%{query}</strong>"
+      articles_count: "Articles (%{count})"
+      in_category: "in %{category}"
+      support_box_desc: "If you couldn't find what you were looking for, our support team is here to help."
+
+    article:
+      updated_ago: "Updated %{time} ago"
+      min_read: "%{count} min read"
+      previous_step: "Previous Step"
+      next_step: "Next Step"
+      feedback_question: "Was this article helpful?"
+      related_articles: "Related Articles"
+      on_this_page: "ON THIS PAGE"
+      read_more_help: "Read more help?"
+      help_box_desc: "Our support experts are available 24/7 to resolve any questions."
+
+    contact:
+      fields:
+        full_name:
+          label: "Full Name"
+          placeholder: "John Doe"
+        name:
+          label: "Full Name"
+          placeholder: "John Doe"
+        email:
+          label: "Email Address"
+          placeholder: "john@example.com"
+        email_address:
+          label: "Email Address"
+          placeholder: "john@example.com"
+        subject:
+          label: "Subject"
+          placeholder: "How can we help?"
+        category:
+          label: "Category"
+          placeholder: "Please select..."
+          options:
+            billing: "Billing"
+            technical_support: "Technical Support"
+            account: "Account"
+            product: "Product"
+            general: "General"
+            other: "Other"
+        description:
+          label: "Description"
+          placeholder: "Please provide as much detail as possible..."
+        message:
+          label: "Description"
+          placeholder: "Please provide as much detail as possible..."
+      new:
+        title: "Submit a Request"
+        select_placeholder: "Please select..."
+        attachments_label: "Attachments (optional)"
+        click_to_upload: "Click to upload"
+        drag_and_drop: "or drag and drop files here"
+        max_file_size: "Maximum file size 10MB (PDF, PNG, JPG)"
+        selected_files: "Selected files"
+        privacy_prefix: "By submitting, you agree to our"
+        privacy_suffix: "regarding data handling."
+        error: "There was an error submitting your request: %{message}"
+      success:
+        notice: "Your request has been submitted successfully."
+        title: "Your request has been submitted"
+        subtitle: "Our support team has received your request and will get back to you shortly."
+        ticket_id: "TICKET ID"
+        expected_response: "EXPECTED RESPONSE"
+        response_time: "Usually within 24 hours"
+        email_notice: "You'll also receive a confirmation email with details and updates."
+        track_request: "Track Your Request"
+        back_to_help_center: "Back to Help Center"
+        while_you_wait: "While you wait..."
+
     footer:
       privacy: "Privacy Policy"
       terms: "Terms of Service"

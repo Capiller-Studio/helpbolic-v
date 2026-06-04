@@ -1,0 +1,144 @@
+fr:
+  marketing:
+    title: "Plateforme de centre d'aide Deskbolic"
+    brand: "Deskbolic"
+    nav:
+      features: "Fonctionnalités"
+      pricing: "Tarifs"
+      docs: "Documentation"
+      login: "Se connecter"
+      signup: "Commencer"
+    hero:
+      badge: "Plateforme de centre d'aide Deskbolic"
+      title_start: "Offrez un support client exceptionnel, "
+      title_highlight: "sans effort."
+      description: "Vous avez atteint le domaine racine de la plateforme de centre d'aide Deskbolic. Nos clients utilisent cette infrastructure pour alimenter des bases de connaissances et des portails de support de haut niveau."
+    cta:
+      primary: "Créer votre centre d'aide"
+      secondary: "Voir la documentation"
+    footer:
+      copyright: "© %{year} Techbolic Solutions. Tous droits réservés."
+
+  help_center:
+    common:
+      home: "Accueil"
+      search: "Rechercher"
+      article: "Article"
+      articles: "Articles"
+      collections: "Collections"
+      contact_support: "Contacter le support"
+      submit_request: "Envoyer une demande"
+      show_more: "Afficher plus"
+      still_need_help: "Besoin d'aide ?"
+      start_live_chat: "Démarrer le chat"
+      yes: "Oui"
+      no: "Non"
+      privacy_policy: "Politique de confidentialité"
+
+    portal:
+      hero_badge: "✦ Base de connaissances mise à jour aujourd'hui"
+      hero_title: "Comment pouvons-nous vous aider aujourd'hui ?"
+      hero_subtitle: "Recherchez dans notre base de connaissances ou parcourez les catégories ci-dessous pour trouver rapidement des réponses et des guides de dépannage."
+      popular_articles: "Articles populaires"
+      need_more_help: "Besoin de plus d'aide ?"
+      contact_support_subtitle: "Réponse moyenne : 2 heures"
+      submit_request_desc: "Ouvrir un ticket pour des problèmes techniques"
+      articles_count:
+        one: "%{count} article"
+        other: "%{count} articles"
+
+    category:
+      all_categories: "Toutes les catégories"
+      browse_categories: "Parcourez notre centre d'aide par catégorie."
+      search_within: "Rechercher dans %{category}..."
+      support: "Support"
+      contact_us: "Contactez-nous"
+      contact_us_desc: "Besoin d'aide ? Contactez notre équipe."
+      other_categories: "Autres catégories"
+      still_need_help_desc: "Nos spécialistes du support sont disponibles 24h/24 et 7j/7 pour vous aider à résoudre vos problèmes."
+
+    search:
+      title: "Résultats de recherche"
+      title_with_query: "Résultats de recherche pour « %{query} » - %{portal}"
+      search_again: "Rechercher à nouveau..."
+      enter_search_term: "Saisissez un terme de recherche"
+      enter_search_term_desc: "Veuillez saisir quelque chose dans la zone de recherche ci-dessus pour trouver ce que vous cherchez."
+      no_results: "Aucun résultat trouvé pour « %{query} »"
+      no_results_desc: "Essayez de modifier votre recherche ou parcourez nos catégories."
+      browse_categories: "Parcourir les catégories"
+      showing_results: "Résultats pour <strong>%{query}</strong>"
+      articles_count: "Articles (%{count})"
+      in_category: "dans %{category}"
+      support_box_desc: "Si vous n'avez pas trouvé ce que vous cherchiez, notre équipe de support est là pour vous aider."
+
+    article:
+      updated_ago: "Mis à jour il y a %{time}"
+      min_read: "%{count} min de lecture"
+      previous_step: "Étape précédente"
+      next_step: "Étape suivante"
+      feedback_question: "Cet article vous a-t-il été utile ?"
+      related_articles: "Articles associés"
+      on_this_page: "SUR CETTE PAGE"
+      read_more_help: "Besoin de plus d'aide ?"
+      help_box_desc: "Nos experts du support sont disponibles 24h/24 et 7j/7 pour répondre à vos questions."
+
+    contact:
+      fields:
+        full_name:
+          label: "Nom complet"
+          placeholder: "Jean Dupont"
+        name:
+          label: "Nom complet"
+          placeholder: "Jean Dupont"
+        email:
+          label: "Adresse e-mail"
+          placeholder: "jean@example.com"
+        email_address:
+          label: "Adresse e-mail"
+          placeholder: "jean@example.com"
+        subject:
+          label: "Sujet"
+          placeholder: "Comment pouvons-nous vous aider ?"
+        category:
+          label: "Catégorie"
+          placeholder: "Veuillez sélectionner..."
+          options:
+            billing: "Facturation"
+            technical_support: "Support technique"
+            account: "Compte"
+            product: "Produit"
+            general: "Général"
+            other: "Autre"
+        description:
+          label: "Description"
+          placeholder: "Veuillez fournir autant de détails que possible..."
+        message:
+          label: "Description"
+          placeholder: "Veuillez fournir autant de détails que possible..."
+      new:
+        title: "Envoyer une demande"
+        select_placeholder: "Veuillez sélectionner..."
+        attachments_label: "Pièces jointes (facultatif)"
+        click_to_upload: "Cliquez pour téléverser"
+        drag_and_drop: "ou glissez-déposez des fichiers ici"
+        max_file_size: "Taille maximale du fichier : 10 Mo (PDF, PNG, JPG)"
+        selected_files: "Fichiers sélectionnés"
+        privacy_prefix: "En envoyant ce formulaire, vous acceptez notre"
+        privacy_suffix: "concernant le traitement des données."
+        error: "Une erreur s'est produite lors de l'envoi de votre demande : %{message}"
+      success:
+        notice: "Votre demande a bien été envoyée."
+        title: "Votre demande a été envoyée"
+        subtitle: "Notre équipe de support a reçu votre demande et vous répondra bientôt."
+        ticket_id: "ID DU TICKET"
+        expected_response: "RÉPONSE ATTENDUE"
+        response_time: "Généralement sous 24 heures"
+        email_notice: "Vous recevrez également un e-mail de confirmation avec les détails et les mises à jour."
+        track_request: "Suivre votre demande"
+        back_to_help_center: "Retour au centre d'aide"
+        while_you_wait: "Pendant ce temps..."
+
+    footer:
+      privacy: "Politique de confidentialité"
+      terms: "Conditions d'utilisation"
+      join: "Nous rejoindre"
