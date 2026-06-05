@@ -24,7 +24,7 @@
       p = @category.description
 
       .category-search data-controller="search"
-        input type="text" placeholder=(@current_portal.search_placeholder.presence || t("help_center.category.search_within", category: @category.name)) class="category-search-input" data-action="keyup->search#query" data-search-target="input"
+        input type="text" placeholder=(@current_portal.search_placeholder.presence || t("help_center.category.search_within", category: @category.name)) class="category-search-input" data-action="input->search#query keydown->search#handleKeydown" data-search-target="input"
         .search-dropdown.hidden data-search-target="results"
           .search-dropdown-label = t("help_center.common.articles").upcase
           .search-dropdown-results id="searchResults"

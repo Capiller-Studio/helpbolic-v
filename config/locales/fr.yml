@@ -25,6 +25,7 @@ fr:
       search: "Rechercher"
       article: "Article"
       articles: "Articles"
+      categories: "Catégories"
       collections: "Collections"
       contact_support: "Contacter le support"
       submit_request: "Envoyer une demande"
@@ -61,14 +62,23 @@ fr:
       title: "Résultats de recherche"
       title_with_query: "Résultats de recherche pour « %{query} » - %{portal}"
       search_again: "Rechercher à nouveau..."
+      clear_search: "Effacer la recherche"
       enter_search_term: "Saisissez un terme de recherche"
       enter_search_term_desc: "Veuillez saisir quelque chose dans la zone de recherche ci-dessus pour trouver ce que vous cherchez."
       no_results: "Aucun résultat trouvé pour « %{query} »"
       no_results_desc: "Essayez de modifier votre recherche ou parcourez nos catégories."
       browse_categories: "Parcourir les catégories"
       showing_results: "Résultats pour <strong>%{query}</strong>"
+      showing_results_count:
+        one: "%{count} résultat pour « %{query} »"
+        other: "%{count} résultats pour « %{query} »"
+      showing_all_results:
+        one: "%{count} résultat"
+        other: "%{count} résultats"
       articles_count: "Articles (%{count})"
       in_category: "dans %{category}"
+      load_more_results: "Charger plus de résultats"
+      show_less_results: "Afficher moins"
       support_box_desc: "Si vous n'avez pas trouvé ce que vous cherchiez, notre équipe de support est là pour vous aider."
 
     article:

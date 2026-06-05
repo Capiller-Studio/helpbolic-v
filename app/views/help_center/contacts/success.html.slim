@@ -40,4 +40,4 @@
                 h4 = article.title
                 p = strip_tags(article.content).to_s.truncate(60)
                 .wait-card-meta
-                  = t("help_center.article.min_read", count: article.configurations["estimated_read_time"] || "5")
+                  = t("help_center.article.min_read", count: article_read_time(article))

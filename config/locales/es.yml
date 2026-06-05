@@ -25,6 +25,7 @@ es:
       search: "Buscar"
       article: "Artículo"
       articles: "Artículos"
+      categories: "Categorías"
       collections: "Colecciones"
       contact_support: "Contactar soporte"
       submit_request: "Enviar solicitud"
@@ -61,14 +62,23 @@ es:
       title: "Resultados de búsqueda"
       title_with_query: "Resultados de búsqueda para \"%{query}\" - %{portal}"
       search_again: "Buscar de nuevo..."
+      clear_search: "Borrar búsqueda"
       enter_search_term: "Introduce un término de búsqueda"
       enter_search_term_desc: "Escribe algo en el cuadro de búsqueda de arriba para encontrar lo que buscas."
       no_results: "No se encontraron resultados para \"%{query}\""
       no_results_desc: "Intenta ajustar tu búsqueda o explora nuestras categorías."
       browse_categories: "Explorar categorías"
       showing_results: "Mostrando resultados para <strong>%{query}</strong>"
+      showing_results_count:
+        one: "Mostrando %{count} resultado para \"%{query}\""
+        other: "Mostrando %{count} resultados para \"%{query}\""
+      showing_all_results:
+        one: "Mostrando %{count} resultado"
+        other: "Mostrando %{count} resultados"
       articles_count: "Artículos (%{count})"
       in_category: "en %{category}"
+      load_more_results: "Cargar más resultados"
+      show_less_results: "Mostrar menos"
       support_box_desc: "Si no encontraste lo que buscabas, nuestro equipo de soporte está aquí para ayudarte."
 
     article:
