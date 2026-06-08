@@ -2,27 +2,16 @@
   = t("help_center.search.title_with_query", query: @query, portal: @current_portal.name)
 
 .search-results-page
-  .container
+  .search-results-container
     .search-results-header
-      .breadcrumb
-        = link_to t("help_center.common.home"), root_path
-        span.breadcrumb-separator ›
-        span.breadcrumb-current = t("help_center.search.title")
-      
-      h1 = t("help_center.search.title")
-      
       .search-form-container data-controller="search"
-        input.search-input-large type="text" value=@query placeholder=t("help_center.search.search_again") data-action="keyup->search#query" data-search-target="input"
+        input.search-input-large type="text" value=@query placeholder=t("help_center.search.search_again") data-action="input->search#query keydown->search#handleKeydown" data-search-target="input"
+        button.search-clear-button class=("hidden" if @query.blank?) type="button" aria-label=t("help_center.search.clear_search") data-search-target="clear" data-action="click->search#clear"
+          i data-lucide="x"
         .search-dropdown.hidden data-search-target="results"
 
     .search-results-body
-      - if @query.blank?
-        .search-empty-state
-          i data-lucide="search" class="empty-state-icon"
-          h2 = t("help_center.search.enter_search_term")
-          p = t("help_center.search.enter_search_term_desc")
-          
-      - elsif @articles.empty? && @categories.empty?
+      - if @articles.empty? && @categories.empty?
         .search-empty-state
           i data-lucide="search-x" class="empty-state-icon"
           h2 = t("help_center.search.no_results", query: @query)
@@ -30,43 +19,73 @@
           = link_to t("help_center.search.browse_categories"), root_path, class: "btn-secondary"
 
       - else
+        - articles_count = @articles_total_count
+        - categories_count = @categories.respond_to?(:total_count) ? @categories.total_count : @categories.size
+        - total_count = articles_count
         .search-results-stats
-          == t("help_center.search.showing_results", query: ERB::Util.html_escape(@query))
+          - if @query.present?
+            = t("help_center.search.showing_results_count", count: total_count, query: @query)
+          - else
+            = t("help_center.search.showing_all_results", count: total_count)
         
-        .search-results-grid
-          .search-main-column
-            - if @articles.any?
-              h3.search-section-title = t("help_center.search.articles_count", count: @pagy_articles.count)
-              .search-article-list
-                - @articles.with_highlights.each do |article, highlights|
-                  = link_to article_path(article), class: "search-result-card" do
-                    h4 = raw(highlights&.dig("translations.title") || article.title)
-                    - if highlights&.dig("translations.content")
-                      p = raw(highlights["translations.content"])
-                    - else
-                      p = strip_tags(article.content).to_s.truncate(150)
-                    .search-result-meta
-                      span.meta-badge = t("help_center.common.article")
-                      - if article.primary_category
-                        span.meta-category = t("help_center.search.in_category", category: article.primary_category.name)
-                      
-              .search-pagination
-                == pagy_nav(@pagy_articles)
+        .search-tabs
+          = link_to t("help_center.common.articles"), search_path(query: @query.presence, tab: "articles"), class: "search-tab #{'active' if @active_tab == 'articles'}"
+          = link_to t("help_center.common.categories"), search_path(query: @query.presence, tab: "categories"), class: "search-tab #{'active' if @active_tab == 'categories'}"
 
-          .search-sidebar-column
-            - if @categories.any?
-              h3.search-section-title = t("help_center.common.collections")
-              .search-category-list
-                - @categories.each do |cat|
-                  = link_to category_path(cat), class: "search-category-card" do
+        - if @active_tab == "articles"
+          - if @articles.any?
+            .search-article-list
+              - @articles.each do |article|
+                = link_to article_path(article), class: "search-result-card" do
+                  .search-result-card-content
+                    h4 = article.title
+                    p = strip_tags(article.content).to_s.truncate(150)
+                    .search-result-meta
+                      span.meta-read
+                        i data-lucide="clock"
+                        = t("help_center.article.min_read", count: article_read_time(article))
+                      span.meta-dot •
+                      span = t("help_center.article.updated_ago", time: time_ago_in_words(article.updated_at))
+                  - if article.primary_category
+                    - badge_tone = article.primary_category.name.to_s.downcase.include?("troubleshooting") ? "is-red" : nil
+                    span.search-result-badge class=badge_tone = article.primary_category.name
+            - if @articles_next_page || @articles_previous_page
+              .search-pagination
+                - if @articles_previous_page
+                  = link_to t("help_center.search.show_less_results"), search_path(query: @query.presence, tab: "articles", page: (@articles_previous_page == 1 ? nil : @articles_previous_page)), class: "search-show-less"
+                - if @articles_next_page
+                  = link_to t("help_center.search.load_more_results"), search_path(query: @query.presence, tab: "articles", page: @articles_next_page), class: "search-load-more"
+          - else
+            .search-empty-state
+              i data-lucide="search-x" class="empty-state-icon"
+              h2 = t("help_center.search.no_results", query: @query)
+              p = t("help_center.search.no_results_desc")
+        - else
+          - if @categories.any?
+            .search-category-list
+              - @categories.each do |cat|
+                = link_to category_path(cat), class: "search-category-card" do
+                  .search-category-main
                     .category-icon
                       i data-lucide=(cat.icon_key || "folder")
                     .category-content
                       h4 = cat.name
-                      p = strip_tags(cat.description.to_s).truncate(80)
-            
-            - if @current_portal.show_contact_form?
-              .search-help-box
-                h4 = t("help_center.common.still_need_help")
-                p = t("help_center.search.support_box_desc")
-                = link_to t("help_center.common.contact_support"), contact_path, class: "btn-primary w-full"
+                      p = strip_tags(cat.description.to_s).truncate(120)
+                  span.search-result-badge = t("help_center.portal.articles_count", count: (@category_article_counts[cat.id] || 0))
+          - else
+            .search-empty-state
+              i data-lucide="search-x" class="empty-state-icon"
+              h2 = t("help_center.search.no_results", query: @query)
+              p = t("help_center.search.no_results_desc")
+
+        - if @current_portal.show_contact_form?
+          .search-help-box
+            h4 = t("help_center.common.still_need_help")
+            p = t("help_center.search.support_box_desc")
+            .search-help-actions
+              = link_to contact_path, class: "search-help-primary" do
+                i data-lucide="mail"
+                = t("help_center.common.contact_support")
+              a.search-help-secondary href="#" onclick="if(window.DeskbolicWidget){window.DeskbolicWidget.open()}; return false;"
+                i data-lucide="message-square"
+                = t("help_center.common.start_live_chat")

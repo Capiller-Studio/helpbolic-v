@@ -7,7 +7,7 @@
         .search-wrapper
           svg.search-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          input.search-input type="text" placeholder=t("help_center.common.search") data-action="keyup->search#query" data-search-target="input"
+          input.search-input type="text" placeholder=t("help_center.common.search") data-action="input->search#query keydown->search#handleKeydown" data-search-target="input"
           .search-dropdown.hidden data-search-target="results"
 
       - if @category
@@ -45,9 +45,8 @@
               span.meta-separator •
           
           span.meta-date = t("help_center.article.updated_ago", time: time_ago_in_words(@article.updated_at))
-          - if @article.configurations["estimated_read_time"].present?
-            span.meta-separator •
-            span.meta-read-time = t("help_center.article.min_read", count: @article.configurations["estimated_read_time"])
+          span.meta-separator •
+          span.meta-read-time = t("help_center.article.min_read", count: article_read_time(@article))
 
       - if @article.banner_image.attached?
         = lazy_picture_tag @article.banner_image, img_class: "article-banner"

@@ -4,41 +4,58 @@ module HelpCenter
   class SearchesController < BaseController
     def index
       @query = params[:query].to_s.strip
-      
-      if @query.blank?
-        @pagy_articles, @articles = pagy(HelpCenter::Article.none)
-        @categories = []
-        return
+      @active_tab = params[:tab].to_s == "categories" ? "categories" : "articles"
+
+      articles_scope = current_portal
+        .articles
+        .published
+        .where(visibility: :everyone)
+        .order(Arel.sql("help_center_articles.position ASC NULLS LAST, help_center_articles.updated_at DESC"))
+        .includes(:translations, :primary_category)
+
+      categories_scope = current_portal
+        .categories
+        .active
+        .where(visibility: :everyone)
+        .order(Arel.sql("help_center_categories.position ASC NULLS LAST, help_center_categories.updated_at DESC"))
+        .includes(:translations)
+
+      if @query.present?
+        search_term = "%#{ActiveRecord::Base.sanitize_sql_like(@query)}%"
+        articles_scope = articles_scope
+          .joins(:translations)
+          .where(help_center_article_translations: { locale: I18n.locale.to_s })
+          .where(
+            "help_center_article_translations.title ILIKE :query OR help_center_article_translations.content ILIKE :query",
+            query: search_term
+          )
+          .distinct
+
+        categories_scope = categories_scope
+          .joins(:translations)
+          .where(help_center_category_translations: { locale: I18n.locale.to_s })
+          .where(
+            "help_center_category_translations.name ILIKE :query OR help_center_category_translations.description ILIKE :query",
+            query: search_term
+          )
+          .distinct
       end
       
-      # Search Articles
-      articles_search = HelpCenter::Article.search(
-        @query,
-        where: { 
-          portal_id: current_portal.id,
-          status: "published", 
-          visibility: "everyone"
-        },
-        fields: [{"translations.title^5" => :word_start}, {"translations.content" => :word_start}],
-        highlight: { tag: "<mark>", fields: {"translations.title" => {}, "translations.content" => { fragment_size: 150 }} },
-        page: params[:page] || 1,
-        per_page: 10
-      )
-      
-      @articles = articles_search
-      @pagy_articles = Pagy.new(count: articles_search.total_count, page: params[:page] || 1, items: 10)
-      
-      # Search Categories
-      @categories = HelpCenter::Category.search(
-        @query,
-        where: { 
-          portal_id: current_portal.id,
-          status: "active", 
-          visibility: "everyone"
-        },
-        fields: [{"translations.name^5" => :word_start}, {"translations.description" => :word_start}],
-        limit: 5
-      )
+      @articles_page = [params[:page].to_i, 1].max
+      @articles_per_page = 4
+      @articles_total_count = articles_scope.count
+      @articles_visible_count = @articles_page * @articles_per_page
+      @articles_next_page = @articles_page + 1 if @articles_total_count > @articles_visible_count
+      @articles_previous_page = @articles_page - 1 if @articles_page > 1
+      @articles = articles_scope.limit(@articles_visible_count)
+      @categories = categories_scope.limit(5)
+
+      @category_article_counts = HelpCenter::CategoryResource
+        .joins("INNER JOIN help_center_articles ON help_center_articles.id = help_center_category_resources.resource_id AND help_center_category_resources.resource_type = 'HelpCenter::Article'")
+        .where(category_id: @categories.map(&:id))
+        .where(help_center_articles: { status: HelpCenter::Article.statuses[:published], visibility: HelpCenter::Article.visibilities[:everyone] })
+        .group(:category_id)
+        .count
     end
 
     def suggestions
@@ -49,43 +66,30 @@ module HelpCenter
         return
       end
       
-      articles = HelpCenter::Article.search(
-        query,
-        where: { 
-          portal_id: current_portal.id,
-          status: "published", 
-          visibility: "everyone"
-        },
-        fields: [{"translations.title^5" => :word_start}, {"translations.content" => :word_start}],
-        limit: 5,
-        load: false
-      ).map do |article|
-        {
-          id: article.id,
-          title: article.translations.find { |t| t["locale"] == I18n.locale.to_s }&.dig("title") || article.title,
-          url: article_path(article.translations.find { |t| t["locale"] == I18n.locale.to_s }&.dig("slug") || article.id)
-        }
-      end
+      search_term = "%#{ActiveRecord::Base.sanitize_sql_like(query)}%"
+      articles = current_portal
+        .articles
+        .published
+        .where(visibility: :everyone)
+        .joins(:translations)
+        .where(help_center_article_translations: { locale: I18n.locale.to_s })
+        .where(
+          "help_center_article_translations.title ILIKE :query OR help_center_article_translations.content ILIKE :query",
+          query: search_term
+        )
+        .distinct
+        .order(Arel.sql("help_center_articles.position ASC NULLS LAST, help_center_articles.updated_at DESC"))
+        .limit(2)
+        .includes(:translations)
+        .map do |article|
+          {
+            id: article.id,
+            title: article.title,
+            url: article_path(article)
+          }
+        end
       
-      categories = HelpCenter::Category.search(
-        query,
-        where: { 
-          portal_id: current_portal.id,
-          status: "active", 
-          visibility: "everyone"
-        },
-        fields: [{"translations.name^5" => :word_start}, {"translations.description" => :word_start}],
-        limit: 3,
-        load: false
-      ).map do |category|
-        {
-          id: category.id,
-          name: category.translations.find { |t| t["locale"] == I18n.locale.to_s }&.dig("name") || category.name,
-          url: category_path(category.translations.find { |t| t["locale"] == I18n.locale.to_s }&.dig("slug") || category.id)
-        }
-      end
-      
-      render json: { articles: articles, categories: categories }
+      render json: { articles: articles, categories: [] }
     end
   end
 end

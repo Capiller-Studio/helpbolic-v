@@ -1,38 +1,42 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "results"]
+  static targets = ["input", "results", "clear"]
 
   connect() {
     this.debounceTimer = null
     this.selectedIndex = -1
+    this.hide = this.hide.bind(this)
     
-    // Add event listener for click outside
-    document.addEventListener("click", this.hide.bind(this))
+    document.addEventListener("click", this.hide)
+    this.updateClearButton()
   }
 
   disconnect() {
-    document.removeEventListener("click", this.hide.bind(this))
+    document.removeEventListener("click", this.hide)
   }
 
   query(event) {
-    // Keyboard navigation
-    if (["ArrowDown", "ArrowUp", "Enter"].includes(event.key)) {
-      event.preventDefault()
-      this.navigate(event.key)
-      return
-    }
-    
+    // Input event handles text changes; keyboard navigation is handled by handleKeydown.
     if (event.key === "Escape") {
       this.resultsTarget.classList.add("hidden")
       return
     }
 
-    // Normal search query debouncing
     clearTimeout(this.debounceTimer)
+    this.updateClearButton()
     this.debounceTimer = setTimeout(() => {
       this.fetchResults()
     }, 300)
+  }
+
+  handleKeydown(event) {
+    if (["ArrowDown", "ArrowUp", "Enter"].includes(event.key)) {
+      event.preventDefault()
+      this.navigate(event.key)
+    } else if (event.key === "Escape") {
+      this.resultsTarget.classList.add("hidden")
+    }
   }
 
   navigate(key) {
@@ -79,7 +83,7 @@ export default class extends Controller {
     }
 
     try {
-      const response = await fetch(`/search/suggestions?query=${encodeURIComponent(query)}`, {
+      const response = await fetch(`${this.suggestionsPath()}?query=${encodeURIComponent(query)}`, {
         headers: { "Accept": "application/json" }
       })
       
@@ -94,15 +98,18 @@ export default class extends Controller {
 
   renderResults(data) {
     this.selectedIndex = -1 // Reset selection
+    const query = this.inputTarget.value.trim()
+    const articles = (data.articles || []).slice(0, 2)
+    const categories = data.categories || []
     
-    if (data.articles.length === 0 && data.categories.length === 0) {
+    if (articles.length === 0 && categories.length === 0) {
       this.resultsTarget.innerHTML = `<div class="search-empty">No results found.</div>`
     } else {
       let html = ""
       
-      if (data.categories.length > 0) {
+      if (categories.length > 0) {
         html += `<div class="search-dropdown-label">COLLECTIONS</div>`
-        html += data.categories.map(cat => `
+        html += categories.map(cat => `
           <a href="${cat.url}" class="search-result-item">
             <svg class="search-result-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
@@ -112,9 +119,9 @@ export default class extends Controller {
         `).join("")
       }
       
-      if (data.articles.length > 0) {
+      if (articles.length > 0) {
         html += `<div class="search-dropdown-label">ARTICLES</div>`
-        html += data.articles.map(art => `
+        html += articles.map(art => `
           <a href="${art.url}" class="search-result-item">
             <svg class="search-result-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -124,7 +131,6 @@ export default class extends Controller {
         `).join("")
       }
       
-      const query = this.inputTarget.value.trim()
       html += `
         <div class="search-dropdown-footer">
           <a href="/search?query=${encodeURIComponent(query)}" class="search-view-all">View all results for "${query}" &rarr;</a>
@@ -142,5 +148,32 @@ export default class extends Controller {
     if (!this.element.contains(event.target)) {
       this.resultsTarget.classList.add("hidden")
     }
+  }
+
+  clear(event) {
+    event.preventDefault()
+
+    this.inputTarget.value = ""
+    this.resultsTarget.classList.add("hidden")
+    this.selectedIndex = -1
+    this.updateClearButton()
+
+    const url = new URL(window.location.href)
+    if (url.pathname.match(/\/search$/) && url.searchParams.has("query")) {
+      url.searchParams.delete("query")
+      url.searchParams.delete("page")
+      window.location.href = url.toString()
+    }
+  }
+
+  updateClearButton() {
+    if (!this.hasClearTarget) return
+
+    this.clearTarget.classList.toggle("hidden", this.inputTarget.value.trim().length === 0)
+  }
+
+  suggestionsPath() {
+    const locale = window.location.pathname.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)(?:\/|$)/)?.[1]
+    return locale ? `/${locale}/search/suggestions` : "/search/suggestions"
   }
 }

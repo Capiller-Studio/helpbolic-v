@@ -6,6 +6,7 @@ module HelpCenter
     helper HelpCenter::ApplicationHelper
     helper HelpCenter::MetaTagsHelper
     helper HelpCenter::ImageHelper
+    helper HelpCenter::ReadTimeHelper
     before_action :resolve_tenant!
     skip_around_action :switch_locale, raise: false
     around_action :switch_locale
