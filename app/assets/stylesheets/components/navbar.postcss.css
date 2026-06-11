@@ -38,6 +38,13 @@
 .brand-logo {
   height: 28px;
   width: auto;
+  display: block;
+}
+
+.navbar-logo picture {
+  display: flex;
+  align-items: center;
+  line-height: 0;
 }
 
 .navbar-right {

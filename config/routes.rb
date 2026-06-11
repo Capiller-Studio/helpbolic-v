@@ -17,7 +17,9 @@ Rails.application.routes.draw do
 
     scope module: :help_center do
       resources :categories, path: "collections", only: [:index, :show]
-      resources :articles, only: [:index, :show]
+      resources :articles, only: [:index, :show] do
+        resource :reaction, only: [:create], controller: "article_reactions"
+      end
       
       get "/search", to: "searches#index"
       get "/search/suggestions", to: "searches#suggestions"

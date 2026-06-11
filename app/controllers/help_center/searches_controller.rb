@@ -21,34 +21,52 @@ module HelpCenter
         .includes(:translations)
 
       if @query.present?
-        search_term = "%#{ActiveRecord::Base.sanitize_sql_like(@query)}%"
-        articles_scope = articles_scope
-          .joins(:translations)
-          .where(help_center_article_translations: { locale: I18n.locale.to_s })
-          .where(
-            "help_center_article_translations.title ILIKE :query OR help_center_article_translations.content ILIKE :query",
-            query: search_term
-          )
-          .distinct
+        @articles_page = [params[:page].to_i, 1].max
+        @articles_per_page = 4
+        @articles_visible_count = @articles_page * @articles_per_page
 
-        categories_scope = categories_scope
-          .joins(:translations)
-          .where(help_center_category_translations: { locale: I18n.locale.to_s })
-          .where(
-            "help_center_category_translations.name ILIKE :query OR help_center_category_translations.description ILIKE :query",
-            query: search_term
-          )
-          .distinct
+        articles_search = HelpCenter::Article.search(
+          @query,
+          where: {
+            portal_id: current_portal.id,
+            status: "published",
+            visibility: "everyone",
+            "translations.locale": I18n.locale.to_s
+          },
+          fields: ["translations.title^5", "translations.content"],
+          match: :word_start,
+          page: 1,
+          per_page: @articles_visible_count
+        )
+
+        categories_search = HelpCenter::Category.search(
+          @query,
+          where: {
+            portal_id: current_portal.id,
+            status: "active",
+            visibility: "everyone",
+            "translations.locale": I18n.locale.to_s
+          },
+          fields: ["translations.name^5", "translations.description"],
+          match: :word_start,
+          limit: 5
+        )
+
+        @articles_total_count = articles_search.total_count
+        @articles_next_page = @articles_page + 1 if @articles_total_count > @articles_visible_count
+        @articles_previous_page = @articles_page - 1 if @articles_page > 1
+        @articles = articles_search
+        @categories = categories_search
+      else
+        @articles_page = [params[:page].to_i, 1].max
+        @articles_per_page = 4
+        @articles_total_count = articles_scope.count
+        @articles_visible_count = @articles_page * @articles_per_page
+        @articles_next_page = @articles_page + 1 if @articles_total_count > @articles_visible_count
+        @articles_previous_page = @articles_page - 1 if @articles_page > 1
+        @articles = articles_scope.limit(@articles_visible_count)
+        @categories = categories_scope.limit(5)
       end
-      
-      @articles_page = [params[:page].to_i, 1].max
-      @articles_per_page = 4
-      @articles_total_count = articles_scope.count
-      @articles_visible_count = @articles_page * @articles_per_page
-      @articles_next_page = @articles_page + 1 if @articles_total_count > @articles_visible_count
-      @articles_previous_page = @articles_page - 1 if @articles_page > 1
-      @articles = articles_scope.limit(@articles_visible_count)
-      @categories = categories_scope.limit(5)
 
       @category_article_counts = HelpCenter::CategoryResource
         .joins("INNER JOIN help_center_articles ON help_center_articles.id = help_center_category_resources.resource_id AND help_center_category_resources.resource_type = 'HelpCenter::Article'")
@@ -65,31 +83,62 @@ module HelpCenter
         render json: { articles: [], categories: [] }
         return
       end
-      
-      search_term = "%#{ActiveRecord::Base.sanitize_sql_like(query)}%"
-      articles = current_portal
-        .articles
-        .published
-        .where(visibility: :everyone)
-        .joins(:translations)
-        .where(help_center_article_translations: { locale: I18n.locale.to_s })
-        .where(
-          "help_center_article_translations.title ILIKE :query OR help_center_article_translations.content ILIKE :query",
-          query: search_term
-        )
-        .distinct
-        .order(Arel.sql("help_center_articles.position ASC NULLS LAST, help_center_articles.updated_at DESC"))
-        .limit(2)
-        .includes(:translations)
-        .map do |article|
-          {
-            id: article.id,
-            title: article.title,
-            url: article_path(article)
-          }
-        end
-      
-      render json: { articles: articles, categories: [] }
+
+      articles = HelpCenter::Article.search(
+        query,
+        where: {
+          portal_id: current_portal.id,
+          status: "published",
+          visibility: "everyone",
+          "translations.locale": I18n.locale.to_s
+        },
+        fields: ["translations.title^5", "translations.content"],
+        match: :word_start,
+        limit: 2
+      ).map do |article|
+        translation = localized_translation(article.translations)
+
+        {
+          id: article.id,
+          title: translated_value(translation, :title) || article.title,
+          url: article_path(translated_value(translation, :slug) || article)
+        }
+      end
+
+      categories = HelpCenter::Category.search(
+        query,
+        where: {
+          portal_id: current_portal.id,
+          status: "active",
+          visibility: "everyone",
+          "translations.locale": I18n.locale.to_s
+        },
+        fields: ["translations.name^5", "translations.description"],
+        match: :word_start,
+        limit: 3
+      ).map do |category|
+        translation = localized_translation(category.translations)
+
+        {
+          id: category.id,
+          name: translated_value(translation, :name) || category.name,
+          url: category_path(translated_value(translation, :slug) || category)
+        }
+      end
+
+      render json: { articles: articles, categories: categories }
+    end
+
+    private
+
+    def localized_translation(translations)
+      translations.find { |translation| translated_value(translation, :locale).to_s == I18n.locale.to_s }
+    end
+
+    def translated_value(translation, attribute)
+      return if translation.blank?
+
+      translation.respond_to?(attribute) ? translation.public_send(attribute) : translation[attribute.to_s]
     end
   end
 end

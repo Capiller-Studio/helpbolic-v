@@ -87,6 +87,8 @@ fr:
       previous_step: "Étape précédente"
       next_step: "Étape suivante"
       feedback_question: "Cet article vous a-t-il été utile ?"
+      feedback_thanks: "Merci pour votre retour."
+      feedback_error: "Nous n'avons pas pu enregistrer votre retour. Veuillez réessayer."
       related_articles: "Articles associés"
       on_this_page: "SUR CETTE PAGE"
       read_more_help: "Besoin de plus d'aide ?"

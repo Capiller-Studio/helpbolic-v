@@ -27,6 +27,8 @@ module HelpCenter
         end
       end
       
+      @article_reaction = HelpCenter::ArticleReaction.find_by(article: @article, ip_address: request.remote_ip)
+
       # Increment view count in a background job or silently
       HelpCenter::Article.increment_counter(:views_count, @article.id, touch: false)
     end
