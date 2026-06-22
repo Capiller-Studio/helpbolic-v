@@ -87,6 +87,8 @@ es:
       previous_step: "Paso anterior"
       next_step: "Siguiente paso"
       feedback_question: "¿Te resultó útil este artículo?"
+      feedback_thanks: "Gracias por tus comentarios."
+      feedback_error: "No pudimos guardar tus comentarios. Inténtalo de nuevo."
       related_articles: "Artículos relacionados"
       on_this_page: "EN ESTA PÁGINA"
       read_more_help: "¿Necesitas más ayuda?"

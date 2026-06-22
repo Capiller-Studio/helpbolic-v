@@ -1,15 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["list"]
+  static targets = ["content", "list"]
 
   connect() {
     this.buildTOC()
   }
 
   buildTOC() {
-    // Find all h2 and h3 elements within the article content
-    const headings = Array.from(this.element.querySelectorAll("h2, h3"))
+    if (!this.hasContentTarget || !this.hasListTarget) return
+
+    const headings = Array.from(this.contentTarget.querySelectorAll("h2, h3"))
     
     if (headings.length === 0) return
 

@@ -3,7 +3,7 @@
 .search-results-page {
   min-height: calc(100vh - var(--navbar-height));
   padding: 2.75rem 1rem 4rem;
-  background: #F6F7FA;
+  background-color: var(--color-background);
 }
 
 .search-results-container {
@@ -14,6 +14,13 @@
 .search-results-header {
   margin-bottom: 1.5rem;
   text-align: center;
+}
+
+.search-results-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 2rem;
 }
 
 .search-form-container {
@@ -29,15 +36,15 @@
   font-size: 1rem;
   color: #20242A;
   background-color: $white;
-  border: 1px solid #EEF0F5;
-  border-radius: 999px;
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .search-input-large:focus {
   outline: none;
-  border-color: rgba(119, 141, 255, 0.45);
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 4px rgba(119, 141, 255, 0.12), 0 10px 28px rgba(15, 23, 42, 0.05);
 }
 
@@ -81,7 +88,8 @@
   margin: 0 0 1.75rem;
   text-align: center;
   font-size: 1rem;
-  color: #4B5563;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .search-tabs {
@@ -104,7 +112,7 @@
 }
 
 .search-tab.active {
-  color: $btn-login;
+  color: var(--color-primary);
   font-weight: 700;
 }
 
@@ -115,7 +123,7 @@
   right: 0;
   bottom: -1px;
   height: 2px;
-  background: $btn-login;
+  color: var(--color-primary);
 }
 
 .search-article-list,
@@ -134,8 +142,8 @@
   min-height: 156px;
   padding: 1.75rem 2rem;
   background: $white;
-  border: 1px solid #EAECF1;
-  border-radius: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   box-shadow: 0 14px 32px rgba(15, 23, 42, 0.04);
   text-decoration: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
@@ -143,8 +151,8 @@
 
 .search-result-card:hover,
 .search-category-card:hover {
-  border-color: rgba(119, 141, 255, 0.35);
-  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.08);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
@@ -165,7 +173,7 @@
 .search-result-card h4,
 .search-category-card h4 {
   margin: 0 0 1rem;
-  color: #20242A;
+  color: var(--color-primary);
   font-size: 0.98rem;
   font-weight: 600;
   line-height: 1.45;
@@ -175,7 +183,7 @@
 .search-category-card p {
   max-width: 760px;
   margin: 0 0 1.25rem;
-  color: #4B5563;
+  color: var(--color-text-muted);
   font-size: 0.96rem;
   line-height: 1.6;
 }
@@ -263,7 +271,7 @@
 }
 
 .search-load-more {
-  color: $btn-login;
+  color: var(--color-primary);
   background: #F3F5FF;
   border: 1px solid #D9E0FF;
 }
@@ -281,7 +289,8 @@
 .search-load-more:hover,
 .search-show-less:hover {
   background: #EEF0FF;
-  border-color: rgba(119, 141, 255, 0.5);
+  border-color: var(--color-primary);
+
   transform: translateY(-1px);
 }
 
@@ -300,7 +309,7 @@
 
 .search-help-box h4 {
   margin: 0 0 1.5rem;
-  color: #20242A;
+  color: var(--color-text);
   font-size: 1.45rem;
   font-weight: 700;
 }
@@ -308,7 +317,7 @@
 .search-help-box p {
   max-width: 440px;
   margin: 0 0 3rem;
-  color: #3F4654;
+  color: var(--color-text-muted);
   font-size: 1rem;
   line-height: 1.55;
 }
@@ -336,12 +345,12 @@
 
 .search-help-primary {
   color: $white;
-  background: $btn-login;
-  border: 1px solid $btn-login;
+  border-color: var(--color-primary);
+  border: 1px solid var(--color-border);
 }
 
 .search-help-secondary {
-  color: $btn-login;
+  color: var(--color-primary);
   background: #F8F9FF;
   border: 1px solid #D9E0FF;
 }
