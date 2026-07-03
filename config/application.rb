@@ -13,7 +13,7 @@ module Helpbolic
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Multi-language configuration
-    config.i18n.available_locales = %i[en fr de es ar]
+    config.i18n.available_locales = Core::SUPPORTED_LOCALES
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
 
