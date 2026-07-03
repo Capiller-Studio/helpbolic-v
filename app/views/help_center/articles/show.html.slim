@@ -13,13 +13,22 @@
       - if @category
         nav.sidebar-nav
           - @category.portal.categories.where(visibility: :everyone).order(:position).each do |cat|
-            a.sidebar-nav-item class=("active" if cat.id == @category.id) href=category_path(cat)
-              span.nav-icon
-                - if cat.image.attached?
-                  = lazy_picture_tag cat.image, img_class: "nav-icon-img"
-                - else
-                  i data-lucide=(cat.icon_key || "folder") class="nav-icon-svg"
-              span.nav-text = cat.name
+            .sidebar-nav-group
+              a.sidebar-nav-item class=("active" if cat.id == @category.id) href=category_path(cat)
+                span.nav-icon
+                  - if cat.image.attached?
+                    = lazy_picture_tag cat.image, img_class: "nav-icon-img"
+                  - else
+                    i data-lucide=(cat.icon_key || "folder") class="nav-icon-svg"
+                span.nav-text = cat.name
+                - if cat.api_reference?
+                  span.nav-badge.api-badge API
+              
+              - if cat.articles.published.where(visibility: :everyone).any?
+                .sidebar-articles-list
+                  - cat.articles.published.where(visibility: :everyone).order(:position, :id).each do |art|
+                    a.sidebar-article-link class=("active" if @article && art.id == @article.id) href=article_path(art)
+                      = art.title
 
     /! Main Content
     main.article-main
@@ -51,70 +60,73 @@
       - if @article.banner_image.attached?
         = lazy_picture_tag @article.banner_image, img_class: "article-banner"
 
-      .article-content data-toc-target="content"
-        = raw @article.content
+      - if @article.api_endpoint?
+        = render "api_endpoint", article: @article
+      - else
+        .article-content data-toc-target="content"
+          = raw @article.content
 
-      /! Guide Mode Pagination
-      - if @category&.guide_mode? && (@prev_article || @next_article)
-        .guide-pagination
-          - current_index = @category.articles.published.where(visibility: :everyone).order(:position).pluck(:id).index(@article.id) || 0
-          - total_articles = @category.articles.published.where(visibility: :everyone).count
-          - progress_percentage = total_articles > 1 ? ((current_index) / (total_articles - 1).to_f * 100).round : 100
-          
-          .guide-progress-bar
-            .guide-progress-fill style="width: #{progress_percentage}%;"
-          
-          .guide-buttons
-            - if @prev_article
-              a.guide-btn.guide-prev href=article_path(@prev_article)
-                svg.guide-arrow xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                  path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
-                .guide-text
-                  span.guide-label = t("help_center.article.previous_step")
-                  span.guide-title = @prev_article.title
-            - else
-              div
-              
-            - if @next_article
-              a.guide-btn.guide-next href=article_path(@next_article)
-                .guide-text
-                  span.guide-label = t("help_center.article.next_step")
-                  span.guide-title = @next_article.title
-                svg.guide-arrow xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                  path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
-      
-      /! Feedback Section
-      .article-feedback id="article-feedback"
-        p.feedback-question = t("help_center.article.feedback_question")
-        .feedback-buttons
-          = form_with url: article_reaction_path(@article), method: :post, local: true, class: "feedback-form" do |f|
-            = f.hidden_field :reaction_type, value: "happy", name: "article_reaction[reaction_type]"
-            button.btn-feedback class=("active" if @article_reaction&.happy?) type="submit"
-              svg.feedback-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-              = t("help_center.common.yes")
-          = form_with url: article_reaction_path(@article), method: :post, local: true, class: "feedback-form" do |f|
-            = f.hidden_field :reaction_type, value: "sad", name: "article_reaction[reaction_type]"
-            button.btn-feedback class=("active" if @article_reaction&.sad?) type="submit"
-              svg.feedback-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
-              = t("help_center.common.no")
-        - if @article_reaction
-          p.feedback-thanks = t("help_center.article.feedback_thanks")
+        /! Guide Mode Pagination
+        - if @category&.guide_mode? && (@prev_article || @next_article)
+          .guide-pagination
+            - current_index = @category.articles.published.where(visibility: :everyone).order(:position).pluck(:id).index(@article.id) || 0
+            - total_articles = @category.articles.published.where(visibility: :everyone).count
+            - progress_percentage = total_articles > 1 ? ((current_index) / (total_articles - 1).to_f * 100).round : 100
+            
+            .guide-progress-bar
+              .guide-progress-fill style="width: #{progress_percentage}%;"
+            
+            .guide-buttons
+              - if @prev_article
+                a.guide-btn.guide-prev href=article_path(@prev_article)
+                  svg.guide-arrow xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+                  .guide-text
+                    span.guide-label = t("help_center.article.previous_step")
+                    span.guide-title = @prev_article.title
+              - else
+                div
+                
+              - if @next_article
+                a.guide-btn.guide-next href=article_path(@next_article)
+                  .guide-text
+                    span.guide-label = t("help_center.article.next_step")
+                    span.guide-title = @next_article.title
+                  svg.guide-arrow xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+        
+        /! Feedback Section
+        .article-feedback id="article-feedback"
+          p.feedback-question = t("help_center.article.feedback_question")
+          .feedback-buttons
+            = form_with url: article_reaction_path(@article), method: :post, local: true, class: "feedback-form" do |f|
+              = f.hidden_field :reaction_type, value: "happy", name: "article_reaction[reaction_type]"
+              button.btn-feedback class=("active" if @article_reaction&.happy?) type="submit"
+                svg.feedback-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                = t("help_center.common.yes")
+            = form_with url: article_reaction_path(@article), method: :post, local: true, class: "feedback-form" do |f|
+              = f.hidden_field :reaction_type, value: "sad", name: "article_reaction[reaction_type]"
+              button.btn-feedback class=("active" if @article_reaction&.sad?) type="submit"
+                svg.feedback-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
+                = t("help_center.common.no")
+          - if @article_reaction
+            p.feedback-thanks = t("help_center.article.feedback_thanks")
 
-      /! Related Resources
-      - if @article.related_articles.any?
-        .article-related-resources
-          h3 = t("help_center.article.related_articles")
-          .related-resources-list
-            - @article.related_articles.each do |related_article|
-              = link_to article_path(related_article, locale: I18n.locale), class: "related-resource-card" do
-                .related-icon
-                  svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                    path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                .related-content
-                  h4 = related_article.title
-                  p = strip_tags(related_article.content).to_s.truncate(80)
+        /! Related Resources
+        - if @article.related_articles.any?
+          .article-related-resources
+            h3 = t("help_center.article.related_articles")
+            .related-resources-list
+              - @article.related_articles.each do |related_article|
+                = link_to article_path(related_article, locale: I18n.locale), class: "related-resource-card" do
+                  .related-icon
+                    svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                      path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  .related-content
+                    h4 = related_article.title
+                    p = strip_tags(related_article.content).to_s.truncate(80)
 
     /! Table of Contents (Right Sidebar)
     - if @article.configurations["show_table_of_contents"]

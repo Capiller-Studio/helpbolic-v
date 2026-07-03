@@ -1,0 +1,43 @@
+.api-endpoint-container
+  .api-endpoint-header
+    .method-badge class="method-#{@article.configurations['api_method']&.downcase}"
+      = @article.configurations['api_method']
+    h2.api-path = @article.configurations['api_endpoint']
+  
+  .api-endpoint-description.article-content
+    = raw @article.content
+
+  .api-endpoint-grid
+    .api-endpoint-main
+      - if @article.configurations['api_parameters'].present?
+        .api-section
+          h3 = t("help_center.article.api.parameters", default: "Parameters")
+          table.api-parameters-table
+            thead
+              tr
+                th = t("help_center.article.api.name", default: "Name")
+                th = t("help_center.article.api.type", default: "Type")
+                th = t("help_center.article.api.description", default: "Description")
+            tbody
+              - @article.configurations['api_parameters'].each do |param|
+                tr
+                  td 
+                    code.param-name = param['name']
+                    - if param['required']
+                      span.required-badge required
+                  td = param['type']
+                  td = param['description']
+
+    .api-endpoint-sidebar
+      - if @article.configurations['api_responses'].present?
+        .api-section.responses-section
+          h3 = t("help_center.article.api.responses", default: "Responses")
+          - @article.configurations['api_responses'].each do |response|
+            .api-response
+              .response-header
+                span.status-badge class="status-#{response['status'].to_s.start_with?('2') ? 'success' : 'error'}"
+                  = response['status']
+                span.response-description = response['description']
+              .response-body
+                pre
+                  code.language-json = response['body']

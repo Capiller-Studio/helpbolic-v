@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   match "/422", to: "errors#invalid_resource", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
 
+  # Internal API (e.g. for domain checking)
+  namespace :internal do
+    get "/domain_check", to: "domain_checks#show"
+  end
+
   # Base Application Domain Route
   constraints(host: /^(localhost|helpbolic\.com|helpbolic\.localhost)$/) do
     root to: "marketing#index", as: :marketing_root
