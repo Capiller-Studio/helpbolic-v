@@ -2,62 +2,64 @@
   .container.contact-container
     .contact-card
       .contact-header
-        h1.contact-title = t("help_center.contact.new.title")
+        h1.contact-title = @contact_form.title.presence || t("help_center.contact.new.title")
+        - if @contact_form.subtitle.present?
+          p.contact-subtitle = @contact_form.subtitle
       
       - if flash[:alert]
         .alert.alert-error = flash[:alert]
 
-      = form_with url: contact_path, method: :post, local: true, html: { multipart: true }, class: "contact-form" do |f|
-        .form-grid
-          - @custom_fields.each do |field|
-            - field_translation = field.translations.find_by(locale: I18n.locale) || field.translations.find_by(locale: "en")
-            - field_i18n_key = field.key.to_s.parameterize(separator: "_")
-            - label_text = t("help_center.contact.fields.#{field_i18n_key}.label", default: field_translation&.label || field.key.humanize)
-            - width_class = field.configurations["width"] == "half" ? "col-half" : "col-full"
-            - placeholder_text = t("help_center.contact.fields.#{field_i18n_key}.placeholder", default: field.configurations["placeholder"].presence || field_translation&.try(:placeholder).presence || label_text)
-            
-            .form-group class=width_class
-              label.form-label for="contact_#{field.key}"
-                = label_text
-                - if field.required?
-                  span.required-asterisk *
+      - unless @contact_form_configured
+        .alert.alert-error = @contact_form_unavailable_message
+      - else
+        = form_with url: contact_path, method: :post, local: true, html: { multipart: true }, class: "contact-form" do |f|
+          .form-grid
+            - @custom_fields.each do |field|
+              - field_translation = field.translations.find_by(locale: I18n.locale) || field.translations.find_by(locale: "en")
+              - field_i18n_key = field.key.to_s.parameterize(separator: "_")
+              - label_text = t("help_center.contact.fields.#{field_i18n_key}.label", default: field_translation&.label || field.key.humanize)
+              - width_class = field.configurations["width"] == "half" ? "col-half" : "col-full"
+              - placeholder_text = t("help_center.contact.fields.#{field_i18n_key}.placeholder", default: field.configurations["placeholder"].presence || field_translation&.try(:placeholder).presence || label_text)
               
-              - case field.field_type.to_sym
-              - when :text
-                = f.text_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", placeholder: placeholder_text, required: field.required?
-              - when :email
-                = f.email_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", placeholder: placeholder_text, required: field.required?
-              - when :textarea
-                = f.text_area "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", placeholder: placeholder_text, rows: 6, required: field.required?
-              - when :select
-                - options = field_translation&.options || []
-                - options_array = options.map { |o| [t("help_center.contact.fields.#{field_i18n_key}.options.#{o["value"].to_s.parameterize(separator: "_")}", default: o["label"]), o["value"]] }
-                = f.select "contact[#{field.key}]", options_array, { include_blank: t("help_center.contact.new.select_placeholder") }, id: "contact_#{field.key}", class: "form-select", required: field.required?
-              - else
-                = f.text_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", required: field.required?
+              .form-group class=width_class
+                label.form-label for="contact_#{field.key}"
+                  = label_text
+                  - if field.required?
+                    span.required-asterisk *
 
-        .form-group.col-full
-          label.form-label for="attachments" = t("help_center.contact.new.attachments_label")
-          .upload-dropzone data-controller="upload"
-            = f.file_field :attachments, multiple: true, name: "attachments[]", class: "form-file", id: "attachments", data: { upload_target: "input", action: "change->upload#update" }
-            .upload-empty data-upload-target="empty"
-              svg.upload-icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16.5 16.5h.75a4.25 4.25 0 0 0 .45-8.48 6 6 0 0 0-11.4 1.8A4.25 4.25 0 0 0 6.75 16.5h.75"
-                path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 12.25v7"
-                path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m8.75 15.5 3.25-3.25 3.25 3.25"
-              p.upload-label
-                span = t("help_center.contact.new.click_to_upload")
-                = " #{t("help_center.contact.new.drag_and_drop")}"
-              p.form-help = t("help_center.contact.new.max_file_size")
-            .upload-summary.hidden data-upload-target="summary"
-              p.upload-label = t("help_center.contact.new.selected_files")
-              ul.upload-file-list data-upload-target="list"
+                - case field.field_type.to_sym
+                - when :text
+                  = f.text_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", placeholder: placeholder_text, required: field.required?
+                - when :email
+                  = f.email_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", placeholder: placeholder_text, required: field.required?
+                - when :textarea
+                  = f.text_area "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", placeholder: placeholder_text, rows: 6, required: field.required?
+                - when :select
+                  - options = field_translation&.options || []
+                  - options_array = options.map { |o| [t("help_center.contact.fields.#{field_i18n_key}.options.#{o["value"].to_s.parameterize(separator: "_")}", default: o["label"]), o["value"]] }
+                  = f.select "contact[#{field.key}]", options_array, { include_blank: t("help_center.contact.new.select_placeholder") }, id: "contact_#{field.key}", class: "form-select", required: field.required?
+                - else
+                  = f.text_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", required: field.required?
 
-        .form-actions
-          = f.submit t("help_center.common.submit_request"), class: "contact-submit btn-primary w-full"
-          p.contact-privacy
-            = t("help_center.contact.new.privacy_prefix")
-            = " "
-            span.contact-privacy-link = t("help_center.common.privacy_policy")
-            = " "
-            = t("help_center.contact.new.privacy_suffix")
+          .form-group.col-full
+            label.form-label for="attachments" = t("help_center.contact.new.attachments_label")
+            .upload-dropzone data-controller="upload"
+              = f.file_field :attachments, multiple: true, accept: ".pdf,.png,.jpg,.jpeg", name: "attachments[]", class: "form-file", id: "attachments", data: { upload_target: "input", action: "change->upload#update" }
+              .upload-empty data-upload-target="empty"
+                = image_tag "attachments.svg", class: "upload-icon", alt: "", aria: { hidden: "true" }
+                p.upload-label
+                  span = t("help_center.contact.new.click_to_upload")
+                  = " #{t("help_center.contact.new.drag_and_drop")}"
+                p.form-help = t("help_center.contact.new.max_file_size")
+              .upload-summary.hidden data-upload-target="summary"
+                p.upload-label = t("help_center.contact.new.selected_files")
+                ul.upload-file-list data-upload-target="list"
+
+          .form-actions
+            = f.submit t("help_center.common.submit_request"), class: "contact-submit btn-primary w-full"
+            p.contact-privacy
+              = t("help_center.contact.new.privacy_prefix")
+              = " "
+              span.contact-privacy-link = t("help_center.common.privacy_policy")
+              = " "
+              = t("help_center.contact.new.privacy_suffix")
