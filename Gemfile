@@ -9,6 +9,8 @@ gem "propshaft"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "bootsnap", require: false
+gem "jbuilder"
+gem "dotenv-rails"
 
 # Asset handling
 gem "jsbundling-rails"
@@ -18,7 +20,6 @@ gem "stimulus-rails"
 gem "slim-rails"
 
 group :development, :test do
-  gem 'dotenv-rails'
   gem 'pry'
   gem 'pry-rails'
   gem 'awesome_print'
