@@ -9,33 +9,33 @@ nav.navbar data-controller="navbar"
       span = @current_portal.name
 
   .navbar-right.hidden-mobile
+    - @current_portal.categories.active.show_in_navbar.order(position: :asc).includes(:translations).each do |cat|
+      = link_to cat.name, category_path(cat), class: "nav-link"
+
+    - if @current_portal.show_contact_form?
+      = link_to t("help_center.common.submit_request"), contact_path, class: "nav-link"
+
     - if @current_portal.locales.many?
       .locale-selector
         select data-action="change->locale#switch" data-controller="locale"
           - @current_portal.locales.each do |locale|
             - target_url = url_for(request.params.merge(locale: (locale == @current_portal.default_locale.to_s ? nil : locale), only_path: true))
             option value=target_url selected=(locale == I18n.locale.to_s) = t("locales.#{locale}", default: locale.upcase)
-            
-    - @current_portal.categories.active.show_in_navbar.order(position: :asc).includes(:translations).each do |cat|
-      = link_to cat.name, category_path(cat), class: "nav-link"
-            
-    - if @current_portal.show_contact_form?
-      = link_to t("help_center.common.submit_request"), contact_path, class: "nav-link"
 
   .navbar-mobile-toggle data-action="click->navbar#toggle"
     svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
       path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"
 
   .navbar-mobile-menu.hidden data-navbar-target="menu"
+    - @current_portal.categories.active.show_in_navbar.order(position: :asc).includes(:translations).each do |cat|
+      = link_to cat.name, category_path(cat), class: "mobile-nav-link"
+
+    - if @current_portal.show_contact_form?
+      = link_to t("help_center.common.submit_request"), contact_path, class: "mobile-nav-link text-primary"
+
     - if @current_portal.locales.many?
       .locale-selector.mobile-locale
         select data-action="change->locale#switch" data-controller="locale"
           - @current_portal.locales.each do |locale|
             - target_url = url_for(request.params.merge(locale: (locale == @current_portal.default_locale.to_s ? nil : locale), only_path: true))
             option value=target_url selected=(locale == I18n.locale.to_s) = t("locales.#{locale}", default: locale.upcase)
-    
-    - @current_portal.categories.active.show_in_navbar.order(position: :asc).includes(:translations).each do |cat|
-      = link_to cat.name, category_path(cat), class: "mobile-nav-link"
-      
-    - if @current_portal.show_contact_form?
-      = link_to t("help_center.common.submit_request"), contact_path, class: "mobile-nav-link text-primary"

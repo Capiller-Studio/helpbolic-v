@@ -16,9 +16,30 @@ module HelpCenter
       )
       reaction.save!
 
-      redirect_to article_path(@article, anchor: "article-feedback"), notice: t("help_center.article.feedback_thanks")
+      if request.format.turbo_stream?
+        render turbo_stream: turbo_stream.replace(
+          "article-feedback",
+          partial: "help_center/articles/feedback",
+          locals: { article: @article, article_reaction: reaction }
+        )
+      else
+        redirect_to article_path(@article, anchor: "article-feedback"), notice: t("help_center.article.feedback_thanks")
+      end
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique, ArgumentError
-      redirect_to article_path(@article, anchor: "article-feedback"), alert: t("help_center.article.feedback_error")
+      if request.format.turbo_stream?
+        existing_reaction = HelpCenter::ArticleReaction.find_by(article: @article, ip_address: request.remote_ip)
+        render turbo_stream: turbo_stream.replace(
+          "article-feedback",
+          partial: "help_center/articles/feedback",
+          locals: {
+            article: @article,
+            article_reaction: existing_reaction,
+            feedback_message: t("help_center.article.feedback_error")
+          }
+        ), status: :unprocessable_entity
+      else
+        redirect_to article_path(@article, anchor: "article-feedback"), alert: t("help_center.article.feedback_error")
+      end
     end
 
     private

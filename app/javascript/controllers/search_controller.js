@@ -107,17 +107,17 @@ export default class extends Controller {
     } else {
       let html = ""
       
-      if (categories.length > 0) {
-        html += `<div class="search-dropdown-label">COLLECTIONS</div>`
-        html += categories.map(cat => `
-          <a href="${cat.url}" class="search-result-item">
-            <svg class="search-result-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-            </svg>
-            <div class="search-result-title">${cat.name}</div>
-          </a>
-        `).join("")
-      }
+      // // if (categories.length > 0) {
+      //   html += `<div class="search-dropdown-label">COLLECTIONS</div>`
+      //   html += categories.map(cat => `
+      //     <a href="${cat.url}" class="search-result-item">
+      //       <svg class="search-result-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      //         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+      //       </svg>
+      //       <div class="search-result-title">${cat.name}</div>
+      //     </a>
+      //   `).join("")
+      // }
       
       if (articles.length > 0) {
         html += `<div class="search-dropdown-label">ARTICLES</div>`

@@ -1,16 +1,11 @@
 .marketing-page
   header.marketing-header
     .marketing-logo-wrapper
-      .marketing-logo-icon
-        svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-          polyline points="3.27 6.96 12 12.01 20.73 6.96"
-          line x1="12" y1="22.08" x2="12" y2="12"
-      span.marketing-brand = t("marketing.brand")
+      = image_tag "logo.svg", alt: t("marketing.brand"), class: "marketing-logo"
     nav.marketing-nav
-      a href="#" = t("marketing.nav.features")
-      a href="#" = t("marketing.nav.pricing")
-      a href="#" = t("marketing.nav.docs")
+      a href="http://deskbolic.localhost:3000" = t("marketing.nav.features")
+      a href="http://deskbolic.localhost:3000" = t("marketing.nav.pricing")
+      a href="http://deskbolic.localhost:3000" = t("marketing.nav.docs")
     .marketing-actions
       a.marketing-login href="http://deskbolic.localhost:3000/login" = t("marketing.nav.login")
       a.marketing-signup href="http://deskbolic.localhost:3000/signup" = t("marketing.nav.signup")
@@ -37,7 +32,7 @@
             line x1="5" y1="12" x2="19" y2="12"
             polyline points="12 5 19 12 12 19"
         
-        a.btn-secondary-marketing href="#"
+        a.btn-secondary-marketing href="http://deskbolic.localhost:3000"
           = t("marketing.cta.secondary")
 
   footer.marketing-footer

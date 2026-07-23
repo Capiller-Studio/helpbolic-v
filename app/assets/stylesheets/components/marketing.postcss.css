@@ -20,26 +20,10 @@
   gap: 0.5rem;
 }
 
-.marketing-logo-icon {
-  width: 2rem;
-  height: 2rem;
-  background-color: #4f46e5;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-}
-
-.marketing-logo-icon svg {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.marketing-brand {
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+.marketing-logo {
+  display: block;
+  width: 8rem;
+  height: auto;
 }
 
 .marketing-nav {
@@ -155,11 +139,11 @@
 
 .marketing-title {
   font-size: 3rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.025em;
   color: #111827;
   margin-bottom: 1.5rem;
-  line-height: 1.1;
+  line-height: 1.0;
 }
 @media (min-width: 768px) {
   .marketing-title {
