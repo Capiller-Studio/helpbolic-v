@@ -3,12 +3,12 @@
     .marketing-logo-wrapper
       = image_tag "logo.svg", alt: t("marketing.brand"), class: "marketing-logo"
     nav.marketing-nav
-      a href="http://deskbolic.localhost:3000" = t("marketing.nav.features")
-      a href="http://deskbolic.localhost:3000" = t("marketing.nav.pricing")
-      a href="http://deskbolic.localhost:3000" = t("marketing.nav.docs")
+      a href=ENV.fetch("MARKETING_URL") = t("marketing.nav.features")
+      a href="#{ENV.fetch('MARKETING_URL')}/pricing" = t("marketing.nav.pricing")
+      a href="#{ENV.fetch('MARKETING_URL')}" = t("marketing.nav.docs")
     .marketing-actions
-      a.marketing-login href="http://deskbolic.localhost:3000/login" = t("marketing.nav.login")
-      a.marketing-signup href="http://deskbolic.localhost:3000/signup" = t("marketing.nav.signup")
+      a.marketing-login href="#{ENV.fetch('DESKBOLIC_URL')}/login" = t("marketing.nav.login")
+      a.marketing-signup href="#{ENV.fetch('DESKBOLIC_URL')}/signup" = t("marketing.nav.signup")
 
   main.marketing-main
     .marketing-hero
@@ -26,13 +26,13 @@
         = t("marketing.hero.description")
 
       .marketing-cta-group
-        a.btn-primary-marketing href="http://deskbolic.localhost:3000"
+        a.btn-primary-marketing href=ENV.fetch("MARKETING_URL")
           = t("marketing.cta.primary")
           svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             line x1="5" y1="12" x2="19" y2="12"
             polyline points="12 5 19 12 12 19"
         
-        a.btn-secondary-marketing href="http://deskbolic.localhost:3000"
+        a.btn-secondary-marketing href=ENV.fetch("MARKETING_URL")
           = t("marketing.cta.secondary")
 
   footer.marketing-footer
