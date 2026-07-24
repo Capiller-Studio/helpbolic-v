@@ -10,21 +10,22 @@
         p.contact-subtitle = flash[:notice] || t("help_center.contact.success.subtitle")
         
         .success-ticket-info
-          .ticket-info-block
-            span.ticket-info-label = t("help_center.contact.success.ticket_id")
-            span.ticket-info-value.text-primary #12345
+          - if @ticket_identifier.present?
+            .ticket-info-block
+              span.ticket-info-label = t("help_center.contact.success.ticket_id")
+              span.ticket-info-value.text-primary = "##{@ticket_identifier}"
           .ticket-info-block
             span.ticket-info-label = t("help_center.contact.success.expected_response")
             span.ticket-info-value = t("help_center.contact.success.response_time")
             
-        p.success-email-notice = t("help_center.contact.success.email_notice")
+        / p.success-email-notice = t("help_center.contact.success.email_notice")
         
         .success-actions
-          a.btn-primary href="#"
-            = t("help_center.contact.success.track_request")
-            svg style="width: 16px; height: 16px; margin-left: 8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-              path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-          a.btn-outline href=root_path = t("help_center.contact.success.back_to_help_center")
+          / a.btn-primary href="#"
+            / = t("help_center.contact.success.track_request")
+            / svg style="width: 16px; height: 16px; margin-left: 8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+            /   path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+          a.btn-primary href=root_path = t("help_center.contact.success.back_to_help_center")
 
       .while-you-wait
         .while-you-wait-header
