@@ -12,7 +12,7 @@
 
       - if @category
         nav.sidebar-nav
-          - @category.portal.categories.where(visibility: :everyone).order(:position).each do |cat|
+          - @sidebar_categories.each do |cat|
             .sidebar-nav-group
               a.sidebar-nav-item class=("active" if cat.id == @category.id) href=category_path(cat)
                 span.nav-icon
@@ -24,9 +24,10 @@
                 - if cat.api_reference?
                   span.nav-badge.api-badge API
               
-              - if cat.articles.published.where(visibility: :everyone).any?
+              - sidebar_articles = @sidebar_articles_by_category_id[cat.id] || []
+              - if sidebar_articles.any?
                 .sidebar-articles-list
-                  - cat.articles.published.where(visibility: :everyone).order(:position, :id).each do |art|
+                  - sidebar_articles.each do |art|
                     a.sidebar-article-link class=("active" if @article && art.id == @article.id) href=article_path(art)
                       = art.title
 
@@ -47,10 +48,12 @@
         
         .article-meta
           - if @article.author
+            - author_name = @article.author.display_name.presence || @article.author.name.presence || @article.author.email.to_s
+            - author_initials = author_name.split.map { |part| part[0] }.join[0, 2].to_s.upcase
             .article-author
               .author-avatar
-                = @article.author.initials
-              span.author-name = @article.author.name
+                = author_initials
+              span.author-name = author_name
               span.meta-separator •
           
           span.meta-date = t("help_center.article.updated_ago", time: time_ago_in_words(@article.updated_at))
@@ -69,8 +72,8 @@
         /! Guide Mode Pagination
         - if @category&.guide_mode? && (@prev_article || @next_article)
           .guide-pagination
-            - current_index = @category.articles.published.where(visibility: :everyone).order(:position).pluck(:id).index(@article.id) || 0
-            - total_articles = @category.articles.published.where(visibility: :everyone).count
+            - current_index = @guide_current_index || 0
+            - total_articles = @guide_total_articles || 0
             - progress_percentage = total_articles > 1 ? ((current_index) / (total_articles - 1).to_f * 100).round : 100
             
             .guide-progress-bar
