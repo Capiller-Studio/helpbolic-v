@@ -41,19 +41,20 @@
                 - else
                   = f.text_field "contact[#{field.key}]", id: "contact_#{field.key}", class: "form-input", required: field.required?
 
-          .form-group.col-full
-            label.form-label for="attachments" = t("help_center.contact.new.attachments_label")
-            .upload-dropzone data-controller="upload"
-              = f.file_field :attachments, multiple: true, accept: ".pdf,.png,.jpg,.jpeg", name: "attachments[]", class: "form-file", id: "attachments", data: { upload_target: "input", action: "change->upload#update" }
-              .upload-empty data-upload-target="empty"
-                = image_tag "attachments.svg", class: "upload-icon", alt: "", aria: { hidden: "true" }
-                p.upload-label
-                  span = t("help_center.contact.new.click_to_upload")
-                  = " #{t("help_center.contact.new.drag_and_drop")}"
-                p.form-help = t("help_center.contact.new.max_file_size")
-              .upload-summary.hidden data-upload-target="summary"
-                p.upload-label = t("help_center.contact.new.selected_files")
-                ul.upload-file-list data-upload-target="list"
+          - if @contact_form.allow_attachments?
+            .form-group.col-full
+              label.form-label for="attachments" = t("help_center.contact.new.attachments_label")
+              .upload-dropzone data-controller="upload"
+                = f.file_field :attachments, multiple: true, accept: ".pdf,.png,.jpg,.jpeg", name: "attachments[]", class: "form-file", id: "attachments", data: { upload_target: "input", action: "change->upload#update" }
+                .upload-empty data-upload-target="empty"
+                  = image_tag "attachments.svg", class: "upload-icon", alt: "", aria: { hidden: "true" }
+                  p.upload-label
+                    span = t("help_center.contact.new.click_to_upload")
+                    = " #{t("help_center.contact.new.drag_and_drop")}"
+                  p.form-help = t("help_center.contact.new.max_file_size")
+                .upload-summary.hidden data-upload-target="summary"
+                  p.upload-label = t("help_center.contact.new.selected_files")
+                  ul.upload-file-list data-upload-target="list"
 
           .form-actions
             = f.submit t("help_center.common.submit_request"), class: "contact-submit btn-primary w-full"
