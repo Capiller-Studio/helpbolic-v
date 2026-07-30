@@ -48,12 +48,10 @@
         
         .article-meta
           - if @article.author
-            - author_name = @article.author.display_name.presence || @article.author.name.presence || @article.author.email.to_s
-            - author_initials = author_name.split.map { |part| part[0] }.join[0, 2].to_s.upcase
             .article-author
               .author-avatar
-                = author_initials
-              span.author-name = author_name
+                = initials(@article.author)
+              span.author-name = display_name(@article.author)
               span.meta-separator •
           
           span.meta-date = t("help_center.article.updated_ago", time: time_ago_in_words(@article.updated_at))
