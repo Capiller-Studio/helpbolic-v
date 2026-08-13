@@ -67,13 +67,6 @@ module HelpCenter
         @articles = articles_scope.limit(@articles_visible_count)
         @categories = categories_scope.limit(5)
       end
-
-      @category_article_counts = HelpCenter::CategoryResource
-        .joins("INNER JOIN help_center_articles ON help_center_articles.id = help_center_category_resources.resource_id AND help_center_category_resources.resource_type = 'HelpCenter::Article'")
-        .where(category_id: @categories.map(&:id))
-        .where(help_center_articles: { status: HelpCenter::Article.statuses[:published], visibility: HelpCenter::Article.visibilities[:everyone] })
-        .group(:category_id)
-        .count
     end
 
     def suggestions

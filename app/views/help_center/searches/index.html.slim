@@ -71,7 +71,7 @@
                     .category-content
                       h4 = cat.name
                       p = strip_tags(cat.description.to_s).truncate(120)
-                  span.search-result-badge = t("help_center.portal.articles_count", count: (@category_article_counts[cat.id] || 0))
+                  span.search-result-badge = t("help_center.portal.articles_count", count: cat.published_articles_count)
           - else
             .search-empty-state
               i data-lucide="search-x" class="empty-state-icon"

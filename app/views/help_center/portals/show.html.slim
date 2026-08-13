@@ -44,7 +44,7 @@
           h3 = category.name
           p = category.description
           .category-meta
-            span.article-count = t("help_center.portal.articles_count", count: (@category_article_counts[category.id] || 0))
+            span.article-count = t("help_center.portal.articles_count", count: category.published_articles_count)
 
   .bottom-section
     .popular-articles
