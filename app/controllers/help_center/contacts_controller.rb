@@ -14,6 +14,13 @@ module HelpCenter
     def new; end
 
     def create
+      if @contact_form.spam_protection_enabled? && params[:nickname].present?
+        redirect_to contact_success_path,
+                    notice: contact_success_notice,
+                    flash: { ticket_identifier: "REQ-#{SecureRandom.hex(4).upcase}" }
+        return
+      end
+
       # Prepare parameters
       # The form data comes from params[:contact] which maps to the keys of the custom fields
       contact_params = params.require(:contact).permit!.to_h

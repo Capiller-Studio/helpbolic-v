@@ -13,6 +13,10 @@
         .alert.alert-error = @contact_form_unavailable_message
       - else
         = form_with url: contact_path, method: :post, local: true, html: { multipart: true }, class: "contact-form" do |f|
+          - if @contact_form.spam_protection_enabled?
+            .honeypot style="display: none !important; opacity: 0; position: absolute; left: -9999px;"
+              = text_field_tag :nickname, nil, tabindex: -1, autocomplete: "off"
+
           .form-grid
             - @custom_fields.each do |field|
               - field_translation = field.translations.find_by(locale: I18n.locale) || field.translations.find_by(locale: "en")
