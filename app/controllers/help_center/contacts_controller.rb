@@ -15,9 +15,9 @@ module HelpCenter
 
     def create
       if @contact_form.spam_protection_enabled? && params[:nickname].present?
-        redirect_to contact_success_path,
+        redirect_to(contact_success_path,
                     notice: contact_success_notice,
-                    flash: { ticket_identifier: "REQ-#{SecureRandom.hex(4).upcase}" }
+                    flash: { ticket_identifier: "REQ-#{SecureRandom.hex(4).upcase}" })
         return
       end
 
@@ -32,12 +32,12 @@ module HelpCenter
           form_params: contact_params,
           attachments: contact_attachments
         )
-        redirect_to contact_success_path,
+        redirect_to(contact_success_path,
                     notice: contact_success_notice,
-                    flash: { ticket_identifier: conversation.identifier }
+                    flash: { ticket_identifier: conversation.identifier })
       rescue StandardError => e
         flash.now[:alert] = I18n.t("help_center.contact.new.error", message: e.message)
-        render :new, status: :unprocessable_entity
+        render(:new, status: :unprocessable_entity)
       end
     end
 
@@ -46,7 +46,7 @@ module HelpCenter
       # in the flash across the create redirect. A direct URL visit (or a refresh)
       # has no flash, so send the visitor back to the form instead.
       @ticket_identifier = flash[:ticket_identifier]
-      redirect_to contact_path if @ticket_identifier.blank?
+      redirect_to(contact_path) if @ticket_identifier.blank?
     end
 
     private
@@ -57,7 +57,7 @@ module HelpCenter
 
     def ensure_contact_form_enabled
       unless current_portal.show_contact_form? && @contact_form.present?
-        redirect_to root_path
+        redirect_to(root_path)
       end
     end
 
@@ -71,10 +71,10 @@ module HelpCenter
       return unless @contact_form&.require_login?
       return if current_customer.present?
 
-      redirect_to root_path, alert: I18n.t(
+      redirect_to(root_path, alert: I18n.t(
         "help_center.contact.new.login_required",
         default: "Please sign in to submit this form."
-      )
+      ))
     end
 
     def current_customer
@@ -95,7 +95,7 @@ module HelpCenter
     def ensure_contact_form_configured
       return if @contact_form_configured
 
-      render :new, status: :service_unavailable
+      render(:new, status: :service_unavailable)
     end
 
     def contact_attachments
@@ -105,15 +105,15 @@ module HelpCenter
       invalid_attachment = attachments.find do |attachment|
         extension = File.extname(attachment.original_filename.to_s).downcase
 
-        !ALLOWED_ATTACHMENT_CONTENT_TYPES.include?(attachment.content_type) ||
-          !ALLOWED_ATTACHMENT_EXTENSIONS.include?(extension)
+        ALLOWED_ATTACHMENT_CONTENT_TYPES.exclude?(attachment.content_type) ||
+          ALLOWED_ATTACHMENT_EXTENSIONS.exclude?(extension)
       end
 
       if invalid_attachment
-        raise ArgumentError, I18n.t(
+        raise(ArgumentError, I18n.t(
           "help_center.contact.new.invalid_attachment_type",
           default: "Only PDF, PNG, and JPG files are allowed."
-        )
+        ))
       end
 
       attachments

@@ -21,7 +21,7 @@ module HelpCenter
         .includes(:translations)
 
       if @query.present?
-        @articles_page = [params[:page].to_i, 1].max
+        @articles_page = [ params[:page].to_i, 1 ].max
         @articles_per_page = 4
         @articles_visible_count = @articles_page * @articles_per_page
 
@@ -33,7 +33,7 @@ module HelpCenter
             visibility: "everyone",
             "translations.locale": I18n.locale.to_s
           },
-          fields: ["translations.title^5", "translations.content"],
+          fields: [ "translations.title^5", "translations.content" ],
           match: :word_start,
           page: 1,
           per_page: @articles_visible_count
@@ -47,7 +47,7 @@ module HelpCenter
             visibility: "everyone",
             "translations.locale": I18n.locale.to_s
           },
-          fields: ["translations.name^5", "translations.description"],
+          fields: [ "translations.name^5", "translations.description" ],
           match: :word_start,
           limit: 5
         )
@@ -58,7 +58,7 @@ module HelpCenter
         @articles = articles_search
         @categories = categories_search
       else
-        @articles_page = [params[:page].to_i, 1].max
+        @articles_page = [ params[:page].to_i, 1 ].max
         @articles_per_page = 4
         @articles_total_count = articles_scope.count
         @articles_visible_count = @articles_page * @articles_per_page
@@ -71,9 +71,9 @@ module HelpCenter
 
     def suggestions
       query = params[:query].to_s.strip
-      
+
       if query.blank?
-        render json: { articles: [], categories: [] }
+        render(json: { articles: [], categories: [] })
         return
       end
 
@@ -85,7 +85,7 @@ module HelpCenter
           visibility: "everyone",
           "translations.locale": I18n.locale.to_s
         },
-        fields: ["translations.title^5", "translations.content"],
+        fields: [ "translations.title^5", "translations.content" ],
         match: :word_start,
         limit: 2
       ).map do |article|
@@ -106,7 +106,7 @@ module HelpCenter
           visibility: "everyone",
           "translations.locale": I18n.locale.to_s
         },
-        fields: ["translations.name^5", "translations.description"],
+        fields: [ "translations.name^5", "translations.description" ],
         match: :word_start,
         limit: 3
       ).map do |category|
@@ -119,7 +119,7 @@ module HelpCenter
         }
       end
 
-      render json: { articles: articles, categories: categories }
+      render(json: { articles: articles, categories: categories })
     end
 
     private

@@ -7,7 +7,7 @@ module HelpCenter
       return configured_time.to_i if configured_time
 
       word_count = strip_tags(article.content.to_s).scan(/\w+/).size
-      [(word_count.to_f / WORDS_PER_MINUTE).ceil, 1].max
+      [ (word_count.to_f / WORDS_PER_MINUTE).ceil, 1 ].max
     end
   end
 end

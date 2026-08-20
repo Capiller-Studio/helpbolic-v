@@ -7,7 +7,7 @@ module HelpCenter
     def index
       # Respect portal's indexing preference
       if current_portal.indexing_enabled?
-        @categories = current_portal.categories.where(visibility: :everyone).published
+        @categories = current_portal.categories.where(visibility: :everyone).active
         @articles = current_portal.articles.where(visibility: :everyone).published
       else
         @categories = []

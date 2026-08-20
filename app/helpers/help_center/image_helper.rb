@@ -16,12 +16,12 @@ module HelpCenter
       DEVICE_WIDTHS.each do |key, value|
         width = value.to_i
         # Generate variant for specific width
-        variant = attachment.variant(resize_to_limit: [width, width]).processed
+        variant = attachment.variant(resize_to_limit: [ width, width ]).processed
         media_query = key == :desktop ? "min-width" : "max-width"
-        
+
         sources += "<source media='(#{media_query}:#{value}px)' srcset='#{url_for(variant)}'/>"
       end
-      
+
       tag = <<~HTML
         <picture>
           #{sources}
@@ -37,12 +37,12 @@ module HelpCenter
       sources = ""
       DEVICE_WIDTHS.each do |key, value|
         width = value.to_i
-        variant = attachment.variant(resize_to_limit: [width, width]).processed
+        variant = attachment.variant(resize_to_limit: [ width, width ]).processed
         media_query = key == :desktop ? "min-width" : "max-width"
-        
+
         sources += "<source media='(#{media_query}:#{value}px)' data-srcset='#{url_for(variant)}'/>"
       end
-      
+
       tag = <<~HTML
         <picture>
           #{sources}

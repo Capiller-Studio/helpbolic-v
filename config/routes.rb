@@ -21,18 +21,18 @@ Rails.application.routes.draw do
     root to: "help_center/portals#show"
 
     scope module: :help_center do
-      resources :categories, path: "collections", only: [:index, :show]
-      resources :articles, only: [:index, :show] do
-        resource :reaction, only: [:create], controller: "article_reactions"
+      resources :categories, path: "collections", only: [ :index, :show ]
+      resources :articles, only: [ :index, :show ] do
+        resource :reaction, only: [ :create ], controller: "article_reactions"
       end
-      
+
       get "/search", to: "searches#index"
       get "/search/suggestions", to: "searches#suggestions"
-      
+
       get "/contact", to: "contacts#new"
       post "/contact", to: "contacts#create"
       get "/contact/success", to: "contacts#success"
-      
+
       get "/sitemap", to: "sitemaps#index", defaults: { format: :xml }
     end
   end
