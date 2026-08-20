@@ -6,7 +6,7 @@ module Internal
       domain = params[:domain]
 
       if domain.blank?
-        return render plain: "Missing domain", status: :bad_request
+        return render(plain: "Missing domain", status: :bad_request)
       end
 
       # Proxy server sends a GET request here with ?domain=example.com.
@@ -14,9 +14,9 @@ module Internal
       # If we return 404 or 400,  will reject the SSL request to prevent abuse.
       # Check if any tenant has this domain (either custom domain or helpbolic subdomain).
       if Domain.exists?(value: domain)
-        render plain: "OK", status: :ok
+        render(plain: "OK", status: :ok)
       else
-        render plain: "Domain not found", status: :not_found
+        render(plain: "Domain not found", status: :not_found)
       end
     end
   end

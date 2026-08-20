@@ -20,7 +20,7 @@ module Helpbolic
     # Routing and Middleware
     config.middleware.use Rack::Deflater
     config.exceptions_app = routes
-    
+
     # Ensure helper and constraint paths are loaded
     config.autoload_paths << Rails.root.join("app", "lib")
 
