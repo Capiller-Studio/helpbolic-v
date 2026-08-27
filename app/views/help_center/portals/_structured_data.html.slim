@@ -1,9 +1,2 @@
 script type="application/ld+json"
-  |
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "url": "#{root_url}",
-      "name": "#{@current_portal.name}",
-      "description": "#{@current_portal.description}"
-    }
+  == portal_structured_data(@current_portal).to_json
