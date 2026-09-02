@@ -27,6 +27,8 @@ en:
       articles: "Articles"
       categories: "Categories"
       collections: "Collections"
+      api_reference: "API Reference"
+      user_guide: "User Guide"
       contact_support: "Contact Support"
       submit_request: "Submit Request"
       show_more: "Show More"
