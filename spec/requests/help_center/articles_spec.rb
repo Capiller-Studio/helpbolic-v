@@ -82,5 +82,11 @@ RSpec.describe 'HelpCenter::Articles', type: :request do
         expect(response).to have_http_status(:not_found)
       end
     end
+
+    it 'returns 404 when article id does not exist' do
+      get article_path(id: SecureRandom.uuid)
+
+      expect(response).to have_http_status(:not_found)
+    end
   end
 end

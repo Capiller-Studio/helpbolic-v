@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get "up" => "rails/health#show", as: :rails_health_check
+
   # Error Pages
   match "/404", to: "errors#not_found", via: :all
   match "/422", to: "errors#invalid_resource", via: :all

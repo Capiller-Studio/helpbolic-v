@@ -61,5 +61,12 @@ RSpec.describe 'HelpCenter::Portals', type: :request do
 
       expect(response).to have_http_status(:not_found)
     end
+
+    it 'returns 404 when domain status is inactive' do
+      domain.update!(status: :inactive)
+
+      get root_path
+      expect(response).to have_http_status(:not_found)
+    end
   end
 end
