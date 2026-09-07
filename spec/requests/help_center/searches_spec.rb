@@ -38,6 +38,21 @@ RSpec.describe 'HelpCenter::Searches', type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
+
+    it 'handles search queries with punctuation and special symbols without crashing' do
+      account.with_shard do
+        allow(HelpCenter::Article).to receive(:search).and_return(
+          double('SearchkickResults', total_count: 0, map: [], to_a: [], empty?: true, any?: false)
+        )
+        allow(HelpCenter::Category).to receive(:search).and_return(
+          double('SearchkickResults', total_count: 0, map: [], to_a: [], empty?: true, any?: false)
+        )
+
+        get search_path, params: { query: '!@#$%^&*()_+<script>alert("xss")</script>' }
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
   end
 
   describe 'GET /search/suggestions' do

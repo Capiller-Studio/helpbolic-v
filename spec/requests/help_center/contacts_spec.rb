@@ -119,6 +119,18 @@ RSpec.describe 'HelpCenter::Contacts', type: :request do
 
       expect(response).to have_http_status(:unprocessable_content)
     end
+
+    it 'returns 503 service unavailable when contact form has no custom fields configured' do
+      account.with_shard do
+        contact_form.custom_field_resources.destroy_all
+
+        post contact_path, params: {
+          contact: { subject: 'Hello support' }
+        }
+
+        expect(response).to have_http_status(:service_unavailable)
+      end
+    end
   end
 
   describe 'GET /contact/success' do
