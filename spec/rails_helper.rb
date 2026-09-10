@@ -9,6 +9,8 @@ require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
+require 'capybara/rspec'
+require 'capybara/rails'
 require 'shoulda/matchers'
 require 'database_cleaner/active_record'
 require 'factory_bot_rails'
@@ -34,6 +36,11 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+Capybara.default_driver = :rack_test
+Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.default_host = 'http://helpbolic.lvh.me'
+Capybara.app_host = 'http://helpbolic.lvh.me'
+
 module HelpCenterTenantHelpers
   def set_tenant_host(domain)
     host! domain.value
@@ -41,6 +48,18 @@ module HelpCenterTenantHelpers
 
   def set_marketing_host
     host! 'helpbolic.com'
+  end
+end
+
+module FeatureTenantHelpers
+  def set_tenant_host(domain)
+    Capybara.app_host = "http://#{domain.value}"
+    Capybara.default_host = "http://#{domain.value}"
+  end
+
+  def set_marketing_host
+    Capybara.app_host = 'http://helpbolic.com'
+    Capybara.default_host = 'http://helpbolic.com'
   end
 end
 
@@ -53,6 +72,7 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   config.include HelpCenterTenantHelpers, type: :request
+  config.include FeatureTenantHelpers, type: :feature
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
@@ -65,6 +85,11 @@ RSpec.configure do |config|
 
   config.before(:each, type: :feature) do
     DatabaseCleaner.strategy = :truncation
+    set_marketing_host
+  end
+
+  config.after(:each, type: :feature) do
+    set_marketing_host
   end
 
   config.before do
