@@ -50,3 +50,25 @@
     text-align: right;
   }
 }
+
+.footer-cookie-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 0.5rem;
+  font-size: inherit;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease;
+  vertical-align: baseline;
+}
+
+.footer-cookie-button:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+.footer-separator {
+  margin-left: 0.5rem;
+  opacity: 0.5;
+}
