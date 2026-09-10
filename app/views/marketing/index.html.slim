@@ -36,4 +36,7 @@
           = t("marketing.cta.secondary")
 
   footer.marketing-footer
-    p = t("marketing.footer.copyright", year: Time.current.year)
+    p
+      = t("marketing.footer.copyright", year: Time.current.year)
+      span.footer-separator< |
+      button.footer-cookie-button type="button" data-cc="c-settings" = t('footer.cookies', default: 'Cookie Settings')

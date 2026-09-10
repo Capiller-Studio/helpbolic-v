@@ -188,6 +188,7 @@
             /** @type {HTMLElement} */ consent_modal_description,
             /** @type {HTMLElement} */ consent_primary_btn,
             /** @type {HTMLElement} */ consent_secondary_btn,
+            /** @type {HTMLElement} */ consent_tertiary_btn,
             /** @type {HTMLElement} */ consent_buttons,
             /** @type {HTMLElement} */ consent_modal_inner,
             /** @type {HTMLElement} */ consent_modal_image,
@@ -266,8 +267,10 @@
             }
 
             if(_config.hide_from_bots){
-                is_bot = navigator &&
-                    ((navigator.userAgent && /bot|crawl|spider|slurp|teoma/i.test(navigator.userAgent)) || navigator.webdriver);
+                is_bot = (typeof navigator !== 'undefined') &&
+                    ((navigator.userAgent && /bot|crawl|spider|slurp|teoma|lighthouse|pagespeed|headlesschrome|googlebot/i.test(navigator.userAgent)) ||
+                     Boolean(navigator.webdriver) ||
+                     typeof window.__LIGHTHOUSE__ !== 'undefined');
             }
 
             _config.page_scripts = user_config['page_scripts'] === true;
@@ -472,7 +475,8 @@
             consent_modal_description.innerHTML = description;
 
             var primary_btn_data = user_config.languages[lang]['consent_modal']['primary_btn'],   // accept current selection
-                secondary_btn_data = user_config.languages[lang]['consent_modal']['secondary_btn'];
+                secondary_btn_data = user_config.languages[lang]['consent_modal']['secondary_btn'],
+                tertiary_btn_data = user_config.languages[lang]['consent_modal']['tertiary_btn'];
 
             // Add primary button if not falsy
             if(primary_btn_data){
@@ -482,9 +486,9 @@
                     consent_primary_btn.id = 'main_modal_accept';
                     consent_primary_btn.className =  "cookies_buttons";
                     consent_primary_btn.appendChild(generateFocusSpan(1))
-                    var svg = _createNode('svg');
+                    var svg = _createNode('span');
                     svg.id = 'main_modal_button_svg';
-                    svg.innerHTML = '<img alt="cookie" height="100%" width="100%">'
+                    svg.innerHTML = '<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.4343 4.644V4.647C14.8093 5.55 15 6.50957 15 7.5C15 11.6344 11.6344 15 7.5 15C3.36559 15 0 11.6344 0 7.5C0 3.36557 3.36559 0 7.5 0C8.28125 0 9.05318 0.121719 9.78812 0.359571C9.79115 0.359571 9.79115 0.362567 9.79115 0.362567H9.80054C9.81105 0.366155 9.81956 0.372555 9.82836 0.379139L9.83665 0.385243L9.8402 0.387703L9.84419 0.390255L9.84634 0.391513L9.8507 0.393862C9.86654 0.403294 9.8854 0.406291 9.90086 0.41872C9.90086 0.41872 9.90086 0.419737 9.90146 0.420588C9.90183 0.421198 9.90257 0.421716 9.90382 0.421716C9.92069 0.438898 9.93283 0.456099 9.94659 0.475575L9.95058 0.48129C9.95243 0.483713 9.95435 0.486006 9.95635 0.488263L9.96072 0.493109C9.96464 0.497418 9.96856 0.501728 9.97196 0.506518C9.97462 0.51018 9.97699 0.514138 9.97884 0.518577C9.98387 0.527362 9.98713 0.536943 9.98957 0.546949L9.99083 0.552535L9.99223 0.559359L9.9943 0.571714L9.99719 0.579612L10.0003 0.587769L10.0005 0.588379C10.0057 0.601881 10.011 0.615845 10.0132 0.631288C10.0132 0.636393 10.0125 0.64159 10.0118 0.646973V0.649451C10.011 0.656461 10.0101 0.663878 10.0101 0.671997C10.0101 0.700277 10.0072 0.725135 10.0007 0.753433V0.756429C9.99712 0.766953 9.99075 0.776534 9.98461 0.785633C9.9798 0.792847 9.97522 0.799746 9.97241 0.80657C9.96301 0.825436 9.95657 0.844283 9.94414 0.859708C9.54383 1.34743 9.32528 1.95686 9.32528 2.58171C9.32528 4.07828 10.5437 5.29715 12.0407 5.29715C12.747 5.29715 13.4156 5.02543 13.9251 4.53171C13.9293 4.52822 13.9335 4.52524 13.9378 4.52256C13.9438 4.51871 13.9499 4.51547 13.956 4.51226C13.9613 4.50944 13.9666 4.50663 13.9719 4.50343C13.9907 4.491 14.0032 4.47857 14.022 4.46914H14.0284C14.0503 4.46013 14.0756 4.45671 14.1005 4.45372C14.1158 4.45372 14.1317 4.44428 14.1471 4.44728C14.166 4.44728 14.1815 4.45372 14.2003 4.45671C14.2222 4.45971 14.244 4.46271 14.2628 4.46914C14.271 4.47308 14.2779 4.4785 14.2851 4.48442L14.2891 4.48771L14.2972 4.494C14.322 4.50643 14.3439 4.51886 14.3657 4.53772C14.3657 4.53952 14.3657 4.54024 14.3663 4.54053C14.3668 4.54072 14.3675 4.54072 14.3687 4.54072C14.3811 4.55615 14.3905 4.57499 14.4 4.59386C14.4094 4.60928 14.4249 4.61872 14.4313 4.63756C14.4313 4.63945 14.4313 4.6403 14.4318 4.64119L14.4327 4.64237L14.4343 4.644ZM2.18743 8.43728C2.18743 9.12814 2.74717 9.68743 3.43757 9.68743C4.12797 9.68743 4.68772 9.12814 4.68772 8.43728C4.68772 7.74643 4.12797 7.18715 3.43757 7.18715C2.74673 7.18715 2.18743 7.74686 2.18743 8.43728ZM5.31213 3.12472C4.79655 3.12472 4.37485 3.54686 4.37485 4.06243C4.37485 4.57801 4.79699 5.00015 5.31213 4.99972C5.82815 4.99972 6.24985 4.57801 6.24985 4.06243C6.24985 3.54642 5.82771 3.12472 5.31213 3.12472ZM7.18757 11.5624C7.18757 12.0784 7.60927 12.5001 8.12485 12.5001C8.64043 12.5001 9.06257 12.078 9.06257 11.5624C9.06257 11.0469 8.64043 10.6251 8.12485 10.6251C7.60927 10.6251 7.18757 11.0469 7.18757 11.5624ZM7.5 7.34357C7.5 8.03443 8.05975 8.59371 8.75015 8.59371C9.44055 8.59371 9.99985 8.03443 10.0003 7.34357C10.0003 6.65272 9.44055 6.09344 8.75015 6.09344C8.0593 6.09344 7.5 6.65315 7.5 7.34357Z" fill="white"/></svg>';
                     consent_primary_btn.appendChild(svg);
                     var _accept_type;
 
@@ -525,6 +529,30 @@
                 consent_secondary_btn.firstElementChild.innerHTML = user_config.languages[lang]['consent_modal']['secondary_btn']['text'];
             }
 
+            // Add tertiary button if not falsy
+            if(tertiary_btn_data){
+
+                if(!consent_tertiary_btn){
+                    consent_tertiary_btn = _createNode('button');
+                    consent_tertiary_btn.id = 'main_modal_settings';
+                    consent_tertiary_btn.className = "cookies_buttons cookie_link";
+                    consent_tertiary_btn.appendChild(generateFocusSpan(1))
+
+                    if(tertiary_btn_data['role'] === 'accept_necessary'){
+                        _addEvent(consent_tertiary_btn, 'click', function(){
+                            _cookieconsent.hide();
+                            _cookieconsent.accept([]); // accept necessary only
+                        });
+                    }else{
+                        _addEvent(consent_tertiary_btn, 'click', function(){
+                            _cookieconsent.showSettings(0);
+                        });
+                    }
+                }
+
+                consent_tertiary_btn.firstElementChild.innerHTML = user_config.languages[lang]['consent_modal']['tertiary_btn']['text'];
+            }
+
             // Swap buttons
             var gui_options_data = user_config['gui_options'];
 
@@ -533,11 +561,13 @@
                 consent_modal_inner.id = 'main_modal_inner';
                 consent_modal_image = _createNode('div');
                 consent_modal_image.id = 'main_modal_image';
-                image = _createNode('img');
-                image.width = "70";
-                image.height = "60";
-                image.alt = "cookie";
-                consent_modal_image.appendChild(image);
+                consent_modal_image.setAttribute('aria-hidden', 'true');
+                consent_modal_image.innerHTML = '<div class="cc-cookie-badge">' +
+                    '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+                    '<path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 11.536 21.968 11.08 21.907 10.632C20.638 11.088 19.231 10.978 18.061 10.274C16.892 9.569 16.141 8.384 16.027 7.045C15.011 6.865 14.125 6.223 13.626 5.309C13.128 4.394 13.084 3.329 13.507 2.411C13.012 2.144 12.513 2 12 2ZM7.5 7.5C8.05228 7.5 8.5 7.05228 8.5 6.5C8.5 5.94772 8.05228 5.5 7.5 5.5C6.94772 5.5 6.5 5.94772 6.5 6.5C6.5 7.05228 6.94772 7.5 7.5 7.5ZM6 12C6.55228 12 7 11.5523 7 11C7 10.4477 6.55228 10 6 10C5.44772 10 5 10.4477 5 11C5 11.5523 5.44772 12 6 12ZM10.5 17C11.3284 17 12 16.3284 12 15.5C12 14.6716 11.3284 14 10.5 14C9.67157 14 9 14.6716 9 15.5C9 16.3284 9.67157 17 10.5 17ZM17 15.5C17 16.0523 16.5523 16.5 16 16.5C15.4477 16.5 15 16.0523 15 15.5C15 14.9477 15.4477 14.5 16 14.5C16.5523 14.5 17 14.9477 17 15.5Z" fill="url(#cc-cookie-icon-gradient)"/>' +
+                    '<defs><linearGradient id="cc-cookie-icon-gradient" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#9055F1"/><stop offset="1" stop-color="#3A82F4"/></linearGradient></defs>' +
+                    '</svg>' +
+                    '</div>';
 
                 consent_modal_inner.appendChild(consent_modal_image);
                 consent_modal_inner.appendChild(consent_modal_inner_inner);
@@ -550,13 +580,15 @@
                 if(gui_options_data && gui_options_data['consent_modal'] && gui_options_data['consent_modal']['swap_buttons'] === true){
                     secondary_btn_data && consent_buttons.appendChild(consent_secondary_btn);
                     primary_btn_data && consent_buttons.appendChild(consent_primary_btn);
+                    tertiary_btn_data && consent_buttons.appendChild(consent_tertiary_btn);
                     consent_buttons.className = 'swap';
                 }else{
                     primary_btn_data && consent_buttons.appendChild(consent_primary_btn);
                     secondary_btn_data && consent_buttons.appendChild(consent_secondary_btn);
+                    tertiary_btn_data && consent_buttons.appendChild(consent_tertiary_btn);
                 }
 
-                (primary_btn_data || secondary_btn_data ) && consent_modal_inner.appendChild(consent_buttons);
+                (primary_btn_data || secondary_btn_data || tertiary_btn_data) && consent_modal_inner.appendChild(consent_buttons);
                 consent_modal.appendChild(consent_modal_inner);
             }
 
@@ -999,6 +1031,7 @@
             // Create main container which holds both consent modal & settings modal
             main_container = _createNode('div');
             main_container.id = 'cookies_parent';
+            main_container.setAttribute('data-turbo-permanent', '');
 
             // Fix layout flash
             main_container.style.position = "fixed";
@@ -1014,6 +1047,26 @@
 
             // Always create settings modal
             _createSettingsModal(lang);
+
+            /*
+             * Optional floating reopen button (commented out for now; enable if floating trigger is desired):
+             *
+             * var reopen_btn = _createNode('button');
+             * reopen_btn.type = 'button';
+             * reopen_btn.id = 'cc-floating-reopen';
+             * var reopen_title = (user_config.languages[lang] && user_config.languages[lang]['consent_modal'] && user_config.languages[lang]['consent_modal']['tertiary_btn'] && user_config.languages[lang]['consent_modal']['tertiary_btn']['text']) || 'Cookie Preferences';
+             * reopen_btn.setAttribute('aria-label', reopen_title);
+             * reopen_btn.setAttribute('title', reopen_title);
+             * reopen_btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+             *     '<path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 11.536 21.968 11.08 21.907 10.632C20.638 11.088 19.231 10.978 18.061 10.274C16.892 9.569 16.141 8.384 16.027 7.045C15.011 6.865 14.125 6.223 13.626 5.309C13.128 4.394 13.084 3.329 13.507 2.411C13.012 2.144 12.513 2 12 2ZM7.5 7.5C8.05228 7.5 8.5 7.05228 8.5 6.5C8.5 5.94772 8.05228 5.5 7.5 5.5C6.94772 5.5 6.5 5.94772 6.5 6.5C6.5 7.05228 6.94772 7.5 7.5 7.5ZM6 12C6.55228 12 7 11.5523 7 11C7 10.4477 6.55228 10 6 10C5.44772 10 5 10.4477 5 11C5 11.5523 5.44772 12 6 12ZM10.5 17C11.3284 17 12 16.3284 12 15.5C12 14.6716 11.3284 14 10.5 14C9.67157 14 9 14.6716 9 15.5C9 16.3284 9.67157 17 10.5 17ZM17 15.5C17 16.0523 16.5523 16.5 16 16.5C15.4477 16.5 15 16.0523 15 15.5C15 14.9477 15.4477 14.5 16 14.5C16.5523 14.5 17 14.9477 17 15.5Z" fill="url(#cc-float-cookie-grad)"/>' +
+             *     '<defs><linearGradient id="cc-float-cookie-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#9055F1"/><stop offset="1" stop-color="#3A82F4"/></linearGradient></defs>' +
+             *     '</svg>';
+             * _addEvent(reopen_btn, 'click', function(e){
+             *     e.preventDefault();
+             *     _cookieconsent.showSettings(0);
+             * });
+             * all_modals_container.appendChild(reopen_btn);
+             */
 
             // Finally append everything (main_container holds both modals)
             (root || document.body).appendChild(main_container);
@@ -1045,6 +1098,16 @@
                 }
 
                 _createSettingsModal(new_validated_lang);
+
+                /*
+                 * Optional floating reopen button language update:
+                 * var reopen_el = document.getElementById('cc-floating-reopen');
+                 * if(reopen_el){
+                 *     var new_title = (user_config.languages[new_validated_lang] && user_config.languages[new_validated_lang]['consent_modal'] && user_config.languages[new_validated_lang]['consent_modal']['tertiary_btn'] && user_config.languages[new_validated_lang]['consent_modal']['tertiary_btn']['text']) || 'Cookie Preferences';
+                 *     reopen_el.setAttribute('aria-label', new_title);
+                 *     reopen_el.setAttribute('title', new_title);
+                 * }
+                 */
 
                 _log("CookieConsent [LANGUAGE]: curr_lang: '" + new_validated_lang + "'");
 

@@ -242,3 +242,24 @@
   color: #6b7280;
   font-size: 0.875rem;
 }
+
+.marketing-footer .footer-cookie-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 0.5rem;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+
+.marketing-footer .footer-cookie-button:hover {
+  color: #111827;
+  text-decoration: underline;
+}
+
+.marketing-footer .footer-separator {
+  margin-left: 0.5rem;
+  opacity: 0.5;
+}

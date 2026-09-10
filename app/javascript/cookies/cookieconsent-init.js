@@ -1,7 +1,8 @@
-// obtain cookieconsent plugin
+// Obtain cookieconsent plugin
 var cc = initCookieConsent();
+window.cc = cc;
 
-function updatePreferences(_cookie) {
+function updatePreferences() {
     let preferences = {
         analytics_storage: "denied",
         ad_storage: "denied",
@@ -12,99 +13,69 @@ function updatePreferences(_cookie) {
     if (cc.allowedCategory('analytics')) {
         preferences.analytics_storage = "granted";
     }
-    if (cc.allowedCategory('advertising')) {
+    if (cc.allowedCategory('marketing') || cc.allowedCategory('advertising')) {
         preferences.ad_storage = "granted";
         preferences.ad_user_data = "granted";
         preferences.ad_personalization = "granted";
     }
 
-    if (preferences) {
-        window.dataLayer = window.dataLayer || [];
+    window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            window.dataLayer.push(arguments);
-        }
-
-        gtag("consent", "update", preferences);
-
-        // setTimeout(function () {
-        //     window.location.reload();
-        // }, 1000);
+    function gtag() {
+        window.dataLayer.push(arguments);
     }
+
+    gtag("consent", "update", preferences);
 }
 
-// run plugin with config object
 cc.run({
     current_lang: 'en',
-    autoclear_cookies: true,                    // default: false
-    cookie_name: 'cookie_consent',              // default: 'cookie_consent'
-    cookie_expiration: 365,                     // default: 182
-    page_scripts: true,                         // default: false
-    force_consent: false,                       // default: false
-
-    // auto_language: null,                     // default: document; could also be 'browser' or 'document'
-    // autorun: true,                           // default: true
-    delay: 7000,                                // default: 0
-    hide_from_bots: true,                       // default: false
-    // remove_cookie_tables: false              // default: false
-    // cookie_domain: location.hostname,        // default: current domain
-    // cookie_path: '/',                        // default: root
-    // cookie_same_site: 'Lax',
-    // use_rfc_cookie: false,                   // default: false
-    // revision: 0,                             // default: 0
+    auto_language: 'document',
+    autoclear_cookies: true,
+    cookie_name: 'cookie_consent',
+    cookie_expiration: 365,
+    page_scripts: true,
+    force_consent: false,
+    delay: 1200,
+    hide_from_bots: true,
 
     gui_options: {
         consent_modal: {
-            layout: 'cloud',                    // box,cloud,bar
-            position: 'bottom center',          // bottom,middle,top + left,right,center
-            transition: 'slide'                 // zoom,slide
+            layout: 'cloud',
+            position: 'bottom center',
+            transition: 'slide'
         },
         settings_modal: {
-            layout: 'bar',                      // box,bar
-            position: 'left',                   // right,left (available only if bar layout selected)
-            transition: 'slide'                 // zoom,slide
+            layout: 'bar',
+            position: 'left',
+            transition: 'slide'
         }
     },
 
-    onFirstAction: ({ }) => updatePreferences(),
-
-    onAccept: function (cookie) {
-        // console.log('onAccept fired!')
-    },
-
-    // onChange: function (cookie, changed_preferences) {
-    //     // console.log('onChange fired!');
-
-    //     // If analytics category is disabled => disable google analytics
-    //     if (!cc.allowedCategory('analytics')) {
-    //         typeof gtag === 'function' && gtag('consent', 'update', {
-    //             'analytics_storage': 'denied'
-    //         });
-    //     }
-    // },
-
-    // onFirstConsent: ({cookie}) => updatePreferences(cookie),
-    // onFirstAction: ({cookie}) => updatePreferences(cookie),
-    onChange: ({ cookie }) => updatePreferences(cookie),
+    onFirstAction: updatePreferences,
+    onChange: updatePreferences,
 
     languages: {
         'en': {
             consent_modal: {
-                title: 'This website uses cookies',
-                description: 'We use cookies to personalize content and ads, to provide social media features and to analyze access to our website. We also share information about your use of our website with our social media, advertising and analytics partners.',
+                title: 'We value your privacy',
+                description: 'We use cookies to personalize content, remember your preferences, provide features, and analyze traffic to improve Deskbolic. You can accept all cookies, reject non-essential cookies, or manage your preferences.',
                 primary_btn: {
                     text: 'Accept all',
-                    role: 'accept_all'      //'accept_selected' or 'accept_all'
+                    role: 'accept_all'
                 },
                 secondary_btn: {
-                    text: 'Preferences',
-                    role: 'settings'       //'settings' or 'accept_necessary'
+                    text: 'Reject non-essential',
+                    role: 'accept_necessary'
                 },
-                revision_message: '<br><br> Dear user, terms and conditions have changed since the last time you visisted!'
+                tertiary_btn: {
+                    text: 'Preferences',
+                    role: 'settings'
+                }
             },
             settings_modal: {
-                title: 'Cookie settings',
-                save_settings_btn: 'Save current selection',
+                title: 'Cookie Preferences',
+                save_settings_btn: 'Save selection',
                 accept_all_btn: 'Accept all',
                 reject_all_btn: 'Reject all',
                 close_btn_label: 'Close',
@@ -116,36 +87,49 @@ cc.run({
                 blocks: [
                     {
                         title: 'Cookie usage',
-                        description: `Cookies are small text files used by websites to make the user experience more efficient.
-                        By law we may store cookies on your device if they are strictly necessary for the operation of this site. For all other types of cookies we need your permission.
-                        This site uses different types of cookies. Some cookies are placed by third parties that appear on our sites.
-                        You can change or withdraw your consent at any time from the cookie statement on our website.
-                        Find out more about who we are, how you can contact us and how we process personal data in our privacy policy.
-                        Please include your consent ID and date when contacting us regarding your consent.`
-                    }, {
+                        description: 'Cookies are small text files used to make your experience on Deskbolic smooth, secure, and reliable. Under data protection regulations, strictly necessary cookies do not require prior consent. For statistics, marketing, and preferences, we request your permission.'
+                    },
+                    {
                         title: 'Strictly necessary cookies',
-                        description: "Necessary cookies help make a website usable by enabling basic functions such as page navigation and access to secure areas of the website. The website cannot function properly without these cookies.",
+                        description: 'These cookies are essential for the website to function properly, maintaining secure sessions, page navigation, and authentication. The website cannot function correctly without these cookies.',
                         toggle: {
                             value: 'necessary',
                             enabled: true,
-                            readonly: true  //cookie categories with readonly=true are all treated as "necessary cookies"
+                            readonly: true
                         },
                         cookie_table: [
                             {
                                 col1: 'cookie_consent',
-                                col2: `deskbolic.com`,
-                                col3: "Stores the user's cookie consent status."
+                                col2: 'deskbolic.com',
+                                col3: "Stores the user's cookie consent preferences."
                             },
                             {
                                 col1: '_deskbolic_session',
                                 col2: 'deskbolic.com',
-                                col3: 'Stores current session details',
-                                path: '/'       // needed for autoclear cookies
+                                col3: 'Stores session and security tokens for the visitor.',
+                                path: '/'
                             }
                         ]
-                    }, {
+                    },
+                    {
+                        title: 'Preference cookies',
+                        description: 'Preference cookies enable the website to remember choices you make, such as your selected display currency or language settings.',
+                        toggle: {
+                            value: 'preference',
+                            enabled: true,
+                            readonly: false
+                        },
+                        cookie_table: [
+                            {
+                                col1: 'currency',
+                                col2: 'deskbolic.com',
+                                col3: 'Stores user-selected preferred pricing currency (USD, EUR, GBP, KRW).'
+                            }
+                        ]
+                    },
+                    {
                         title: 'Statistics cookies',
-                        description: 'Statistics cookies help website owners understand how visitors interact with websites by collecting and reporting information anonymously.',
+                        description: 'Statistics cookies help us understand how visitors interact with Deskbolic by collecting anonymous metrics on page visits and error diagnostics.',
                         toggle: {
                             value: 'analytics',
                             enabled: true,
@@ -154,35 +138,30 @@ cc.run({
                         cookie_table: [
                             {
                                 col1: '_ga',
-                                col2: `<a href="https://google.com">Google</a>`,
+                                col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>',
                                 col3: 'Registers a unique ID that is used to generate statistical data about how the visitor uses the website.',
                                 is_regex: true
                             },
                             {
+                                col1: '_ga_*',
+                                col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>',
+                                col3: 'Collects session state data for Google Analytics 4.'
+                            },
+                            {
                                 col1: '_gid',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Registers a unique ID that is used to generate statistical data about how the visitor uses the website.',
-                            },
-                            {
-                                col1: 'td',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: '	Registers statistical data about the behavior of visitors on the website. Used by the website operator for internal analytics.',
-                                path: '/'       // needed for autoclear cookies
-                            },
-                            {
-                                col1: '_ga_#',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Collects data on how many times a user has visited a website, as well as data for the first and last visit. Used by Google Analytics.'
+                                col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>',
+                                col3: 'Registers a unique ID to calculate visitor, session, and campaign data.'
                             },
                             {
                                 col1: '_gat',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Used by Google Analytics to limit the request rate.'
+                                col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>',
+                                col3: 'Used by Google Analytics to throttle request rate.'
                             }
                         ]
-                    }, {
+                    },
+                    {
                         title: 'Marketing cookies',
-                        description: 'Marketing cookies are used to track visitors across websites. The intent is to show ads that are relevant and engaging to individual users and therefore more valuable to publishers and third-party advertisers.',
+                        description: 'Marketing cookies track visits and referrals across websites to measure ad effectiveness and attribute partner referral commissions.',
                         toggle: {
                             value: 'marketing',
                             enabled: true,
@@ -190,61 +169,45 @@ cc.run({
                         },
                         cookie_table: [
                             {
-                                col1: 'pagead/landing',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Collects visitor behavior data across multiple websites to present more relevant advertising - This also allows the website to limit the number of times the same advertisement is displayed.',
-                                is_regex: true
+                                col1: 'ref',
+                                col2: 'deskbolic.com',
+                                col3: 'Stores affiliate and partner referral codes for proper attribution.'
                             },
                             {
                                 col1: '_gcl_au',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Used by Google AdSense to experiment with advertising effectiveness on websites that use their services.',
+                                col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>',
+                                col3: 'Used by Google Ads / AdSense to experiment with advertisement efficiency.'
                             }
                         ]
-                    }, {
-                        title: 'Preference cookies',
-                        description: 'Preference cookies allow a website to remember information that affects the way a website behaves or looks, such as: B. Your preferred language or the region you are in.',
-                        toggle: {
-                            value: 'preference',
-                            enabled: true,
-                            readonly: false
-                        }
-                    }, {
-                        title: 'Not classified cookies',
-                        description: 'Unclassified cookies are cookies that we are currently trying to classify, along with providers of individual cookies.',
-                        toggle: {
-                            value: 'unclassified',
-                            enabled: true,
-                            readonly: false
-                        }
-                    }, {
+                    },
+                    {
                         title: 'Privacy Policy',
-                        description: `Thank you for visiting Techbolic Solutions (PVT) Limited. This Privacy Policy outlines how we collect, use, and protect your personal information.
-                        We may collect personal information, such as your name, email address, and other details, when voluntarily provided by you.
-                        We use the information you provide to deliver and improve our services, respond to inquiries, and personalize your experience on the Website.
-                        We use cookies to enhance your browsing experience. You can disable cookies in your browser settings, but this may affect the functionality of the Website.
-                        If you have any questions or concerns about our Privacy Policy, please contact us at info@deskbolic.com.`,
+                        description: 'To learn more about how we process and safeguard your personal data, please read our <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a> or contact us at <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
                     }
                 ]
             }
         },
+
         'es': {
             consent_modal: {
-                title: 'Este sitio web utiliza cookies',
-                description: 'Utilizamos cookies para personalizar contenido y anuncios, proporcionar funciones de redes sociales y analizar el acceso a nuestro sitio web. También compartimos información sobre su uso de nuestro sitio web con nuestros socios de redes sociales, publicidad y análisis.',
+                title: 'Valoramos su privacidad',
+                description: 'Utilizamos cookies para personalizar contenidos, recordar preferencias y analizar el tráfico de Deskbolic. Puede aceptar todas las cookies, rechazar las no esenciales o personalizar sus preferencias.',
                 primary_btn: {
                     text: 'Aceptar todo',
-                    role: 'accept_all' //'accept_selected' or 'accept_all'
+                    role: 'accept_all'
                 },
                 secondary_btn: {
-                    text: 'Preferencias',
-                    role: 'settings' //'settings' or 'accept_necessary'
+                    text: 'Rechazar no esenciales',
+                    role: 'accept_necessary'
                 },
-                revision_message: '<br><br> Estimado usuario, ¡los términos y condiciones han cambiado desde la última vez que visitó!'
+                tertiary_btn: {
+                    text: 'Preferencias',
+                    role: 'settings'
+                }
             },
             settings_modal: {
-                title: 'Configuración de cookies',
-                save_settings_btn: 'Guardar selección actual',
+                title: 'Preferencias de cookies',
+                save_settings_btn: 'Guardar selección',
                 accept_all_btn: 'Aceptar todo',
                 reject_all_btn: 'Rechazar todo',
                 close_btn_label: 'Cerrar',
@@ -256,275 +219,73 @@ cc.run({
                 blocks: [
                     {
                         title: 'Uso de cookies',
-                        description: `Las cookies son pequeños archivos de texto utilizados por los sitios web para hacer más eficiente la experiencia del usuario.
-                                Por ley, podemos almacenar cookies en su dispositivo si son estrictamente necesarias para el funcionamiento de este sitio. Para todos los demás tipos de cookies, necesitamos su permiso.
-                                Este sitio utiliza diferentes tipos de cookies. Algunas cookies son colocadas por terceros que aparecen en nuestros sitios.
-                                Puede cambiar o retirar su consentimiento en cualquier momento desde la declaración de cookies en nuestro sitio web.
-                                Obtenga más información sobre quiénes somos, cómo puede comunicarse con nosotros y cómo procesamos datos personales en nuestra política de privacidad.
-                                Incluya su ID de consentimiento y la fecha al contactarnos sobre su consentimiento.`
-                    }, {
-                        title: 'Cookies estrictamente necesarias',
-                        description: "Las cookies necesarias ayudan a que un sitio web sea utilizable mediante la activación de funciones básicas como la navegación por la página y el acceso a áreas seguras del sitio web. El sitio web no puede funcionar correctamente sin estas cookies.",
-                        toggle: {
-                            value: 'necessary',
-                            enabled: true,
-                            readonly: true //cookie categories with readonly=true are all treated as "necessary cookies"
-                        },
-                        cookie_table: [
-                            {
-                                col1: 'cookie_consent',
-                                col2: `deskbolic.com`,
-                                col3: "Almacena el estado de consentimiento de cookies del usuario."
-                            },
-                            {
-                                col1: '_deskbolic_session',
-                                col2: 'deskbolic.com',
-                                col3: 'Almacena detalles de la sesión actual',
-                                path: '/' // needed for autoclear cookies
-                            }
-                        ]
-                    }, {
-                        title: 'Cookies de estadísticas',
-                        description: 'Las cookies de estadísticas ayudan a los propietarios de sitios web a comprender cómo interactúan los visitantes con los sitios web al recopilar y reportar información de forma anónima.',
-                        toggle: {
-                            value: 'analytics',
-                            enabled: true,
-                            readonly: false
-                        },
-                        cookie_table: [
-                            {
-                                col1: '_ga',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Registra un ID único que se utiliza para generar datos estadísticos sobre cómo el visitante utiliza el sitio web.',
-                                is_regex: true
-                            },
-                            {
-                                col1: '_gid',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Registra un ID único que se utiliza para generar datos estadísticos sobre cómo el visitante utiliza el sitio web.',
-                            },
-                            {
-                                col1: 'td',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Registra datos estadísticos sobre el comportamiento de los visitantes en el sitio web. Utilizado por el operador del sitio web para análisis internos.',
-                                path: '/' // needed for autoclear cookies
-                            },
-                            {
-                                col1: '_ga_#',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Recoge datos sobre cuántas veces un usuario ha visitado un sitio web, así como datos de la primera y la última visita. Utilizado por Google Analytics.'
-                            },
-                            {
-                                col1: '_gat',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Utilizado por Google Analytics para limitar la tasa de solicitudes.'
-                            }
-                        ]
-                    }, {
-                        title: 'Cookies de marketing',
-                        description: 'Las cookies de marketing se utilizan para rastrear a los visitantes en los sitios web. El objetivo es mostrar anuncios que sean relevantes y atractivos para los usuarios individuales y, por lo tanto, más valiosos para los editores y anunciantes de terceros.',
-                        toggle: {
-                            value: 'marketing',
-                            enabled: true,
-                            readonly: false
-                        },
-                        cookie_table: [
-                            {
-                                col1: 'pagead/landing',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Recopila datos de comportamiento de los visitantes en varios sitios web para presentar publicidad más relevante. Esto también permite que el sitio web limite la cantidad de veces que se muestra el mismo anuncio.',
-                                is_regex: true
-                            },
-                            {
-                                col1: '_gcl_au',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Utilizado por Google AdSense para experimentar con la efectividad de la publicidad en sitios web que utilizan sus servicios.',
-                            }
-                        ]
-                    }, {
-                        title: 'Cookies de preferencias',
-                        description: 'Las cookies de preferencias permiten que un sitio web recuerde información que afecta la forma en que se comporta o se ve un sitio web, como su idioma preferido o la región en la que se encuentra.',
-                        toggle: {
-                            value: 'preference',
-                            enabled: true,
-                            readonly: false
-                        }
-                    }, {
-                        title: 'Cookies no clasificadas',
-                        description: 'Las cookies no clasificadas son cookies que estamos tratando de clasificar actualmente, junto con los proveedores de cookies individuales.',
-                        toggle: {
-                            value: 'unclassified',
-                            enabled: true,
-                            readonly: false
-                        }
-                    }, {
-                        title: 'Política de privacidad',
-                        description: `Gracias por visitar Techbolic Solutions (PVT) Limited. Esta Política de Privacidad describe cómo recopilamos, utilizamos y protegemos su información personal.
-                        Podemos recopilar información personal, como su nombre, dirección de correo electrónico y otros detalles, cuando usted los proporciona voluntariamente.
-                        Utilizamos la información que usted proporciona para brindar y mejorar nuestros servicios, responder consultas y personalizar su experiencia en el sitio web.
-                        Utilizamos cookies para mejorar su experiencia de navegación. Puede desactivar las cookies en la configuración de su navegador, pero esto puede afectar la funcionalidad del sitio web.
-                        Si tiene alguna pregunta o inquietud sobre nuestra Política de Privacidad, contáctenos en info@deskbolic.com.`
-                    }
-                ]
-            }
-        },
-        'fr': {
-            consent_modal: {
-                title: 'Ce site web utilise des cookies',
-                description: 'Nous utilisons des cookies pour personnaliser le contenu et les annonces, fournir des fonctionnalités de médias sociaux et analyser l\'accès à notre site web. Nous partageons également des informations sur votre utilisation de notre site avec nos partenaires de médias sociaux, de publicité et d\'analyse.',
-                primary_btn: {
-                    text: 'Accepter tout',
-                    role: 'accept_all' //'accept_selected' or 'accept_all'
-                },
-                secondary_btn: {
-                    text: 'Préférences',
-                    role: 'settings' //'settings' or 'accept_necessary'
-                },
-                revision_message: '<br><br> Cher utilisateur, les termes et conditions ont changé depuis votre dernière visite !'
-            },
-            settings_modal: {
-                title: 'Paramètres des cookies',
-                save_settings_btn: 'Enregistrer la sélection actuelle',
-                accept_all_btn: 'Accepter tout',
-                reject_all_btn: 'Refuser tout',
-                close_btn_label: 'Fermer',
-                cookie_table_headers: [
-                    { col1: 'Nom' },
-                    { col2: 'Fournisseur' },
-                    { col3: 'Objectif' }
-                ],
-                blocks: [
+                        description: 'Las cookies son pequeños archivos de texto necesarios para que su experiencia en Deskbolic sea eficiente y segura. Puede modificar sus preferencias en cualquier momento.'
+                    },
                     {
-                        title: 'Utilisation des cookies',
-                        description: `Les cookies sont de petits fichiers texte utilisés par les sites web pour rendre l'expérience utilisateur plus efficace.
-                        En vertu de la loi, nous pouvons stocker des cookies sur votre appareil s'ils sont strictement nécessaires au fonctionnement de ce site. Pour tous les autres types de cookies, nous avons besoin de votre permission.
-                        Ce site utilise différents types de cookies. Certains cookies sont placés par des tiers qui apparaissent sur nos sites.
-                        Vous pouvez changer ou retirer votre consentement à tout moment à partir de l'énoncé de cookie sur notre site web.
-                        En savoir plus sur qui nous sommes, comment vous pouvez nous contacter et comment nous traitons les données personnelles dans notre politique de confidentialité.
-                        Veuillez inclure votre identifiant de consentement et la date lorsque vous nous contactez concernant votre consentement.`
-                    }, {
-                        title: 'Cookies strictement nécessaires',
-                        description: "Les cookies nécessaires contribuent à rendre un site web utilisable en activant des fonctions de base telles que la navigation dans les pages et l'accès à des zones sécurisées du site web. Le site web ne peut pas fonctionner correctement sans ces cookies.",
-                        toggle: {
-                            value: 'necessary',
-                            enabled: true,
-                            readonly: true // Les catégories de cookies avec readonly=true sont toutes traitées comme des "cookies nécessaires"
-                        },
+                        title: 'Cookies estrictamente necesarias',
+                        description: 'Permiten funciones básicas como la navegación y el acceso a zonas seguras. El sitio no puede funcionar correctamente sin ellas.',
+                        toggle: { value: 'necessary', enabled: true, readonly: true },
                         cookie_table: [
-                            {
-                                col1: 'cookie_consent',
-                                col2: `deskbolic.com`,
-                                col3: "Stocke l'état de consentement aux cookies de l'utilisateur."
-                            },
-                            {
-                                col1: '_deskbolic_session',
-                                col2: 'deskbolic.com',
-                                col3: 'Stocke les détails de la session en cours',
-                                path: '/' // nécessaire pour effacer automatiquement les cookies
-                            }
+                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'Guarda las opciones de consentimiento de cookies.' },
+                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'Mantiene la sesión y tokens de seguridad.', path: '/' }
                         ]
-                    }, {
-                        title: 'Cookies statistiques',
-                        description: 'Les cookies statistiques aident les propriétaires de sites web à comprendre comment les visiteurs interagissent avec les sites web en collectant et en rapportant des informations de manière anonyme.',
-                        toggle: {
-                            value: 'analytics',
-                            enabled: true,
-                            readonly: false
-                        },
+                    },
+                    {
+                        title: 'Cookies de preferencias',
+                        description: 'Permiten recordar sus elecciones, como la moneda de precios o el idioma seleccionado.',
+                        toggle: { value: 'preference', enabled: true, readonly: false },
                         cookie_table: [
-                            {
-                                col1: '_ga',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Enregistre un identifiant unique utilisé pour générer des données statistiques sur la manière dont le visiteur utilise le site web.',
-                                is_regex: true
-                            },
-                            {
-                                col1: '_gid',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Enregistre un identifiant unique utilisé pour générer des données statistiques sur la manière dont le visiteur utilise le site web.',
-                            },
-                            {
-                                col1: 'td',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Enregistre des données statistiques sur le comportement des visiteurs sur le site web. Utilisé par l\'opérateur du site web pour l\'analyse interne.',
-                                path: '/' // nécessaire pour effacer automatiquement les cookies
-                            },
-                            {
-                                col1: '_ga_#',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Collecte des données sur le nombre de fois quun utilisateur a visité un site web, ainsi que des données pour la première et la dernière visite. Utilisé par Google Analytics.'
-                            },
-                            {
-                                col1: '_gat',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Utilisé par Google Analytics pour limiter le taux de requêtes.'
-                            }
+                            { col1: 'currency', col2: 'deskbolic.com', col3: 'Almacena la moneda de pago seleccionada por el usuario.' }
                         ]
-                    }, {
-                        title: 'Cookies marketing',
-                        description: 'Les cookies marketing sont utilisés pour suivre les visiteurs à travers les sites web. L\'objectif est de diffuser des annonces pertinentes et attrayantes pour les utilisateurs individuels et donc plus précieuses pour les éditeurs et les annonceurs tiers.',
-                        toggle: {
-                            value: 'marketing',
-                            enabled: true,
-                            readonly: false
-                        },
+                    },
+                    {
+                        title: 'Cookies estadísticas',
+                        description: 'Ayudan a entender cómo interactúan los visitantes con el sitio web de forma totalmente anónima.',
+                        toggle: { value: 'analytics', enabled: true, readonly: false },
                         cookie_table: [
-                            {
-                                col1: 'pagead/landing',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Collecte des données comportementales des visiteurs sur plusieurs sites web pour présenter une publicité plus pertinente - Cela permet également au site web de limiter le nombre de fois où la même annonce est affichée.',
-                                is_regex: true
-                            },
-                            {
-                                col1: '_gcl_au',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Utilisé par Google AdSense pour expérimenter l\'efficacité de la publicité sur les sites web qui utilisent leurs services.',
-                            }
+                            { col1: '_ga', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Registra un ID único para generar métricas estadísticas.' },
+                            { col1: '_ga_*', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Mantiene el estado de la sesión en Google Analytics 4.' },
+                            { col1: '_gid', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Agrupa el comportamiento del usuario durante el día.' },
+                            { col1: '_gat', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Limita la tasa de peticiones a Google Analytics.' }
                         ]
-                    }, {
-                        title: 'Cookies de préférence',
-                        description: 'Les cookies de préférence permettent à un site web de se souvenir des informations qui affectent la manière dont un site web se comporte ou apparaît, telles que votre langue préférée ou la région dans laquelle vous vous trouvez.',
-                        toggle: {
-                            value: 'preference',
-                            enabled: true,
-                            readonly: false
-                        }
-                    }, {
-                        title: 'Cookies non classés',
-                        description: 'Les cookies non classés sont des cookies que nous essayons actuellement de classer, avec les fournisseurs de cookies individuels.',
-                        toggle: {
-                            value: 'unclassified',
-                            enabled: true,
-                            readonly: false
-                        }
-                    }, {
-                        title: 'Politique de confidentialité',
-                        description: `Merci d'avoir visité Techbolic Solutions (PVT) Limited. Cette politique de confidentialité décrit la manière dont nous collectons, utilisons et protégeons vos informations personnelles.
-                        Nous pouvons collecter des informations personnelles, telles que votre nom, votre adresse e-mail et d'autres détails, lorsque vous les fournissez volontairement.
-                        Nous utilisons les informations que vous fournissez pour fournir et améliorer nos services, répondre aux demandes de renseignements et personnaliser votre expérience sur le site Web.
-                        Nous utilisons des cookies pour améliorer votre expérience de navigation. Vous pouvez désactiver les cookies dans les paramètres de votre navigateur, mais cela peut affecter la fonctionnalité du site Web.
-                        Si vous avez des questions ou des préoccupations concernant notre politique de confidentialité, veuillez nous contacter à info@deskbolic.com.`
+                    },
+                    {
+                        title: 'Cookies de marketing',
+                        description: 'Permiten atribuir conversiones y enlaces de afiliados.',
+                        toggle: { value: 'marketing', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'ref', col2: 'deskbolic.com', col3: 'Registra el código de referencia de afiliado para atribución.' },
+                            { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Mide la efectividad publicitaria en Google Ads.' }
+                        ]
+                    },
+                    {
+                        title: 'Política de privacidad',
+                        description: 'Para más información, consulte nuestra <a href="/privacy" target="_blank" rel="noopener">Política de Privacidad</a> o contáctenos en <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
                     }
                 ]
             }
         },
+
         'de': {
             consent_modal: {
-                title: 'Diese Website verwendet Cookies',
-                description: 'Wir verwenden Cookies, um Inhalte und Anzeigen zu personalisieren, Funktionen für soziale Medien bereitzustellen und den Zugriff auf unsere Website zu analysieren. Wir teilen auch Informationen über Ihre Nutzung unserer Website mit unseren Partnern für soziale Medien, Werbung und Analyse.',
+                title: 'Wir schätzen Ihre Privatsphäre',
+                description: 'Wir verwenden Cookies, um Inhalte zu personalisieren, Einstellungen zu speichern und den Datenverkehr auf Deskbolic zu analysieren. Sie können alle Cookies akzeptieren, nicht essenzielle ablehnen oder Ihre Einstellungen anpassen.',
                 primary_btn: {
                     text: 'Alle akzeptieren',
-                    role: 'accept_all' //'accept_selected' or 'accept_all'
+                    role: 'accept_all'
                 },
                 secondary_btn: {
-                    text: 'Einstellungen',
-                    role: 'settings' //'settings' or 'accept_necessary'
+                    text: 'Nicht essenzielle ablehnen',
+                    role: 'accept_necessary'
                 },
-                revision_message: '<br><br> Lieber Benutzer, die Geschäftsbedingungen haben sich seit Ihrem letzten Besuch geändert!'
+                tertiary_btn: {
+                    text: 'Einstellungen',
+                    role: 'settings'
+                }
             },
             settings_modal: {
                 title: 'Cookie-Einstellungen',
-                save_settings_btn: 'Aktuelle Auswahl speichern',
+                save_settings_btn: 'Auswahl speichern',
                 accept_all_btn: 'Alle akzeptieren',
                 reject_all_btn: 'Alle ablehnen',
                 close_btn_label: 'Schließen',
@@ -536,117 +297,402 @@ cc.run({
                 blocks: [
                     {
                         title: 'Cookie-Nutzung',
-                        description: `Cookies sind kleine Textdateien, die von Websites verwendet werden, um die Benutzererfahrung effizienter zu gestalten.
-                            Nach dem Gesetz dürfen wir Cookies auf Ihrem Gerät speichern, wenn sie für den Betrieb dieser Website unbedingt erforderlich sind. Für alle anderen Arten von Cookies benötigen wir Ihre Zustimmung.
-                            Diese Website verwendet verschiedene Arten von Cookies. Einige Cookies werden von Dritten platziert, die auf unseren Websites erscheinen.
-                            Sie können Ihre Zustimmung jederzeit über die Cookie-Erklärung auf unserer Website ändern oder zurückziehen.
-                            Erfahren Sie mehr darüber, wer wir sind, wie Sie uns kontaktieren können und wie wir personenbezogene Daten in unserer Datenschutzrichtlinie verarbeiten.
-                            Bitte geben Sie bei Anfragen zu Ihrer Zustimmung Ihre Zustimmungs-ID und das Datum an.`
-                    }, {
-                        title: 'Unbedingt notwendige Cookies',
-                        description: "Notwendige Cookies tragen dazu bei, eine Website nutzbar zu machen, indem sie Grundfunktionen wie Seitennavigation und den Zugriff auf sichere Bereiche der Website ermöglichen. Die Website kann ohne diese Cookies nicht ordnungsgemäß funktionieren.",
-                        toggle: {
-                            value: 'necessary',
-                            enabled: true,
-                            readonly: true //Cookie-Kategorien mit readonly=true gelten alle als "notwendige Cookies"
-                        },
+                        description: 'Cookies sind kleine Textdateien, die für den sicheren und zuverlässigen Betrieb von Deskbolic erforderlich sind.'
+                    },
+                    {
+                        title: 'Technisch notwendige Cookies',
+                        description: 'Diese Cookies sind für den grundlegenden Betrieb der Website und sichere Sitzungen unerlässlich.',
+                        toggle: { value: 'necessary', enabled: true, readonly: true },
                         cookie_table: [
-                            {
-                                col1: 'cookie_consent',
-                                col2: `deskbolic.com`,
-                                col3: 'Speichert den Zustimmungsstatus des Benutzers zu Cookies.'
-                            },
-                            {
-                                col1: '_deskbolic_session',
-                                col2: 'deskbolic.com',
-                                col3: 'Speichert aktuelle Sitzungsdetails',
-                                path: '/' // benötigt für das automatische Löschen von Cookies
-                            }
+                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'Speichert die Cookie-Einwilligung des Nutzers.' },
+                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'Speichert Sitzungs- und Sicherheitstoken.', path: '/' }
                         ]
-                    }, {
-                        title: 'Statistik-Cookies',
-                        description: 'Statistik-Cookies helfen Website-Besitzern zu verstehen, wie Besucher mit Websites interagieren, indem sie Informationen anonym sammeln und melden.',
-                        toggle: {
-                            value: 'analytics',
-                            enabled: true,
-                            readonly: false
-                        },
-                        cookie_table: [
-                            {
-                                col1: '_ga',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Registriert eine eindeutige ID, die zur Erzeugung statistischer Daten darüber verwendet wird, wie der Besucher die Website nutzt.',
-                                is_regex: true
-                            },
-                            {
-                                col1: '_gid',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Registriert eine eindeutige ID, die zur Erzeugung statistischer Daten darüber verwendet wird, wie der Besucher die Website nutzt.',
-                            },
-                            {
-                                col1: 'td',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Registriert statistische Daten zum Verhalten von Besuchern auf der Website. Wird vom Website-Betreiber für interne Analysen verwendet.',
-                                path: '/' // benötigt für das automatische Löschen von Cookies
-                            },
-                            {
-                                col1: '_ga_#',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Sammelt Daten darüber, wie oft ein Benutzer eine Website besucht hat, sowie Daten für den ersten und letzten Besuch. Wird von Google Analytics verwendet.'
-                            },
-                            {
-                                col1: '_gat',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Wird von Google Analytics verwendet, um die Anfragerate zu begrenzen.'
-                            }
-                        ]
-                    }, {
-                        title: 'Marketing-Cookies',
-                        description: 'Marketing-Cookies werden verwendet, um Besucher über Websites hinweg zu verfolgen. Die Absicht besteht darin, Anzeigen anzuzeigen, die für einzelne Benutzer relevant und ansprechend sind und daher für Herausgeber und Drittanbieter-Werbetreibende wertvoller sind.',
-                        toggle: {
-                            value: 'marketing',
-                            enabled: true,
-                            readonly: false
-                        },
-                        cookie_table: [
-                            {
-                                col1: 'pagead/landing',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Sammelt Verhaltensdaten von Besuchern über mehrere Websites, um relevantere Werbung anzuzeigen. Dies ermöglicht es der Website auch, die Anzahl der Anzeigenanzeigungen zu begrenzen.',
-                                is_regex: true
-                            },
-                            {
-                                col1: '_gcl_au',
-                                col2: `<a href="https://google.com">Google</a>`,
-                                col3: 'Wird von Google AdSense verwendet, um die Wirksamkeit von Werbung auf Websites zu testen, die ihre Dienste nutzen.',
-                            }
-                        ]
-                    }, {
+                    },
+                    {
                         title: 'Präferenz-Cookies',
-                        description: 'Präferenz-Cookies ermöglichen einer Website das Speichern von Informationen, die sich auf das Verhalten oder das Aussehen einer Website auswirken, wie z. B. Ihre bevorzugte Sprache oder die Region, in der Sie sich befinden.',
-                        toggle: {
-                            value: 'preference',
-                            enabled: true,
-                            readonly: false
-                        }
-                    }, {
-                        title: 'Nicht klassifizierte Cookies',
-                        description: 'Nicht klassifizierte Cookies sind Cookies, die wir derzeit zu klassifizieren versuchen, zusammen mit Anbietern einzelner Cookies.',
-                        toggle: {
-                            value: 'unclassified',
-                            enabled: true,
-                            readonly: false
-                        }
-                    }, {
-                        title: 'Datenschutzrichtlinie',
-                        description: `Vielen Dank für Ihren Besuch bei Techbolic Solutions (PVT) Limited. Diese Datenschutzrichtlinie beschreibt, wie wir Ihre persönlichen Daten sammeln, verwenden und schützen.
-                        Wir können personenbezogene Daten wie Ihren Namen, Ihre E-Mail-Adresse und andere Daten erfassen, wenn Sie uns diese freiwillig zur Verfügung stellen.
-                        Wir verwenden die von Ihnen bereitgestellten Informationen, um unsere Dienste bereitzustellen und zu verbessern, auf Anfragen zu antworten und Ihr Erlebnis auf der Website zu personalisieren.
-                        Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern. Sie können Cookies in Ihren Browsereinstellungen deaktivieren, dies kann jedoch die Funktionalität der Website beeinträchtigen.
-                        Wenn Sie Fragen oder Bedenken zu unserer Datenschutzrichtlinie haben, kontaktieren Sie uns bitte unter info@deskbolic.com.`
+                        description: 'Ermöglichen das Speichern von Nutzereinstellungen wie der gewählten Währung.',
+                        toggle: { value: 'preference', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'currency', col2: 'deskbolic.com', col3: 'Speichert die bevorzugte Anzeigewährung.' }
+                        ]
+                    },
+                    {
+                        title: 'Statistik-Cookies',
+                        description: 'Helfen uns zu verstehen, wie Besucher mit der Website interagieren, um Deskbolic zu optimieren.',
+                        toggle: { value: 'analytics', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: '_ga', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Generiert anonyme statistische Daten zur Nutzung.' },
+                            { col1: '_ga_*', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Google Analytics 4 Sitzungsstatus.' },
+                            { col1: '_gid', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Gruppiert Nutzeraktionen innerhalb eines Tages.' },
+                            { col1: '_gat', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Drosselt Anfragen an Google Analytics.' }
+                        ]
+                    },
+                    {
+                        title: 'Marketing-Cookies',
+                        description: 'Werden genutzt, um Werbewirksamkeit und Partner-Empfehlungen zuzuordnen.',
+                        toggle: { value: 'marketing', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'ref', col2: 'deskbolic.com', col3: 'Speichert Partner-Empfehlungscodes für die Zuordnung.' },
+                            { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Wird von Google Ads zur Conversion-Messung verwendet.' }
+                        ]
+                    },
+                    {
+                        title: 'Datenschutzerklärung',
+                        description: 'Weitere Informationen finden Sie in unserer <a href="/privacy" target="_blank" rel="noopener">Datenschutzerklärung</a> oder per E-Mail an <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                    }
+                ]
+            }
+        },
+
+        'fr': {
+            consent_modal: {
+                title: 'Nous respectons votre vie privée',
+                description: 'Nous utilisons des cookies pour personnaliser le contenu, mémoriser vos préférences et analyser le trafic sur Deskbolic. Vous pouvez accepter tous les cookies, refuser les cookies non essentiels ou personnaliser vos choix.',
+                primary_btn: {
+                    text: 'Tout accepter',
+                    role: 'accept_all'
+                },
+                secondary_btn: {
+                    text: 'Refuser les non essentiels',
+                    role: 'accept_necessary'
+                },
+                tertiary_btn: {
+                    text: 'Personnaliser',
+                    role: 'settings'
+                }
+            },
+            settings_modal: {
+                title: 'Préférences des cookies',
+                save_settings_btn: 'Enregistrer la sélection',
+                accept_all_btn: 'Tout accepter',
+                reject_all_btn: 'Tout refuser',
+                close_btn_label: 'Fermer',
+                cookie_table_headers: [
+                    { col1: 'Nom' },
+                    { col2: 'Fournisseur' },
+                    { col3: 'Finalité' }
+                ],
+                blocks: [
+                    {
+                        title: 'Utilisation des cookies',
+                        description: 'Les cookies sont de petits fichiers texte nécessaires au fonctionnement sécurisé et personnalisé de Deskbolic.'
+                    },
+                    {
+                        title: 'Cookies strictement nécessaires',
+                        description: 'Ces cookies sont indispensables au fonctionnement normal du site et à la sécurité de la session.',
+                        toggle: { value: 'necessary', enabled: true, readonly: true },
+                        cookie_table: [
+                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'Conserve vos préférences de consentement de cookies.' },
+                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'Maintient la session sécurisée du visiteur.', path: '/' }
+                        ]
+                    },
+                    {
+                        title: 'Cookies de préférences',
+                        description: 'Permettent de mémoriser des informations qui modifient le comportement du site, comme la devise d\'affichage.',
+                        toggle: { value: 'preference', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'currency', col2: 'deskbolic.com', col3: 'Stocke la devise choisie pour les tarifs.' }
+                        ]
+                    },
+                    {
+                        title: 'Cookies statistiques',
+                        description: 'Nous aident à comprendre comment les visiteurs naviguent sur le site de manière anonyme.',
+                        toggle: { value: 'analytics', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: '_ga', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Identifiant unique pour les statistiques Google Analytics.' },
+                            { col1: '_ga_*', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Maintient l\'état de session dans GA4.' },
+                            { col1: '_gid', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Identifiant pour regrouper les pages vues sur 24h.' },
+                            { col1: '_gat', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Régule le débit des requêtes vers Google Analytics.' }
+                        ]
+                    },
+                    {
+                        title: 'Cookies marketing',
+                        description: 'Mesurent l\'efficacité publicitaire et attribuent les recommandations d\'affiliés.',
+                        toggle: { value: 'marketing', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'ref', col2: 'deskbolic.com', col3: 'Conserve le code d\'affiliation pour l\'attribution des commissions.' },
+                            { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Utilisé par Google Ads pour mesurer les conversions.' }
+                        ]
+                    },
+                    {
+                        title: 'Politique de confidentialité',
+                        description: 'Consultez notre <a href="/privacy" target="_blank" rel="noopener">Politique de confidentialité</a> ou écrivez-nous à <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                    }
+                ]
+            }
+        },
+
+        'pt-BR': {
+            consent_modal: {
+                title: 'Valorizamos sua privacidade',
+                description: 'Usamos cookies para personalizar conteúdos, lembrar suas preferências e analisar o tráfego no Deskbolic. Você pode aceitar todos os cookies, rejeitar os não essenciais ou gerenciar suas preferências.',
+                primary_btn: {
+                    text: 'Aceitar todos',
+                    role: 'accept_all'
+                },
+                secondary_btn: {
+                    text: 'Rejeitar não essenciais',
+                    role: 'accept_necessary'
+                },
+                tertiary_btn: {
+                    text: 'Preferências',
+                    role: 'settings'
+                }
+            },
+            settings_modal: {
+                title: 'Preferências de cookies',
+                save_settings_btn: 'Salvar seleção',
+                accept_all_btn: 'Aceitar todos',
+                reject_all_btn: 'Rejeitar todos',
+                close_btn_label: 'Fechar',
+                cookie_table_headers: [
+                    { col1: 'Nome' },
+                    { col2: 'Provedor' },
+                    { col3: 'Finalidade' }
+                ],
+                blocks: [
+                    {
+                        title: 'Uso de cookies',
+                        description: 'Cookies são pequenos arquivos de texto essenciais para garantir que sua experiência no Deskbolic seja segura e contínua.'
+                    },
+                    {
+                        title: 'Cookies estritamente necessários',
+                        description: 'Fundamentais para a navegação no site e sessões seguras. Não podem ser desativados.',
+                        toggle: { value: 'necessary', enabled: true, readonly: true },
+                        cookie_table: [
+                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'Armazena suas preferências de consentimento de cookies.' },
+                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'Mantém a sessão segura e tokens do visitante.', path: '/' }
+                        ]
+                    },
+                    {
+                        title: 'Cookies de preferências',
+                        description: 'Lembram escolhas como sua moeda de exibição e idioma preferido.',
+                        toggle: { value: 'preference', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'currency', col2: 'deskbolic.com', col3: 'Armazena a moeda selecionada para exibição de planos.' }
+                        ]
+                    },
+                    {
+                        title: 'Cookies de estatísticas',
+                        description: 'Ajudam a entender anonimamente como os visitantes interagem com a plataforma.',
+                        toggle: { value: 'analytics', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: '_ga', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Gera métricas estatísticas anônimas de navegação.' },
+                            { col1: '_ga_*', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Mantém o estado da sessão no GA4.' },
+                            { col1: '_gid', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Identificador para agrupar páginas visitadas em 24h.' },
+                            { col1: '_gat', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Controla a taxa de requisições ao Google Analytics.' }
+                        ]
+                    },
+                    {
+                        title: 'Cookies de marketing',
+                        description: 'Permitem mensurar o retorno de anúncios e atribuir indicações de parceiros.',
+                        toggle: { value: 'marketing', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'ref', col2: 'deskbolic.com', col3: 'Registra o código de afiliado para atribuição de comissões.' },
+                            { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Mede conversões e eficiência de anúncios no Google Ads.' }
+                        ]
+                    },
+                    {
+                        title: 'Política de Privacidade',
+                        description: 'Saiba mais em nossa <a href="/privacy" target="_blank" rel="noopener">Política de Privacidade</a> ou pelo e-mail <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                    }
+                ]
+            }
+        },
+
+        'ar': {
+            consent_modal: {
+                title: 'نحن نهتم بخصوصيتك',
+                description: 'يستخدم ديسكبوليك ملفات تعريف الارتباط لتحسين تجربة التصفح، وتذكر تفضيلاتك، وتحليل حركة المرور. يمكنك قبول جميع الملفات، أو رفض غير الأساسية، أو تخصيص تفضيلاتك.',
+                primary_btn: {
+                    text: 'قبول الكل',
+                    role: 'accept_all'
+                },
+                secondary_btn: {
+                    text: 'رفض غير الأساسية',
+                    role: 'accept_necessary'
+                },
+                tertiary_btn: {
+                    text: 'تخصيص التفضيلات',
+                    role: 'settings'
+                }
+            },
+            settings_modal: {
+                title: 'إعدادات ملفات تعريف الارتباط',
+                save_settings_btn: 'حفظ الاختيارات',
+                accept_all_btn: 'قبول الكل',
+                reject_all_btn: 'رفض الكل',
+                close_btn_label: 'إغلاق',
+                cookie_table_headers: [
+                    { col1: 'الاسم' },
+                    { col2: 'المزود' },
+                    { col3: 'الغرض' }
+                ],
+                blocks: [
+                    {
+                        title: 'استخدام ملفات تعريف الارتباط',
+                        description: 'ملفات تعريف الارتباط هي ملفات نصية صغيرة تساعد في ضمان عمل ديسكبوليك بأمان وموثوقية.'
+                    },
+                    {
+                        title: 'ملفات تعريف الارتباط الضرورية للغاية',
+                        description: 'هذه الملفات أساسية لعمل الموقع وتمكين الأمان وتسجيل الدخول ولا يمكن إيقافها.',
+                        toggle: { value: 'necessary', enabled: true, readonly: true },
+                        cookie_table: [
+                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'تخزين تفضيلات الموافقة على ملفات تعريف الارتباط.' },
+                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'الحفاظ على جلسة وأمان الزائر.', path: '/' }
+                        ]
+                    },
+                    {
+                        title: 'ملفات تعريف ارتباط التفضيلات',
+                        description: 'تتيح للموقع تذكر اختياراتك مثل العملة المفضلة لعرض الأسعار.',
+                        toggle: { value: 'preference', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'currency', col2: 'deskbolic.com', col3: 'تخزين العملة المحددة لعرض الأسعار.' }
+                        ]
+                    },
+                    {
+                        title: 'ملفات تعريف الارتباط الإحصائية',
+                        description: 'تساعدنا على فهم كيفية تفاعل الزوار مع الموقع بشكل مجهول الهوية لتحسين خدماتنا.',
+                        toggle: { value: 'analytics', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: '_ga', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'تسجيل معرّف فريد لتوليد بيانات إحصائية مجهولة.' },
+                            { col1: '_ga_*', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'الاحتفاظ بحالة الجلسة لـ Google Analytics 4.' },
+                            { col1: '_gid', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'تجميع سلوك التصفح على مدار 24 ساعة.' },
+                            { col1: '_gat', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'الحد من معدل الطلبات في Google Analytics.' }
+                        ]
+                    },
+                    {
+                        title: 'ملفات تعريف الارتباط التسويقية',
+                        description: 'تُستخدم لقياس فعالية الحملات وتتبع روابط الإحالة للشركاء.',
+                        toggle: { value: 'marketing', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'ref', col2: 'deskbolic.com', col3: 'تخزين رمز الإحالة التابع للشركاء.' },
+                            { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'تتبع كفاءة وتحويلات إعلانات Google Ads.' }
+                        ]
+                    },
+                    {
+                        title: 'سياسة الخصوصية',
+                        description: 'لمزيد من المعلومات، يرجى قراءة <a href="/privacy" target="_blank" rel="noopener">سياسة الخصوصية</a> أو التواصل عبر <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                    }
+                ]
+            }
+        },
+
+        'ko': {
+            consent_modal: {
+                title: '고객님의 개인정보를 소중히 생각합니다',
+                description: 'Deskbolic은 서비스 기능 제공, 환경설정 기억, 맞춤형 콘텐츠 제공 및 웹사이트 트래픽 분석을 위해 쿠키를 사용합니다. 모든 쿠키를 수락하거나, 필수 외 쿠키를 거부하거나, 직접 설정을 변경할 수 있습니다.',
+                primary_btn: {
+                    text: '모두 수락',
+                    role: 'accept_all'
+                },
+                secondary_btn: {
+                    text: '필수 외 거부',
+                    role: 'accept_necessary'
+                },
+                tertiary_btn: {
+                    text: '쿠키 설정',
+                    role: 'settings'
+                }
+            },
+            settings_modal: {
+                title: '쿠키 환경설정',
+                save_settings_btn: '선택 항목 저장',
+                accept_all_btn: '모두 수락',
+                reject_all_btn: '모두 거부',
+                close_btn_label: '닫기',
+                cookie_table_headers: [
+                    { col1: '쿠키명' },
+                    { col2: '제공자' },
+                    { col3: '수집 목적' }
+                ],
+                blocks: [
+                    {
+                        title: '쿠키 사용 안내',
+                        description: '쿠키는 웹사이트가 원활하고 안전하게 작동할 수 있도록 지원하는 작은 텍스트 파일입니다.'
+                    },
+                    {
+                        title: '필수 쿠키',
+                        description: '웹사이트의 기본 기능(보안 세션, 페이지 탐색)을 지원하며 비활성화할 수 없습니다.',
+                        toggle: { value: 'necessary', enabled: true, readonly: true },
+                        cookie_table: [
+                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: '이용자의 쿠키 동의 설정을 저장합니다.' },
+                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: '안전한 방문자 세션 토큰을 유지합니다.', path: '/' }
+                        ]
+                    },
+                    {
+                        title: '기능 및 설정 쿠키',
+                        description: '선택하신 요금제 통화 및 언어 설정을 기억합니다.',
+                        toggle: { value: 'preference', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'currency', col2: 'deskbolic.com', col3: '이용자가 선택한 요금제 표시 통화를 저장합니다.' }
+                        ]
+                    },
+                    {
+                        title: '통계 및 분석 쿠키',
+                        description: '방문자의 사이트 이용 통계를 익명으로 분석하여 서비스 품질을 개선합니다.',
+                        toggle: { value: 'analytics', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: '_ga', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: '익명 통계 데이터 생성을 위한 고유 ID를 부여합니다.' },
+                            { col1: '_ga_*', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Google Analytics 4 세션 상태를 유지합니다.' },
+                            { col1: '_gid', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: '24시간 동안의 사용자 페이지 이용 행태를 집계합니다.' },
+                            { col1: '_gat', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Google Analytics 요청 빈도를 조절합니다.' }
+                        ]
+                    },
+                    {
+                        title: '마케팅 쿠키',
+                        description: '광고 캠페인의 성과를 측정하고 파트너 추천 링크를 추적합니다.',
+                        toggle: { value: 'marketing', enabled: true, readonly: false },
+                        cookie_table: [
+                            { col1: 'ref', col2: 'deskbolic.com', col3: '제휴 파트너 추천 코드를 저장합니다.' },
+                            { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Google Ads 전환 및 마케팅 효율을 측정합니다.' }
+                        ]
+                    },
+                    {
+                        title: '개인정보 처리방침',
+                        description: '자세한 사항은 <a href="/privacy" target="_blank" rel="noopener">개인정보 처리방침</a>을 확인하시거나 <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>으로 문의해 주시기 바랍니다.'
                     }
                 ]
             }
         }
+    }
+});
+
+// Alias 'pt' to 'pt-BR'
+if (cc && cc.languages) {
+    cc.languages['pt'] = cc.languages['pt-BR'];
+}
+
+// Delegated click listener for Turbo navigation
+document.addEventListener('click', function(event) {
+    var trigger = event.target.closest('[data-cc]');
+    if (!trigger) return;
+
+    var role = trigger.getAttribute('data-cc');
+    if (role === 'c-settings') {
+        event.preventDefault();
+        if (window.cc) window.cc.showSettings(0);
+    } else if (role === 'accept-all') {
+        event.preventDefault();
+        if (window.cc) {
+            window.cc.accept('all');
+            window.cc.hideSettings();
+            window.cc.hide();
+        }
+    } else if (role === 'accept-necessary') {
+        event.preventDefault();
+        if (window.cc) {
+            window.cc.accept([]);
+            window.cc.hideSettings();
+            window.cc.hide();
+        }
+    }
+});
+
+// Update language when navigating via Turbo
+document.addEventListener("turbo:load", function() {
+    if (window.cc && typeof window.cc.updateLanguage === 'function') {
+        var docLang = document.documentElement.lang || 'en';
+        window.cc.updateLanguage(docLang);
     }
 });
