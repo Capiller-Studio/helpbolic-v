@@ -1,5 +1,5 @@
-- content_for :title do
-  = t("help_center.search.title_with_query", query: @query, portal: @current_portal.name)
+- search_title = @query.present? ? t("help_center.search.title_with_query", query: @query, portal: @current_portal.name) : "#{t('help_center.search.title')} - #{@current_portal.name}"
+- set_meta_tags(title: search_title, description: t("help_center.search.enter_search_term_desc"))
 
 .search-results-page
   .search-results-container

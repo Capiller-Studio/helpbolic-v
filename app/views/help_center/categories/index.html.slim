@@ -1,5 +1,4 @@
-- content_for :title do
-  = t("help_center.category.all_categories")
+- set_meta_tags(title: "#{t('help_center.category.all_categories')} - #{@current_portal.name}", description: t("help_center.category.browse_categories"))
 
 .page-wrapper
   .container

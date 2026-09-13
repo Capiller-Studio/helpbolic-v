@@ -1,13 +1,4 @@
-- content_for :title do
-  = @current_portal.name
-
-- content_for :meta_tags do
-  meta name="description" content=@current_portal.description
-  meta property="og:title" content=@current_portal.name
-  meta property="og:description" content=@current_portal.description
-  - if @current_portal.social_share_image.attached?
-    meta property="og:image" content=url_for(@current_portal.social_share_image)
-  meta property="og:type" content="website"
+- set_meta_tags(title: @current_portal.name, description: @current_portal.description)
 
 .page-wrapper
   .hero-section
