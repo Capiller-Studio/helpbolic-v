@@ -1,13 +1,5 @@
-- content_for :title do
-  = "#{@category.name} - #{@current_portal.name}"
-
-- content_for :meta_tags do
-  meta name="description" content=@category.description
-  meta property="og:title" content="#{@category.name} - #{@current_portal.name}"
-  meta property="og:description" content=@category.description
-  - if @category.image.attached?
-    meta property="og:image" content=url_for(@category.image)
-  meta property="og:type" content="website"
+- category_image = @category.image.attached? ? url_for(@category.image) : nil
+- set_meta_tags(title: "#{@category.name} - #{@current_portal.name}", description: @category.description, image: category_image)
 
 .page-wrapper
   .category-page

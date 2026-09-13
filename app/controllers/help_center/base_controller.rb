@@ -7,6 +7,7 @@ module HelpCenter
     helper HelpCenter::MetaTagsHelper
     helper HelpCenter::ImageHelper
     helper HelpCenter::ReadTimeHelper
+    helper HelpCenter::StructuredDataHelper
     before_action :resolve_tenant!
     skip_around_action :switch_locale, raise: false
     around_action :switch_locale

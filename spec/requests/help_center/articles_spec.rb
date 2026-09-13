@@ -26,6 +26,24 @@ RSpec.describe 'HelpCenter::Articles', type: :request do
       end
     end
 
+    it 'renders SEO tags, canonical link, and JSON-LD schema on article page' do
+      account.with_shard do
+        category = create(:help_center_category, account: account, portal: portal, status: :active)
+        article = create(:help_center_article, account: account, portal: portal, primary_category: category, title: 'How to Reset Password', content: 'Follow these steps to reset password.', status: :published)
+
+        get article_path(id: article.id)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("<title>#{article.title} - #{portal.name}</title>")
+        expect(response.body).to include('rel="canonical"')
+        expect(response.body).to include('property="og:type"')
+        expect(response.body).to include('article')
+        expect(response.body).to include('application/ld+json')
+        expect(response.body).to include('"@type":"Article"')
+        expect(response.body).to include('"@type":"BreadcrumbList"')
+      end
+    end
+
     it 'renders guide mode sequential navigation for guide categories' do
       account.with_shard do
         category = create(:help_center_category, account: account, portal: portal, status: :active, flags: 1) # guide_mode

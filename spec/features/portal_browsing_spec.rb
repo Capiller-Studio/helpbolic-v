@@ -28,14 +28,14 @@ RSpec.describe 'Help Center Portal Browsing Feature', type: :feature do
 
         visit root_path
 
-        expect(page).to have_content('Billing & Subscriptions')
-        expect(page).to have_content('How to update your credit card')
+        expect(page).to have_text('Billing & Subscriptions')
+        expect(page).to have_text('How to update your credit card')
 
         # Visit the article page
         click_link 'How to update your credit card'
 
-        expect(page).to have_content('How to update your credit card')
-        expect(page).to have_content('Step 1: Go to billing settings.')
+        expect(page).to have_text('How to update your credit card')
+        expect(page).to have_text('Step 1: Go to billing settings.')
       end
     end
   end

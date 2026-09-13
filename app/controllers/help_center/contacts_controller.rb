@@ -101,7 +101,9 @@ module HelpCenter
     def contact_attachments
       return [] unless @contact_form.allow_attachments?
 
-      attachments = Array(params[:attachments]).compact
+      attachments = Array(params[:attachments]).reject { |a| a.blank? || !a.respond_to?(:original_filename) }
+      return [] if attachments.empty?
+
       invalid_attachment = attachments.find do |attachment|
         extension = File.extname(attachment.original_filename.to_s).downcase
 

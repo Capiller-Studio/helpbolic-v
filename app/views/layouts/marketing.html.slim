@@ -1,7 +1,9 @@
 doctype html
 html lang=I18n.locale dir=(I18n.locale.to_s.match?(/\A(ar|he|fa|ur)/i) ? "rtl" : "ltr")
   head
-    title = t("marketing.title")
+    title = meta_title.presence || t("marketing.title")
+    = render "layouts/meta_tags"
+    = render "layouts/structured_data"
     meta name="viewport" content="width=device-width,initial-scale=1"
     meta charset="utf-8"
     = csrf_meta_tags

@@ -1,3 +1,6 @@
+- article_image = @article.banner_image.attached? ? url_for(@article.banner_image) : nil
+- set_meta_tags(title: "#{@article.title} - #{@current_portal.name}", description: strip_tags(@article.content.to_s).truncate(160), image: article_image, type: "article")
+
 .article-page
   .container.article-container data-controller="toc"
     

@@ -14,7 +14,7 @@ en:
       badge: "Deskbolic Help Center Platform"
       title_start: "Deliver exceptional customer support, "
       title_highlight: "effortlessly."
-      description: "You've reached the root domain of the Deskbolic Help Center Platform. Our customers use this infrastructure to power world-class knowledge bases and support portals."
+      description: "Deliver seamless customer self-service with Deskbolic Help Center Platform. Fast, beautiful, and multilingual knowledge bases and customer support portals."
     cta:
       primary: "Create Your Help Center"
       secondary: "View Documentation"
@@ -41,13 +41,13 @@ en:
       privacy_policy: "Privacy Policy"
 
     portal:
-      hero_badge: "✦ Knowledge base updated today"
+      hero_badge: "✦ Help Center & Knowledge Base"
       hero_title: "How can we help you today?"
       hero_subtitle: "Search our knowledge base or browse categories below to find quick answers and troubleshooting guides."
       popular_articles: "Popular Articles"
       need_more_help: "Need more help?"
-      contact_support_subtitle: "Avg. response: 2 hours"
-      submit_request_desc: "Open a ticket for technical issues"
+      contact_support_subtitle: "Get in touch with our team"
+      submit_request_desc: "Open a ticket for any questions or issues"
       articles_count:
         one: "%{count} article"
         other: "%{count} articles"
@@ -60,7 +60,7 @@ en:
       contact_us: "Contact Us"
       contact_us_desc: "Need help? Get in touch with our team."
       other_categories: "Other Categories"
-      still_need_help_desc: "Our support specialists are available 24/7 to help you troubleshoot."
+      still_need_help_desc: "Our support specialists are here to help you troubleshoot."
 
     search:
       title: "Search Results"
@@ -95,8 +95,8 @@ en:
       feedback_error: "We could not save your feedback. Please try again."
       related_articles: "Related Articles"
       on_this_page: "ON THIS PAGE"
-      read_more_help: "Read more help?"
-      help_box_desc: "Our support experts are available 24/7 to resolve any questions."
+      read_more_help: "Need more help?"
+      help_box_desc: "Our support experts are here to help resolve any questions."
 
     contact:
       fields:
@@ -148,7 +148,7 @@ en:
         subtitle: "Our support team has received your request and will get back to you shortly."
         ticket_id: "TICKET ID"
         expected_response: "EXPECTED RESPONSE"
-        response_time: "Usually within 24 hours"
+        response_time: "We'll get back to you as soon as possible"
         email_notice: "You'll also receive a confirmation email with details and updates."
         track_request: "Track Your Request"
         back_to_help_center: "Back to Help Center"
