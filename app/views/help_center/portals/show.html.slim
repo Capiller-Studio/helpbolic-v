@@ -53,27 +53,30 @@
               span = article.title
               span.chevron ›
 
-    .need-help
-      h2 = t("help_center.portal.need_more_help")
-      .help-cards
-        .help-card
-          .help-card-icon
-            svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-              path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          div
-            h4 = t("help_center.common.contact_support")
-            p = t("help_center.portal.contact_support_subtitle")
-            
-        - if @current_portal.show_contact_form?
-          = link_to contact_path, class: "help-card full-width" do
-            .help-card-left
-              .help-card-icon.help-card-icon--small
-                svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                  g transform="rotate(90 12 12)"
-                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-              div
-                h4 = t("help_center.common.submit_request")
-                p = t("help_center.portal.submit_request_desc")
-            span.arrow ↗
+    - if @current_portal.show_contact_form? || (@current_portal.show_web_widget? && @current_portal.web_widget_channel.present?)
+      .need-help
+        h2 = t("help_center.portal.need_more_help")
+        .help-cards
+          - if @current_portal.show_contact_form?
+            = link_to contact_path, class: "help-card" do
+              .help-card-left
+                .help-card-icon
+                  svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                div
+                  h4 = t("help_center.common.contact_support")
+                  p = t("help_center.portal.contact_support_subtitle")
+              span.arrow ↗
+
+          - if @current_portal.show_web_widget? && @current_portal.web_widget_channel.present?
+            a.help-card href="#" onclick="if(window.DeskbolicWidget){window.DeskbolicWidget.open()}; return false;"
+              .help-card-left
+                .help-card-icon
+                  svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                div
+                  h4 = t("help_center.common.start_live_chat", default: "Start Live Chat")
+                  p = t("help_center.portal.live_chat_subtitle", default: "Chat with our support team in real time")
+              span.arrow ↗
 
 = render "help_center/portals/structured_data"

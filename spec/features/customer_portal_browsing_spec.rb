@@ -16,7 +16,8 @@ RSpec.describe 'Customer Portal Browsing Feature', type: :feature do
         hero_subtitle: 'Search our knowledge base or browse categories below',
         status: :active,
         default_locale: 'en',
-        locales: %w[en es]
+        locales: %w[en es],
+        show_contact_form: true
       )
     end
   end
@@ -51,6 +52,19 @@ RSpec.describe 'Customer Portal Browsing Feature', type: :feature do
         # Need more help section
         expect(page).to have_text('Need more help?')
         expect(page).to have_text('Contact Support')
+
+        # Footer branding badge
+        expect(page).to have_css('.powered-by-badge')
+        expect(page).to have_link('Deskbolic', href: 'https://deskbolic.com?utm_source=help_portal&utm_medium=powered_by')
+      end
+    end
+
+    context 'when custom branding is enabled' do
+      it 'does not show the powered by Deskbolic badge' do
+        allow_any_instance_of(Account).to receive(:feature_enabled?).with(:custom_branding).and_return(true)
+
+        visit root_path
+        expect(page).to have_no_css('.powered-by-badge')
       end
     end
   end

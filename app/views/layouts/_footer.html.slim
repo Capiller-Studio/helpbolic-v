@@ -7,6 +7,12 @@ footer.footer
         svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
           path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
       span = @current_portal.name
+  - unless @current_portal&.account&.feature_enabled?(:custom_branding)
+    .footer-center
+      = link_to "https://deskbolic.com?utm_source=help_portal&utm_medium=powered_by", target: "_blank", rel: "noopener", class: "powered-by-badge" do
+        = image_tag "deskbolic_mark.svg", class: "powered-by-icon", alt: "Deskbolic"
+        span.powered-by-text = t('footer.powered_by', default: 'Powered by')
+        span.powered-by-brand Deskbolic
   .footer-right
     p
       = raw(@current_portal.footer_text.presence || "&copy; #{Time.current.year} #{@current_portal.account.name}. All rights reserved.")

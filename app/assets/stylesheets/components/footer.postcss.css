@@ -23,6 +23,13 @@
   align-items: center;
 }
 
+@media (min-width: 768px) {
+  .footer-left {
+    flex: 1;
+    justify-content: flex-start;
+  }
+}
+
 .footer-logo {
   display: flex;
   align-items: center;
@@ -39,6 +46,76 @@
   filter: grayscale(100%);
 }
 
+.footer-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.powered-by-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 9999px;
+  text-decoration: none;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  color: var(--color-text-muted, #6b7280);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.powered-by-badge:hover {
+  color: var(--color-text, #111827);
+  border-color: rgba(67, 83, 255, 0.4);
+  background: rgba(255, 255, 255, 0.98);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(67, 83, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .powered-by-badge,
+.dark .powered-by-badge {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .powered-by-badge:hover,
+.dark .powered-by-badge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(119, 141, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(119, 141, 255, 0.25);
+}
+
+.powered-by-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  display: block;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.powered-by-badge:hover .powered-by-icon {
+  transform: scale(1.08);
+}
+
+.powered-by-text {
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.powered-by-brand {
+  font-weight: 600;
+  color: var(--color-text, #111827);
+  letter-spacing: -0.01em;
+}
+
 .footer-right {
   font-size: 0.875rem;
   color: var(--color-text-muted);
@@ -47,6 +124,7 @@
 
 @media (min-width: 768px) {
   .footer-right {
+    flex: 1;
     text-align: right;
   }
 }
