@@ -2,7 +2,7 @@
   "name": "helpbolic",
   "private": true,
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --minify --sourcemap --outdir=app/assets/builds --public-path=assets",
+    "build": "esbuild app/javascript/*.* --bundle --minify --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
     "build:css": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css --minify"
   },
   "dependencies": {

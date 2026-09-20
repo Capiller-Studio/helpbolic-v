@@ -202,8 +202,12 @@
 
 /* Show modals */
 
+.show--consent #cookies_main_modal,
+.show--consent #cookies_main_modal.bar,
 .show--consent .cookies_animations #cookies_main_modal,
 .show--consent .cookies_animations #cookies_main_modal.bar,
+.show--settings #s-inr,
+.show--settings .bar.slide #s-inr,
 .show--settings .cookies_animations #s-inr,
 .show--settings .cookies_animations .bar.slide #s-inr{
     opacity: 1;
@@ -211,17 +215,22 @@
     visibility: visible!important;
 }
 
+.show--consent .box.middle,
+.show--consent .cloud.middle,
 .show--consent .cookies_animations #cookies_main_modal.box.middle,
 .show--consent .cookies_animations #cookies_main_modal.cloud.middle{
     transform: scale(1) translateY(-50%);
 }
 
+.show--settings #s-cnt,
 .show--settings .cookies_animations #s-cnt{
     visibility: visible!important;
 }
 
 /* Show overlays */
+.force--consent.show--consent #cookies_main_modal_ov,
 .force--consent.show--consent .cookies_animations #cookies_main_modal_ov,
+.show--settings #cs-ov,
 .show--settings .cookies_animations #cs-ov{
     visibility: visible!important;
     opacity: var(--cc-overlay-opacity)!important;

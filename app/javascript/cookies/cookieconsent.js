@@ -1070,6 +1070,7 @@
 
             // Finally append everything (main_container holds both modals)
             (root || document.body).appendChild(main_container);
+            _addClass(main_container, 'cookies_animations');
         }
 
         /**
@@ -1974,6 +1975,7 @@
 
             setTimeout(function() {
                 _addClass(html_dom, "show--settings");
+                if(main_container) _addClass(main_container, "cookies_animations");
                 _log("CookieConsent [SETTINGS]: show settings_modal");
             }, delay > 0 ? delay : 0);
         }
