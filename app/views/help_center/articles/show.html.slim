@@ -126,7 +126,7 @@
         .toc-help-box
           h4.help-box-title = t("help_center.article.read_more_help")
           p.help-box-desc = t("help_center.article.help_box_desc")
-          - if @current_portal.show_contact_form?
+          - if @current_portal.contact_form_enabled?
             a.btn-primary.w-full.mb-2 href=contact_path = t("help_center.common.contact_support")
           - if @current_portal.show_web_widget? && @current_portal.web_widget_channel.present?
             button.btn-secondary.w-full = t("help_center.common.start_live_chat")

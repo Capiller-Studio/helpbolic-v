@@ -12,7 +12,7 @@ nav.navbar data-controller="navbar"
     - @current_portal.categories.active.show_in_navbar.order(position: :asc).includes(:translations).each do |cat|
       = link_to cat.name, category_path(cat), class: "nav-link"
 
-    - if @current_portal.show_contact_form?
+    - if @current_portal.contact_form_enabled?
       = link_to t("help_center.common.submit_request"), contact_path, class: "nav-link"
 
     - if @current_portal.locales.many?
@@ -30,7 +30,7 @@ nav.navbar data-controller="navbar"
     - @current_portal.categories.active.show_in_navbar.order(position: :asc).includes(:translations).each do |cat|
       = link_to cat.name, category_path(cat), class: "mobile-nav-link"
 
-    - if @current_portal.show_contact_form?
+    - if @current_portal.contact_form_enabled?
       = link_to t("help_center.common.submit_request"), contact_path, class: "mobile-nav-link text-primary"
 
     - if @current_portal.locales.many?

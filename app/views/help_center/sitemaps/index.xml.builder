@@ -6,7 +6,7 @@ xml.tag! 'urlset', 'xmlns' => "http://www.sitemaps.org/schemas/sitemap/0.9", 'xm
     xml.lastmod Time.current.strftime("%F")
   end
   
-  if @current_portal.show_contact_form? && @current_portal.contact_form_channel.present?
+  if @current_portal.contact_form_enabled?
     xml.tag! 'url' do
       xml.tag! 'loc', contact_url
       xml.lastmod Time.current.strftime("%F")

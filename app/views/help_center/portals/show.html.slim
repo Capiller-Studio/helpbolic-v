@@ -53,11 +53,11 @@
               span = article.title
               span.chevron ›
 
-    - if @current_portal.show_contact_form? || (@current_portal.show_web_widget? && @current_portal.web_widget_channel.present?)
+    - if @current_portal.contact_form_enabled? || (@current_portal.show_web_widget? && @current_portal.web_widget_channel.present?)
       .need-help
         h2 = t("help_center.portal.need_more_help")
         .help-cards
-          - if @current_portal.show_contact_form?
+          - if @current_portal.contact_form_enabled?
             = link_to contact_path, class: "help-card" do
               .help-card-left
                 .help-card-icon

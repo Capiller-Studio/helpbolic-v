@@ -67,7 +67,7 @@
                 = link_to t("help_center.common.show_more"), category_path(@category, page: @pagy_articles.next, format: :turbo_stream), data: { controller: "infinite-scroll", action: "click->infinite-scroll#loadMore intersect->infinite-scroll#loadMore" }, class: "btn-secondary w-full", style: "margin-top: 1.5rem; display: block; text-align: center;"
 
       .category-sidebar
-        - if @current_portal.show_contact_form?
+        - if @current_portal.contact_form_enabled?
           .sidebar-featured-card
             / .sidebar-featured-image
               svg width="40" height="40" fill="none" stroke="#778DFF" stroke-width="1.5" viewBox="0 0 24 24"
@@ -95,7 +95,7 @@
         h2 = t("help_center.common.still_need_help")
         p = t("help_center.category.still_need_help_desc")
       .still-need-help-right
-        - if @current_portal.show_contact_form?
+        - if @current_portal.contact_form_enabled?
           = link_to t("help_center.common.contact_support"), contact_path, class: "btn-contact-support"
         - if @current_portal.show_web_widget? && @current_portal.web_widget_channel.present?
           a.btn-live-chat href="#" onclick="if(window.DeskbolicWidget){window.DeskbolicWidget.open()}; return false;" = t("help_center.common.start_live_chat")
