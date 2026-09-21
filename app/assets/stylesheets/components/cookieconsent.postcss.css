@@ -205,13 +205,23 @@
 .show--consent #cookies_main_modal,
 .show--consent #cookies_main_modal.bar,
 .show--consent .cookies_animations #cookies_main_modal,
-.show--consent .cookies_animations #cookies_main_modal.bar,
+.show--consent .cookies_animations #cookies_main_modal.bar{
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible!important;
+}
+
 .show--settings #s-inr,
 .show--settings .bar.slide #s-inr,
 .show--settings .cookies_animations #s-inr,
-.show--settings .cookies_animations .bar.slide #s-inr{
-    opacity: 1;
-    transform: scale(1);
+.show--settings .cookies_animations .bar.slide #s-inr,
+.show--settings .cookies_animations .bar.left.slide #s-inr,
+.show--settings .cookies_animations .bar.right.slide #s-inr,
+.show--settings .cookies_div .bar.slide #s-inr,
+.show--settings .cookies_div .bar.left.slide #s-inr,
+.show--settings .cookies_div .bar.right.slide #s-inr{
+    opacity: 1!important;
+    transform: none!important;
     visibility: visible!important;
 }
 
