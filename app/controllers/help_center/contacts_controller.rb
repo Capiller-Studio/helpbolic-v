@@ -56,7 +56,7 @@ module HelpCenter
     end
 
     def ensure_contact_form_enabled
-      unless current_portal.show_contact_form? && @contact_form.present?
+      unless current_portal.contact_form_enabled?
         redirect_to(root_path)
       end
     end

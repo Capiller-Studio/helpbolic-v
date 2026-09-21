@@ -78,7 +78,7 @@
               h2 = t("help_center.search.no_results", query: @query)
               p = t("help_center.search.no_results_desc")
 
-        - if @current_portal.show_contact_form?
+        - if @current_portal.contact_form_enabled?
           .search-help-box
             h4 = t("help_center.common.still_need_help")
             p = t("help_center.search.support_box_desc")
