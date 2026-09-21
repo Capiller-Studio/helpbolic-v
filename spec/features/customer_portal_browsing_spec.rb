@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Customer Portal Browsing Feature', type: :feature do
   let(:account) { create(:account) }
   let(:domain) { create(:domain, :custom, :dns_verified, account: account, value: 'help.lvh.me', status: :active) }
+  let(:contact_form) { account.with_shard { create(:channel_contact_form, account: account) } }
   let!(:portal) do
     account.with_shard do
       create(
@@ -17,7 +18,8 @@ RSpec.describe 'Customer Portal Browsing Feature', type: :feature do
         status: :active,
         default_locale: 'en',
         locales: %w[en es],
-        show_contact_form: true
+        show_contact_form: true,
+        contact_form_channel: contact_form
       )
     end
   end
