@@ -1,14 +1,18 @@
+- marketing_url = ENV.fetch("MARKETING_URL", "https://deskbolic.com").delete_suffix("/")
+- deskbolic_url = ENV.fetch("DESKBOLIC_URL", "https://deskbolic.app").delete_suffix("/")
+
 .marketing-page
   header.marketing-header
     .marketing-logo-wrapper
-      = image_tag "logo.svg", alt: t("marketing.brand"), class: "marketing-logo"
+      = link_to marketing_url, class: "marketing-logo-link", title: t("marketing.brand") do
+        = image_tag "logo.svg", alt: t("marketing.brand"), class: "marketing-logo"
     nav.marketing-nav
-      a href=ENV.fetch("MARKETING_URL") = t("marketing.nav.features")
-      a href="#{ENV.fetch('MARKETING_URL')}/pricing" = t("marketing.nav.pricing")
-      a href="#{ENV.fetch('MARKETING_URL')}" = t("marketing.nav.docs")
+      a href="#{marketing_url}/#our-features-section" = t("marketing.nav.features")
+      a href="#{marketing_url}/pricing" = t("marketing.nav.pricing")
+      a href="#{marketing_url}/help-center" = t("marketing.nav.help_center", default: "Help Center")
     .marketing-actions
-      a.marketing-login href="#{ENV.fetch('DESKBOLIC_URL')}/login" = t("marketing.nav.login")
-      a.marketing-signup href="#{ENV.fetch('DESKBOLIC_URL')}/signup" = t("marketing.nav.signup")
+      a.marketing-login href="#{deskbolic_url}/login" = t("marketing.nav.login")
+      a.marketing-signup href="#{deskbolic_url}/register" = t("marketing.nav.signup")
 
   main.marketing-main
     .marketing-hero
@@ -26,13 +30,13 @@
         = t("marketing.hero.description")
 
       .marketing-cta-group
-        a.btn-primary-marketing href=ENV.fetch("MARKETING_URL")
+        a.btn-primary-marketing href="#{deskbolic_url}/register"
           = t("marketing.cta.primary")
           svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             line x1="5" y1="12" x2="19" y2="12"
             polyline points="12 5 19 12 12 19"
         
-        a.btn-secondary-marketing href=ENV.fetch("MARKETING_URL")
+        a.btn-secondary-marketing href="#{marketing_url}/help-center"
           = t("marketing.cta.secondary")
 
   footer.marketing-footer

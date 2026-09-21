@@ -8,19 +8,19 @@ fr:
     nav:
       features: "Fonctionnalités"
       pricing: "Tarifs"
-      docs: "Documentation"
+      help_center: "Centre d'aide"
       login: "Se connecter"
       signup: "Commencer"
     hero:
       badge: "Plateforme de centre d'aide Deskbolic"
       title_start: "Offrez un support client exceptionnel, "
       title_highlight: "sans effort."
-      description: "Vous avez atteint le domaine racine de la plateforme de centre d'aide Deskbolic. Nos clients utilisent cette infrastructure pour alimenter des bases de connaissances et des portails de support de haut niveau."
+      description: "Offrez un libre-service client fluide avec la plateforme de centre d'aide Deskbolic. Des bases de connaissances et des portails d'assistance rapides, élégants et multilingues."
     cta:
       primary: "Créer votre centre d'aide"
-      secondary: "Voir la documentation"
+      secondary: "Explorer les fonctionnalités"
     footer:
-      copyright: "© %{year} Techbolic Solutions. Tous droits réservés."
+      copyright: "© %{year} TECHBOLIC, LLC. Tous droits réservés."
 
   help_center:
     common:

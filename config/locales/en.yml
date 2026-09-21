@@ -8,7 +8,7 @@ en:
     nav:
       features: "Features"
       pricing: "Pricing"
-      docs: "Docs"
+      help_center: "Help Center"
       login: "Log in"
       signup: "Get Started"
     hero:
@@ -18,9 +18,9 @@ en:
       description: "Deliver seamless customer self-service with Deskbolic Help Center Platform. Fast, beautiful, and multilingual knowledge bases and customer support portals."
     cta:
       primary: "Create Your Help Center"
-      secondary: "View Documentation"
+      secondary: "Explore Features"
     footer:
-      copyright: "© %{year} Techbolic Solutions. All rights reserved."
+      copyright: "© %{year} TECHBOLIC, LLC. All rights reserved."
 
   help_center:
     common:

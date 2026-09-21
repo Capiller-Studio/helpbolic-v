@@ -14,11 +14,11 @@ RSpec.describe 'Marketing Landing Page Feature', type: :feature do
       expect(page.status_code).to eq(200)
 
       # Navigation
-      expect(page).to have_link('Features')
-      expect(page).to have_link('Pricing')
-      expect(page).to have_link('Docs')
-      expect(page).to have_link('Log in')
-      expect(page).to have_link('Get Started')
+      expect(page).to have_link('Features', href: 'https://deskbolic.com/#our-features-section')
+      expect(page).to have_link('Pricing', href: 'https://deskbolic.com/pricing')
+      expect(page).to have_link('Help Center', href: 'https://deskbolic.com/help-center')
+      expect(page).to have_link('Log in', href: 'https://deskbolic.app/login')
+      expect(page).to have_link('Get Started', href: 'https://deskbolic.app/register')
 
       # Hero Section
       expect(page).to have_text('Deskbolic Help Center Platform')
@@ -26,11 +26,11 @@ RSpec.describe 'Marketing Landing Page Feature', type: :feature do
       expect(page).to have_text('Deliver seamless customer self-service')
 
       # Call to Actions
-      expect(page).to have_link('Create Your Help Center')
-      expect(page).to have_link('View Documentation')
+      expect(page).to have_link('Create Your Help Center', href: 'https://deskbolic.app/register')
+      expect(page).to have_link('Explore Features', href: 'https://deskbolic.com/help-center')
 
       # Footer
-      expect(page).to have_text("© #{Time.current.year} Techbolic Solutions. All rights reserved.")
+      expect(page).to have_text("© #{Time.current.year} TECHBOLIC, LLC. All rights reserved.")
       expect(page).to have_button('Cookie Settings')
     end
 
