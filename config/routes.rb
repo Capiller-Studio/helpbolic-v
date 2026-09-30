@@ -23,7 +23,18 @@ Rails.application.routes.draw do
     root to: "help_center/portals#show"
 
     scope module: :help_center do
-      resources :categories, path: "collections", only: [ :index, :show ]
+      resources :categories, only: [ :index, :show ]
+
+      # Backwards compatibility 301 redirects for legacy /collections URLs
+      get "/collections", to: redirect { |params, _req|
+        prefix = params[:locale].present? ? "/#{params[:locale]}" : ""
+        "#{prefix}/categories"
+      }, status: 301
+
+      get "/collections/:id", to: redirect { |params, _req|
+        prefix = params[:locale].present? ? "/#{params[:locale]}" : ""
+        "#{prefix}/categories/#{params[:id]}"
+      }, status: 301
       resources :articles, only: [ :index, :show ] do
         resource :reaction, only: [ :create ], controller: "article_reactions"
       end
