@@ -11,8 +11,8 @@ RSpec.describe 'HelpCenter::Categories', type: :request do
     set_tenant_host(domain)
   end
 
-  describe 'GET /collections' do
-    it 'renders the collections index page' do
+  describe 'GET /categories' do
+    it 'renders the categories index page' do
       account.with_shard do
         category = create(:help_center_category, account: account, portal: portal, status: :active)
 
@@ -24,7 +24,27 @@ RSpec.describe 'HelpCenter::Categories', type: :request do
     end
   end
 
-  describe 'GET /collections/:id' do
+  describe 'Legacy /collections redirects' do
+    it 'permanently redirects /collections to /categories' do
+      get '/collections'
+      expect(response).to redirect_to('/categories')
+      expect(response).to have_http_status(:moved_permanently)
+    end
+
+    it 'permanently redirects /collections/:id to /categories/:id' do
+      get '/collections/billing-faq'
+      expect(response).to redirect_to('/categories/billing-faq')
+      expect(response).to have_http_status(:moved_permanently)
+    end
+
+    it 'permanently redirects /:locale/collections/:id to /:locale/categories/:id' do
+      get '/es/collections/billing-faq'
+      expect(response).to redirect_to('/es/categories/billing-faq')
+      expect(response).to have_http_status(:moved_permanently)
+    end
+  end
+
+  describe 'GET /categories/:id' do
     it 'renders a category by UUID with articles and sibling categories' do
       account.with_shard do
         parent = create(:help_center_category, account: account, portal: portal, name: 'Billing', status: :active)

@@ -21,8 +21,8 @@ RSpec.describe 'HelpCenter::Sitemaps', type: :request do
 
         expect(response).to have_http_status(:ok)
         expect(response.media_type).to eq('application/xml')
-        expect(response.body).to include(category.slug || category.id)
-        expect(response.body).to include(article.slug || article.id)
+        expect(response.body).to include("/categories/#{category.slug || category.id}")
+        expect(response.body).to include("/articles/#{article.slug || article.id}")
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe 'HelpCenter::Sitemaps', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.media_type).to eq('application/xml')
-      expect(response.body).not_to include('/collections/')
+      expect(response.body).not_to include('/categories/')
       expect(response.body).not_to include('/articles/')
     end
 

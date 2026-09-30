@@ -108,7 +108,7 @@ export default class extends Controller {
       let html = ""
       
       // // if (categories.length > 0) {
-      //   html += `<div class="search-dropdown-label">COLLECTIONS</div>`
+      //   html += `<div class="search-dropdown-label">CATEGORIES</div>`
       //   html += categories.map(cat => `
       //     <a href="${cat.url}" class="search-result-item">
       //       <svg class="search-result-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
