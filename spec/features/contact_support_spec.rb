@@ -60,7 +60,7 @@ RSpec.describe 'Contact Support Feature', type: :feature do
       expect(Channels::ContactForms::ConversationCreator).not_to receive(:call)
 
       visit contact_path
-      fill_in 'nickname', with: 'bot_value', visible: :hidden
+      fill_in 'gift_vcode', with: 'bot_value', visible: :hidden
       fill_in 'contact_subject', with: 'Spam offer'
       click_button 'Submit Request'
 

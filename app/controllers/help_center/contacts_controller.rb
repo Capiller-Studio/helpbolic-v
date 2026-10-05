@@ -14,7 +14,7 @@ module HelpCenter
     def new; end
 
     def create
-      if @contact_form.spam_protection_enabled? && params[:nickname].present?
+      if params[:gift_vcode].present?
         redirect_to(contact_success_path,
                     notice: contact_success_notice,
                     flash: { ticket_identifier: "REQ-#{SecureRandom.hex(4).upcase}" })

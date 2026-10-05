@@ -99,11 +99,11 @@ RSpec.describe 'HelpCenter::Contacts', type: :request do
       expect(response).to have_http_status(:unprocessable_content)
     end
 
-    it 'silently traps bots when honeypot field :nickname is filled' do
+    it 'silently traps bots when honeypot field :gift_vcode is filled' do
       expect(Channels::ContactForms::ConversationCreator).not_to receive(:call)
 
       post contact_path, params: {
-        nickname: 'spam_bot_input',
+        gift_vcode: 'spam_bot_input',
         contact: { subject: 'Spam Message' }
       }
 

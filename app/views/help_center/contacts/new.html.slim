@@ -15,9 +15,9 @@
         .alert.alert-error = @contact_form_unavailable_message
       - else
         = form_with url: contact_path, method: :post, local: true, html: { multipart: true }, class: "contact-form" do |f|
-          - if @contact_form.spam_protection_enabled?
-            .honeypot style="display: none !important; opacity: 0; position: absolute; left: -9999px;"
-              = text_field_tag :nickname, nil, tabindex: -1, autocomplete: "off"
+          .honeypot style="display: none !important; opacity: 0; position: absolute; left: -9999px;"
+            label for="gift_vcode" If you are a human, ignore this field
+            = text_field_tag :gift_vcode, nil, id: "gift_vcode", tabindex: -1, autocomplete: "off"
 
           .form-grid
             - @custom_fields.each do |field|
