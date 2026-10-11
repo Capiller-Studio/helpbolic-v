@@ -69,7 +69,7 @@ module HelpCenter
 
       art_slug = article.slug.presence || article.id
       images = []
-      if article.respond_to?(:banner_image) && article.banner_image&.attached?
+      if article.banner_image.attached?
         begin
           images << url_for(article.banner_image)
         rescue StandardError
