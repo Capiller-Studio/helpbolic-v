@@ -59,7 +59,7 @@ cc.run({
         'en': {
             consent_modal: {
                 title: 'We value your privacy',
-                description: 'We use cookies to personalize content, remember your preferences, provide features, and analyze traffic to improve Deskbolic. You can accept all cookies, reject non-essential cookies, or manage your preferences.',
+                description: 'We use cookies to personalize content, remember your preferences, provide features, and analyze traffic to improve Capiller Rely Help. You can accept all cookies, reject non-essential cookies, or manage your preferences.',
                 primary_btn: {
                     text: 'Accept all',
                     role: 'accept_all'
@@ -87,7 +87,7 @@ cc.run({
                 blocks: [
                     {
                         title: 'Cookie usage',
-                        description: 'Cookies are small text files used to make your experience on Deskbolic smooth, secure, and reliable. Under data protection regulations, strictly necessary cookies do not require prior consent. For statistics, marketing, and preferences, we request your permission.'
+                        description: 'Cookies are small text files used to make your experience on Capiller Rely Help smooth, secure, and reliable. Under data protection regulations, strictly necessary cookies do not require prior consent. For statistics, marketing, and preferences, we request your permission.'
                     },
                     {
                         title: 'Strictly necessary cookies',
@@ -129,7 +129,7 @@ cc.run({
                     },
                     {
                         title: 'Statistics cookies',
-                        description: 'Statistics cookies help us understand how visitors interact with Deskbolic by collecting anonymous metrics on page visits and error diagnostics.',
+                        description: 'Statistics cookies help us understand how visitors interact with Capiller Rely Help by collecting anonymous metrics on page visits and error diagnostics.',
                         toggle: {
                             value: 'analytics',
                             enabled: true,
@@ -191,7 +191,7 @@ cc.run({
         'es': {
             consent_modal: {
                 title: 'Valoramos su privacidad',
-                description: 'Utilizamos cookies para personalizar contenidos, recordar preferencias y analizar el tráfico de Deskbolic. Puede aceptar todas las cookies, rechazar las no esenciales o personalizar sus preferencias.',
+                description: 'Utilizamos cookies para personalizar contenidos, recordar preferencias y analizar el tráfico de Capiller Rely Help. Puede aceptar todas las cookies, rechazar las no esenciales o personalizar sus preferencias.',
                 primary_btn: {
                     text: 'Aceptar todo',
                     role: 'accept_all'
@@ -219,7 +219,7 @@ cc.run({
                 blocks: [
                     {
                         title: 'Uso de cookies',
-                        description: 'Las cookies son pequeños archivos de texto necesarios para que su experiencia en Deskbolic sea eficiente y segura. Puede modificar sus preferencias en cualquier momento.'
+                        description: 'Las cookies son pequeños archivos de texto necesarios para que su experiencia en Capiller Rely Help sea eficiente y segura. Puede modificar sus preferencias en cualquier momento.'
                     },
                     {
                         title: 'Cookies estrictamente necesarias',
@@ -269,7 +269,7 @@ cc.run({
         'de': {
             consent_modal: {
                 title: 'Wir schätzen Ihre Privatsphäre',
-                description: 'Wir verwenden Cookies, um Inhalte zu personalisieren, Einstellungen zu speichern und den Datenverkehr auf Deskbolic zu analysieren. Sie können alle Cookies akzeptieren, nicht essenzielle ablehnen oder Ihre Einstellungen anpassen.',
+                description: 'Wir verwenden Cookies, um Inhalte zu personalisieren, Einstellungen zu speichern und den Datenverkehr auf Capiller Rely Help zu analysieren. Sie können alle Cookies akzeptieren, nicht essenzielle ablehnen oder Ihre Einstellungen anpassen.',
                 primary_btn: {
                     text: 'Alle akzeptieren',
                     role: 'accept_all'
@@ -297,7 +297,7 @@ cc.run({
                 blocks: [
                     {
                         title: 'Cookie-Nutzung',
-                        description: 'Cookies sind kleine Textdateien, die für den sicheren und zuverlässigen Betrieb von Deskbolic erforderlich sind.'
+                        description: 'Cookies sind kleine Textdateien, die für den sicheren und zuverlässigen Betrieb von Capiller Rely Help erforderlich sind.'
                     },
                     {
                         title: 'Technisch notwendige Cookies',
@@ -318,7 +318,7 @@ cc.run({
                     },
                     {
                         title: 'Statistik-Cookies',
-                        description: 'Helfen uns zu verstehen, wie Besucher mit der Website interagieren, um Deskbolic zu optimieren.',
+                        description: 'Helfen uns zu verstehen, wie Besucher mit der Website interagieren, um Capiller Rely Help zu optimieren.',
                         toggle: { value: 'analytics', enabled: true, readonly: false },
                         cookie_table: [
                             { col1: '_ga', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Generiert anonyme statistische Daten zur Nutzung.' },
@@ -347,7 +347,7 @@ cc.run({
         'fr': {
             consent_modal: {
                 title: 'Nous respectons votre vie privée',
-                description: 'Nous utilisons des cookies pour personnaliser le contenu, mémoriser vos préférences et analyser le trafic sur Deskbolic. Vous pouvez accepter tous les cookies, refuser les cookies non essentiels ou personnaliser vos choix.',
+                description: 'Nous utilisons des cookies pour personnaliser le contenu, mémoriser vos préférences et analyser le trafic sur Capiller Rely Help. Vous pouvez accepter tous les cookies, refuser les cookies non essentiels ou personnaliser vos choix.',
                 primary_btn: {
                     text: 'Tout accepter',
                     role: 'accept_all'
@@ -375,7 +375,7 @@ cc.run({
                 blocks: [
                     {
                         title: 'Utilisation des cookies',
-                        description: 'Les cookies sont de petits fichiers texte nécessaires au fonctionnement sécurisé et personnalisé de Deskbolic.'
+                        description: 'Les cookies sont de petits fichiers texte nécessaires au fonctionnement sécurisé et personnalisé de Capiller Rely Help.'
                     },
                     {
                         title: 'Cookies strictement nécessaires',
@@ -425,7 +425,7 @@ cc.run({
         'pt-BR': {
             consent_modal: {
                 title: 'Valorizamos sua privacidade',
-                description: 'Usamos cookies para personalizar conteúdos, lembrar suas preferências e analisar o tráfego no Deskbolic. Você pode aceitar todos os cookies, rejeitar os não essenciais ou gerenciar suas preferências.',
+                description: 'Usamos cookies para personalizar conteúdos, lembrar suas preferências e analisar o tráfego no Capiller Rely Help. Você pode aceitar todos os cookies, rejeitar os não essenciais ou gerenciar suas preferências.',
                 primary_btn: {
                     text: 'Aceitar todos',
                     role: 'accept_all'
@@ -453,7 +453,7 @@ cc.run({
                 blocks: [
                     {
                         title: 'Uso de cookies',
-                        description: 'Cookies são pequenos arquivos de texto essenciais para garantir que sua experiência no Deskbolic seja segura e contínua.'
+                        description: 'Cookies são pequenos arquivos de texto essenciais para garantir que sua experiência no Capiller Rely Help seja segura e contínua.'
                     },
                     {
                         title: 'Cookies estritamente necessários',
@@ -581,7 +581,7 @@ cc.run({
         'ko': {
             consent_modal: {
                 title: '고객님의 개인정보를 소중히 생각합니다',
-                description: 'Deskbolic은 서비스 기능 제공, 환경설정 기억, 맞춤형 콘텐츠 제공 및 웹사이트 트래픽 분석을 위해 쿠키를 사용합니다. 모든 쿠키를 수락하거나, 필수 외 쿠키를 거부하거나, 직접 설정을 변경할 수 있습니다.',
+                description: 'Capiller Rely Help은 서비스 기능 제공, 환경설정 기억, 맞춤형 콘텐츠 제공 및 웹사이트 트래픽 분석을 위해 쿠키를 사용합니다. 모든 쿠키를 수락하거나, 필수 외 쿠키를 거부하거나, 직접 설정을 변경할 수 있습니다.',
                 primary_btn: {
                     text: '모두 수락',
                     role: 'accept_all'

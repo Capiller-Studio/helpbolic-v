@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe HelpCenter::StructuredDataHelper, type: :helper do
   let(:account) { create(:account) }
   let(:domain) { create(:domain, :custom, :dns_verified, account: account, value: 'support.example.com', status: :active) }
-  let(:portal) { create(:help_center_portal, account: account, domain: domain, name: 'Deskbolic Support', hero_subtitle: 'Knowledge Base') }
+  let(:portal) { create(:help_center_portal, account: account, domain: domain, name: 'Capiller Rely Help Support', hero_subtitle: 'Knowledge Base') }
 
   before do
     @current_portal = portal
@@ -23,7 +23,7 @@ RSpec.describe HelpCenter::StructuredDataHelper, type: :helper do
 
       expect(data['@context']).to eq('https://schema.org')
       expect(data['@type']).to eq('WebSite')
-      expect(data['name']).to eq('Deskbolic Support')
+      expect(data['name']).to eq('Capiller Rely Help Support')
       expect(data['description']).to eq('Knowledge Base')
     end
   end
@@ -74,8 +74,8 @@ RSpec.describe HelpCenter::StructuredDataHelper, type: :helper do
         expect(art_schema).to be_present
         expect(art_schema['headline']).to eq('How to Pay')
         expect(art_schema['description']).to include('Pay here')
-        expect(art_schema['author']['name']).to eq('Deskbolic Support')
-        expect(art_schema['publisher']['name']).to eq('Deskbolic Support')
+        expect(art_schema['author']['name']).to eq('Capiller Rely Help Support')
+        expect(art_schema['publisher']['name']).to eq('Capiller Rely Help Support')
 
         breadcrumbs = data['@graph'].find { |g| g['@type'] == 'BreadcrumbList' }
         expect(breadcrumbs).to be_present

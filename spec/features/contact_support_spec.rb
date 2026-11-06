@@ -20,7 +20,7 @@ RSpec.describe 'Contact Support Feature', type: :feature do
         :help_center_portal,
         account: account,
         domain: domain,
-        name: 'Deskbolic Support',
+        name: 'Capiller Rely Help Support',
         status: :active,
         show_contact_form: true,
         contact_form_channel: contact_form

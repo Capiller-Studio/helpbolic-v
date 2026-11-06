@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Rack::Attack Rate Limiting in Helpbolic', type: :request do
+RSpec.describe 'Rack::Attack Rate Limiting in Capiller Rely Help', type: :request do
   let(:account) { create(:account) }
   let(:domain) { create(:domain, :custom, :dns_verified, account: account, value: 'support.example.com', status: :active) }
   let!(:form) do
