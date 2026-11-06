@@ -10,7 +10,7 @@ footer.footer
   - unless @current_portal&.account&.feature_enabled?(:custom_branding)
     .footer-center
       = link_to "https://capiller.com", target: "_blank", rel: "noopener", class: "powered-by-badge" do
-        = image_tag "deskbolic_mark.svg", class: "powered-by-icon", alt: "Capiller Rely Help"
+        = image_tag "fav_icon.png", class: "powered-by-icon", alt: "Capiller Rely Help"
         span.powered-by-text = t('footer.powered_by', default: 'Powered by')
         span.powered-by-brand Capiller Rely Help
   .footer-right

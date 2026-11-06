@@ -45,7 +45,7 @@
 .search-input-large:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(119, 141, 255, 0.12), 0 10px 28px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12), 0 10px 28px rgba(15, 23, 42, 0.05);
 }
 
 .search-clear-button {
@@ -357,7 +357,7 @@
 
 .search-help-primary:hover,
 .search-help-secondary:hover {
-  box-shadow: 0 12px 24px rgba(119, 141, 255, 0.18);
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.18);
   transform: translateY(-1px);
 }
 

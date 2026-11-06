@@ -1,11 +1,11 @@
-- marketing_url = ENV.fetch("MARKETING_URL", "https://deskbolic.com").delete_suffix("/")
-- deskbolic_url = ENV.fetch("DESKBOLIC_URL", "https://deskbolic.app").delete_suffix("/")
+- marketing_url = ENV.fetch("MARKETING_URL", "https://capiller.com").delete_suffix("/")
+- deskbolic_url = ENV.fetch("DESKBOLIC_URL", "https://rely.capiller.com").delete_suffix("/")
 
 .marketing-page
   header.marketing-header
     .marketing-logo-wrapper
       = link_to marketing_url, class: "marketing-logo-link", title: t("marketing.brand") do
-        = image_tag "logo.svg", alt: t("marketing.brand"), class: "marketing-logo"
+        = image_tag "logo.png", alt: t("marketing.brand"), class: "marketing-logo"
     nav.marketing-nav
       a href="#{marketing_url}/#our-features-section" = t("marketing.nav.features")
       a href="#{marketing_url}/pricing" = t("marketing.nav.pricing")

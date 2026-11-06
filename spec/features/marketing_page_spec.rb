@@ -14,11 +14,11 @@ RSpec.describe 'Marketing Landing Page Feature', type: :feature do
       expect(page.status_code).to eq(200)
 
       # Navigation
-      expect(page).to have_link('Features', href: 'https://deskbolic.com/#our-features-section')
-      expect(page).to have_link('Pricing', href: 'https://deskbolic.com/pricing')
-      expect(page).to have_link('Help Center', href: 'https://deskbolic.com/help-center')
-      expect(page).to have_link('Log in', href: 'https://deskbolic.app/login')
-      expect(page).to have_link('Get Started', href: 'https://deskbolic.app/register')
+      expect(page).to have_link('Features', href: 'https://capiller.com/#our-features-section')
+      expect(page).to have_link('Pricing', href: 'https://capiller.com/pricing')
+      expect(page).to have_link('Help Center', href: 'https://capiller.com/help-center')
+      expect(page).to have_link('Log in', href: 'https://rely.capiller.com/login')
+      expect(page).to have_link('Get Started', href: 'https://rely.capiller.com/register')
 
       # Hero Section
       expect(page).to have_text('Capiller Rely Help')
@@ -26,8 +26,8 @@ RSpec.describe 'Marketing Landing Page Feature', type: :feature do
       expect(page).to have_text('Deliver seamless customer self-service')
 
       # Call to Actions
-      expect(page).to have_link('Create Your Help Center', href: 'https://deskbolic.app/register')
-      expect(page).to have_link('Explore Features', href: 'https://deskbolic.com/help-center')
+      expect(page).to have_link('Create Your Help Center', href: 'https://rely.capiller.com/register')
+      expect(page).to have_link('Explore Features', href: 'https://capiller.com/help-center')
 
       # Footer
       expect(page).to have_text("© #{Time.current.year} TECHBOLIC, LLC. All rights reserved.")

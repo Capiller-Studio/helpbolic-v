@@ -15,8 +15,8 @@ $font-family-inter: 'Inter', sans-serif;
 $justify-center : center;
 $align-center : center;
 
-$primary: #4f46e5;
-$primary-dark: #4338ca;
+$primary: #3b82f6;
+$primary-dark: #2563eb;
 $sidebar-bg: #1e1e2d;
 $sidebar-text: #9899ac;
 $sidebar-active: #2d2d3f;
@@ -26,7 +26,7 @@ $border: #e8e8e8;
 $text: #333333;
 $text-light: #666666;
 $shadow: 0 2px 8px rgba(0,0,0,0.06);
-$primary-light: #ede9fe;
+$primary-light: #eff6ff;
 $shadow-md: 0 4px 20px rgba(0,0,0,0.1);
 $radius: 10px;
 $radius-sm: 6px;
@@ -43,10 +43,10 @@ $bp-lg: 1024px;
 $bp-xl: 1280px;
 
 /* Helpbolic specific */
-$hero-bg: radial-gradient(circle at 50% 50%, rgba(119, 141, 255, 0.05) 0%, rgba(119, 141, 255, 0) 50%, rgba(119, 141, 255, 0) 100%);; 
+$hero-bg: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0) 50%, rgba(59, 130, 246, 0) 100%);; 
 $card-border: #e8e8f0;
 $text-muted: #8b8fa8;
-$badge-bg: #eef0ff;
-$badge-text: #4f46e5;
-$btn-login: #778DFF;
+$badge-bg: #eff6ff;
+$badge-text: #3b82f6;
+$btn-login: #3b82f6;
 $bg-bg:#f5f6fa;

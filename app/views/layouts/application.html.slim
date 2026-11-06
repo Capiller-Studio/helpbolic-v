@@ -15,8 +15,8 @@ html lang=I18n.locale dir=(I18n.locale.to_s.match?(/^(ar|he|fa|ur)/i) ? "rtl" : 
     /! Dynamic Theme CSS Variables
     style
       | :root {
-      |   --color-primary: #{@current_portal.ui_configurations["primary_color"] || '#778DFF'};
-      |   --color-secondary: #{@current_portal.ui_configurations["secondary_color"] || '#4F46E5'};
+      |   --color-primary: #{@current_portal.ui_configurations["primary_color"] || '#3b82f6'};
+      |   --color-secondary: #{@current_portal.ui_configurations["secondary_color"] || '#2563eb'};
       |   --font-family: #{@current_portal.ui_configurations["font_family"] || 'Inter, sans-serif'};
       | }
       = raw @current_portal.configurations["custom_css"]

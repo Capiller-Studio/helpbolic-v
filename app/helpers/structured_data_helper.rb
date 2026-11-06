@@ -32,7 +32,7 @@ module StructuredDataHelper
       "contactPoint" => {
         "@type" => "ContactPoint",
         "contactType" => "Customer Support",
-        "email" => "support@deskbolic.com",
+        "email" => "support@capiller.com",
         "availableLanguage" => [ "English", "Spanish", "French" ]
       }
     }

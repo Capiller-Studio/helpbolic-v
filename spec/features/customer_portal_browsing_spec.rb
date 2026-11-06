@@ -57,7 +57,7 @@ RSpec.describe 'Customer Portal Browsing Feature', type: :feature do
 
         # Footer branding badge
         expect(page).to have_css('.powered-by-badge')
-        expect(page).to have_link('Capiller Rely Help', href: 'https://deskbolic.com?utm_source=help_portal&utm_medium=powered_by')
+        expect(page).to have_link('Capiller Rely Help', href: 'https://capiller.com')
       end
     end
 

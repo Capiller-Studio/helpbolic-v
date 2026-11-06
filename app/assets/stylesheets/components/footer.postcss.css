@@ -88,8 +88,8 @@
 [data-theme="dark"] .powered-by-badge:hover,
 .dark .powered-by-badge:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(119, 141, 255, 0.5);
-  box-shadow: 0 4px 12px rgba(119, 141, 255, 0.25);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
 }
 
 .powered-by-icon {

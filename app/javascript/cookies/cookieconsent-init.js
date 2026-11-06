@@ -100,12 +100,12 @@ cc.run({
                         cookie_table: [
                             {
                                 col1: 'cookie_consent',
-                                col2: 'deskbolic.com',
+                                col2: 'capiller.com',
                                 col3: "Stores the user's cookie consent preferences."
                             },
                             {
                                 col1: '_deskbolic_session',
-                                col2: 'deskbolic.com',
+                                col2: 'capiller.com',
                                 col3: 'Stores session and security tokens for the visitor.',
                                 path: '/'
                             }
@@ -122,7 +122,7 @@ cc.run({
                         cookie_table: [
                             {
                                 col1: 'currency',
-                                col2: 'deskbolic.com',
+                                col2: 'capiller.com',
                                 col3: 'Stores user-selected preferred pricing currency (USD, EUR, GBP, KRW).'
                             }
                         ]
@@ -170,7 +170,7 @@ cc.run({
                         cookie_table: [
                             {
                                 col1: 'ref',
-                                col2: 'deskbolic.com',
+                                col2: 'capiller.com',
                                 col3: 'Stores affiliate and partner referral codes for proper attribution.'
                             },
                             {
@@ -182,7 +182,7 @@ cc.run({
                     },
                     {
                         title: 'Privacy Policy',
-                        description: 'To learn more about how we process and safeguard your personal data, please read our <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a> or contact us at <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                        description: 'To learn more about how we process and safeguard your personal data, please read our <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a> or contact us at <a href="mailto:info@capiller.com">info@capiller.com</a>.'
                     }
                 ]
             }
@@ -226,8 +226,8 @@ cc.run({
                         description: 'Permiten funciones básicas como la navegación y el acceso a zonas seguras. El sitio no puede funcionar correctamente sin ellas.',
                         toggle: { value: 'necessary', enabled: true, readonly: true },
                         cookie_table: [
-                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'Guarda las opciones de consentimiento de cookies.' },
-                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'Mantiene la sesión y tokens de seguridad.', path: '/' }
+                            { col1: 'cookie_consent', col2: 'capiller.com', col3: 'Guarda las opciones de consentimiento de cookies.' },
+                            { col1: '_deskbolic_session', col2: 'capiller.com', col3: 'Mantiene la sesión y tokens de seguridad.', path: '/' }
                         ]
                     },
                     {
@@ -235,7 +235,7 @@ cc.run({
                         description: 'Permiten recordar sus elecciones, como la moneda de precios o el idioma seleccionado.',
                         toggle: { value: 'preference', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'currency', col2: 'deskbolic.com', col3: 'Almacena la moneda de pago seleccionada por el usuario.' }
+                            { col1: 'currency', col2: 'capiller.com', col3: 'Almacena la moneda de pago seleccionada por el usuario.' }
                         ]
                     },
                     {
@@ -254,13 +254,13 @@ cc.run({
                         description: 'Permiten atribuir conversiones y enlaces de afiliados.',
                         toggle: { value: 'marketing', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'ref', col2: 'deskbolic.com', col3: 'Registra el código de referencia de afiliado para atribución.' },
+                            { col1: 'ref', col2: 'capiller.com', col3: 'Registra el código de referencia de afiliado para atribución.' },
                             { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Mide la efectividad publicitaria en Google Ads.' }
                         ]
                     },
                     {
                         title: 'Política de privacidad',
-                        description: 'Para más información, consulte nuestra <a href="/privacy" target="_blank" rel="noopener">Política de Privacidad</a> o contáctenos en <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                        description: 'Para más información, consulte nuestra <a href="/privacy" target="_blank" rel="noopener">Política de Privacidad</a> o contáctenos en <a href="mailto:info@capiller.com">info@capiller.com</a>.'
                     }
                 ]
             }
@@ -304,8 +304,8 @@ cc.run({
                         description: 'Diese Cookies sind für den grundlegenden Betrieb der Website und sichere Sitzungen unerlässlich.',
                         toggle: { value: 'necessary', enabled: true, readonly: true },
                         cookie_table: [
-                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'Speichert die Cookie-Einwilligung des Nutzers.' },
-                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'Speichert Sitzungs- und Sicherheitstoken.', path: '/' }
+                            { col1: 'cookie_consent', col2: 'capiller.com', col3: 'Speichert die Cookie-Einwilligung des Nutzers.' },
+                            { col1: '_deskbolic_session', col2: 'capiller.com', col3: 'Speichert Sitzungs- und Sicherheitstoken.', path: '/' }
                         ]
                     },
                     {
@@ -313,7 +313,7 @@ cc.run({
                         description: 'Ermöglichen das Speichern von Nutzereinstellungen wie der gewählten Währung.',
                         toggle: { value: 'preference', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'currency', col2: 'deskbolic.com', col3: 'Speichert die bevorzugte Anzeigewährung.' }
+                            { col1: 'currency', col2: 'capiller.com', col3: 'Speichert die bevorzugte Anzeigewährung.' }
                         ]
                     },
                     {
@@ -332,13 +332,13 @@ cc.run({
                         description: 'Werden genutzt, um Werbewirksamkeit und Partner-Empfehlungen zuzuordnen.',
                         toggle: { value: 'marketing', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'ref', col2: 'deskbolic.com', col3: 'Speichert Partner-Empfehlungscodes für die Zuordnung.' },
+                            { col1: 'ref', col2: 'capiller.com', col3: 'Speichert Partner-Empfehlungscodes für die Zuordnung.' },
                             { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Wird von Google Ads zur Conversion-Messung verwendet.' }
                         ]
                     },
                     {
                         title: 'Datenschutzerklärung',
-                        description: 'Weitere Informationen finden Sie in unserer <a href="/privacy" target="_blank" rel="noopener">Datenschutzerklärung</a> oder per E-Mail an <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                        description: 'Weitere Informationen finden Sie in unserer <a href="/privacy" target="_blank" rel="noopener">Datenschutzerklärung</a> oder per E-Mail an <a href="mailto:info@capiller.com">info@capiller.com</a>.'
                     }
                 ]
             }
@@ -382,8 +382,8 @@ cc.run({
                         description: 'Ces cookies sont indispensables au fonctionnement normal du site et à la sécurité de la session.',
                         toggle: { value: 'necessary', enabled: true, readonly: true },
                         cookie_table: [
-                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'Conserve vos préférences de consentement de cookies.' },
-                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'Maintient la session sécurisée du visiteur.', path: '/' }
+                            { col1: 'cookie_consent', col2: 'capiller.com', col3: 'Conserve vos préférences de consentement de cookies.' },
+                            { col1: '_deskbolic_session', col2: 'capiller.com', col3: 'Maintient la session sécurisée du visiteur.', path: '/' }
                         ]
                     },
                     {
@@ -391,7 +391,7 @@ cc.run({
                         description: 'Permettent de mémoriser des informations qui modifient le comportement du site, comme la devise d\'affichage.',
                         toggle: { value: 'preference', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'currency', col2: 'deskbolic.com', col3: 'Stocke la devise choisie pour les tarifs.' }
+                            { col1: 'currency', col2: 'capiller.com', col3: 'Stocke la devise choisie pour les tarifs.' }
                         ]
                     },
                     {
@@ -410,13 +410,13 @@ cc.run({
                         description: 'Mesurent l\'efficacité publicitaire et attribuent les recommandations d\'affiliés.',
                         toggle: { value: 'marketing', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'ref', col2: 'deskbolic.com', col3: 'Conserve le code d\'affiliation pour l\'attribution des commissions.' },
+                            { col1: 'ref', col2: 'capiller.com', col3: 'Conserve le code d\'affiliation pour l\'attribution des commissions.' },
                             { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Utilisé par Google Ads pour mesurer les conversions.' }
                         ]
                     },
                     {
                         title: 'Politique de confidentialité',
-                        description: 'Consultez notre <a href="/privacy" target="_blank" rel="noopener">Politique de confidentialité</a> ou écrivez-nous à <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                        description: 'Consultez notre <a href="/privacy" target="_blank" rel="noopener">Politique de confidentialité</a> ou écrivez-nous à <a href="mailto:info@capiller.com">info@capiller.com</a>.'
                     }
                 ]
             }
@@ -460,8 +460,8 @@ cc.run({
                         description: 'Fundamentais para a navegação no site e sessões seguras. Não podem ser desativados.',
                         toggle: { value: 'necessary', enabled: true, readonly: true },
                         cookie_table: [
-                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'Armazena suas preferências de consentimento de cookies.' },
-                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'Mantém a sessão segura e tokens do visitante.', path: '/' }
+                            { col1: 'cookie_consent', col2: 'capiller.com', col3: 'Armazena suas preferências de consentimento de cookies.' },
+                            { col1: '_deskbolic_session', col2: 'capiller.com', col3: 'Mantém a sessão segura e tokens do visitante.', path: '/' }
                         ]
                     },
                     {
@@ -469,7 +469,7 @@ cc.run({
                         description: 'Lembram escolhas como sua moeda de exibição e idioma preferido.',
                         toggle: { value: 'preference', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'currency', col2: 'deskbolic.com', col3: 'Armazena a moeda selecionada para exibição de planos.' }
+                            { col1: 'currency', col2: 'capiller.com', col3: 'Armazena a moeda selecionada para exibição de planos.' }
                         ]
                     },
                     {
@@ -488,13 +488,13 @@ cc.run({
                         description: 'Permitem mensurar o retorno de anúncios e atribuir indicações de parceiros.',
                         toggle: { value: 'marketing', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'ref', col2: 'deskbolic.com', col3: 'Registra o código de afiliado para atribuição de comissões.' },
+                            { col1: 'ref', col2: 'capiller.com', col3: 'Registra o código de afiliado para atribuição de comissões.' },
                             { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Mede conversões e eficiência de anúncios no Google Ads.' }
                         ]
                     },
                     {
                         title: 'Política de Privacidade',
-                        description: 'Saiba mais em nossa <a href="/privacy" target="_blank" rel="noopener">Política de Privacidade</a> ou pelo e-mail <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                        description: 'Saiba mais em nossa <a href="/privacy" target="_blank" rel="noopener">Política de Privacidade</a> ou pelo e-mail <a href="mailto:info@capiller.com">info@capiller.com</a>.'
                     }
                 ]
             }
@@ -538,8 +538,8 @@ cc.run({
                         description: 'هذه الملفات أساسية لعمل الموقع وتمكين الأمان وتسجيل الدخول ولا يمكن إيقافها.',
                         toggle: { value: 'necessary', enabled: true, readonly: true },
                         cookie_table: [
-                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: 'تخزين تفضيلات الموافقة على ملفات تعريف الارتباط.' },
-                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: 'الحفاظ على جلسة وأمان الزائر.', path: '/' }
+                            { col1: 'cookie_consent', col2: 'capiller.com', col3: 'تخزين تفضيلات الموافقة على ملفات تعريف الارتباط.' },
+                            { col1: '_deskbolic_session', col2: 'capiller.com', col3: 'الحفاظ على جلسة وأمان الزائر.', path: '/' }
                         ]
                     },
                     {
@@ -547,7 +547,7 @@ cc.run({
                         description: 'تتيح للموقع تذكر اختياراتك مثل العملة المفضلة لعرض الأسعار.',
                         toggle: { value: 'preference', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'currency', col2: 'deskbolic.com', col3: 'تخزين العملة المحددة لعرض الأسعار.' }
+                            { col1: 'currency', col2: 'capiller.com', col3: 'تخزين العملة المحددة لعرض الأسعار.' }
                         ]
                     },
                     {
@@ -566,13 +566,13 @@ cc.run({
                         description: 'تُستخدم لقياس فعالية الحملات وتتبع روابط الإحالة للشركاء.',
                         toggle: { value: 'marketing', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'ref', col2: 'deskbolic.com', col3: 'تخزين رمز الإحالة التابع للشركاء.' },
+                            { col1: 'ref', col2: 'capiller.com', col3: 'تخزين رمز الإحالة التابع للشركاء.' },
                             { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'تتبع كفاءة وتحويلات إعلانات Google Ads.' }
                         ]
                     },
                     {
                         title: 'سياسة الخصوصية',
-                        description: 'لمزيد من المعلومات، يرجى قراءة <a href="/privacy" target="_blank" rel="noopener">سياسة الخصوصية</a> أو التواصل عبر <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>.'
+                        description: 'لمزيد من المعلومات، يرجى قراءة <a href="/privacy" target="_blank" rel="noopener">سياسة الخصوصية</a> أو التواصل عبر <a href="mailto:info@capiller.com">info@capiller.com</a>.'
                     }
                 ]
             }
@@ -616,8 +616,8 @@ cc.run({
                         description: '웹사이트의 기본 기능(보안 세션, 페이지 탐색)을 지원하며 비활성화할 수 없습니다.',
                         toggle: { value: 'necessary', enabled: true, readonly: true },
                         cookie_table: [
-                            { col1: 'cookie_consent', col2: 'deskbolic.com', col3: '이용자의 쿠키 동의 설정을 저장합니다.' },
-                            { col1: '_deskbolic_session', col2: 'deskbolic.com', col3: '안전한 방문자 세션 토큰을 유지합니다.', path: '/' }
+                            { col1: 'cookie_consent', col2: 'capiller.com', col3: '이용자의 쿠키 동의 설정을 저장합니다.' },
+                            { col1: '_deskbolic_session', col2: 'capiller.com', col3: '안전한 방문자 세션 토큰을 유지합니다.', path: '/' }
                         ]
                     },
                     {
@@ -625,7 +625,7 @@ cc.run({
                         description: '선택하신 요금제 통화 및 언어 설정을 기억합니다.',
                         toggle: { value: 'preference', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'currency', col2: 'deskbolic.com', col3: '이용자가 선택한 요금제 표시 통화를 저장합니다.' }
+                            { col1: 'currency', col2: 'capiller.com', col3: '이용자가 선택한 요금제 표시 통화를 저장합니다.' }
                         ]
                     },
                     {
@@ -644,13 +644,13 @@ cc.run({
                         description: '광고 캠페인의 성과를 측정하고 파트너 추천 링크를 추적합니다.',
                         toggle: { value: 'marketing', enabled: true, readonly: false },
                         cookie_table: [
-                            { col1: 'ref', col2: 'deskbolic.com', col3: '제휴 파트너 추천 코드를 저장합니다.' },
+                            { col1: 'ref', col2: 'capiller.com', col3: '제휴 파트너 추천 코드를 저장합니다.' },
                             { col1: '_gcl_au', col2: '<a href="https://google.com" target="_blank" rel="noopener">Google</a>', col3: 'Google Ads 전환 및 마케팅 효율을 측정합니다.' }
                         ]
                     },
                     {
                         title: '개인정보 처리방침',
-                        description: '자세한 사항은 <a href="/privacy" target="_blank" rel="noopener">개인정보 처리방침</a>을 확인하시거나 <a href="mailto:info@deskbolic.com">info@deskbolic.com</a>으로 문의해 주시기 바랍니다.'
+                        description: '자세한 사항은 <a href="/privacy" target="_blank" rel="noopener">개인정보 처리방침</a>을 확인하시거나 <a href="mailto:info@capiller.com">info@capiller.com</a>으로 문의해 주시기 바랍니다.'
                     }
                 ]
             }
