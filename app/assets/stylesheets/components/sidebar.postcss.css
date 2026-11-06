@@ -46,7 +46,7 @@
 .sidebar-search .search-input:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(119, 141, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .sidebar-nav {
@@ -73,7 +73,7 @@
 }
 
 .sidebar-nav-item.active {
-  background-color: rgba(119, 141, 255, 0.1);
+  background-color: rgba(59, 130, 246, 0.1);
   color: var(--color-primary);
 }
 

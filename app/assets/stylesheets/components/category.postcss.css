@@ -259,7 +259,7 @@ body:has(.category-page) {
 
       &:hover {
         background: var(--color-primary);
-        box-shadow: 0 8px 18px rgba(79, 70, 229, 0.28);
+        box-shadow: 0 8px 18px rgba(59, 130, 246, 0.28);
         transform: translateY(-1px);
       }
     }
@@ -304,7 +304,7 @@ body:has(.category-page) {
 
 .subcategory-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(119, 141, 255, 0.35);
+  border-color: rgba(59, 130, 246, 0.35);
   box-shadow: $shadow-md;
 }
 

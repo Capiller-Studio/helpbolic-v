@@ -222,7 +222,7 @@
 
 .guide-btn:hover {
   border-color: var(--color-primary);
-  background-color: rgba(119, 141, 255, 0.05);
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
 .guide-next {
@@ -305,7 +305,7 @@
 
 .btn-feedback.active {
   color: var(--color-primary);
-  background: rgba(119, 141, 255, 0.1);
+  background: rgba(59, 130, 246, 0.1);
   border-color: var(--color-primary);
 }
 
