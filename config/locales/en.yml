@@ -3,8 +3,8 @@ en:
     cookies: "Cookie Settings"
     powered_by: "Powered by"
   marketing:
-    title: "Deskbolic Help Center Platform"
-    brand: "Deskbolic"
+    title: "Capiller Rely Help"
+    brand: "Capiller Rely Help"
     nav:
       features: "Features"
       pricing: "Pricing"
@@ -12,10 +12,10 @@ en:
       login: "Log in"
       signup: "Get Started"
     hero:
-      badge: "Deskbolic Help Center Platform"
+      badge: "Capiller Rely Help"
       title_start: "Deliver exceptional customer support, "
       title_highlight: "effortlessly."
-      description: "Deliver seamless customer self-service with Deskbolic Help Center Platform. Fast, beautiful, and multilingual knowledge bases and customer support portals."
+      description: "Deliver seamless customer self-service with Capiller Rely Help. Fast, beautiful, and multilingual knowledge bases and customer support portals."
     cta:
       primary: "Create Your Help Center"
       secondary: "Explore Features"

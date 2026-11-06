@@ -11,7 +11,7 @@ RSpec.describe 'Portal Localization Feature', type: :feature do
         :help_center_portal,
         account: account,
         domain: domain,
-        name: 'Deskbolic Portal',
+        name: 'Capiller Rely Help Portal',
         default_locale: 'en',
         locales: %w[en es fr],
         status: :active

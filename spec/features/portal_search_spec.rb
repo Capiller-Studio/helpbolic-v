@@ -11,7 +11,7 @@ RSpec.describe 'Portal Search Feature', type: :feature do
         :help_center_portal,
         account: account,
         domain: domain,
-        name: 'Deskbolic Help Center',
+        name: 'Capiller Rely Help Center',
         status: :active,
         default_locale: 'en',
         locales: %w[en es]
@@ -77,7 +77,7 @@ RSpec.describe 'Portal Search Feature', type: :feature do
       expect(page).to have_link('Browse Categories')
 
       click_link 'Browse Categories'
-      expect(page).to have_text('Deskbolic Help Center')
+      expect(page).to have_text('Capiller Rely Help Center')
     end
   end
 end

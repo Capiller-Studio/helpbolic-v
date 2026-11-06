@@ -3,8 +3,8 @@ es:
     cookies: "Configuración de cookies"
     powered_by: "Desarrollado por"
   marketing:
-    title: "Plataforma de centro de ayuda de Deskbolic"
-    brand: "Deskbolic"
+    title: "Plataforma de centro de ayuda de Capiller Rely Help"
+    brand: "Capiller Rely Help"
     nav:
       features: "Funciones"
       pricing: "Precios"
@@ -12,10 +12,10 @@ es:
       login: "Iniciar sesión"
       signup: "Comenzar"
     hero:
-      badge: "Plataforma de centro de ayuda de Deskbolic"
+      badge: "Plataforma de centro de ayuda de Capiller Rely Help"
       title_start: "Ofrece soporte al cliente excepcional, "
       title_highlight: "sin esfuerzo."
-      description: "Ofrece autoservicio continuo a tus clientes con la plataforma de centro de ayuda de Deskbolic. Bases de conocimiento y portales de soporte rápidos, elegantes y multilingües."
+      description: "Ofrece autoservicio continuo a tus clientes con la plataforma de centro de ayuda de Capiller Rely Help. Bases de conocimiento y portales de soporte rápidos, elegantes y multilingües."
     cta:
       primary: "Crear tu centro de ayuda"
       secondary: "Explorar funciones"

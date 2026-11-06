@@ -20,10 +20,10 @@ RSpec.describe StructuredDataHelper, type: :helper do
       expect(org['name']).to eq('TECHBOLIC, LLC')
 
       website = data['@graph'].find { |g| g['@type'] == 'WebSite' }
-      expect(website['name']).to eq('Helpbolic')
+      expect(website['name']).to eq('Capiller Rely Help')
 
       software = data['@graph'].find { |g| g['@type'] == 'SoftwareApplication' }
-      expect(software['name']).to eq('Helpbolic')
+      expect(software['name']).to eq('Capiller Rely Help')
     end
   end
 end

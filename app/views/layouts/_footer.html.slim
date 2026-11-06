@@ -9,10 +9,10 @@ footer.footer
       span = @current_portal.name
   - unless @current_portal&.account&.feature_enabled?(:custom_branding)
     .footer-center
-      = link_to "https://deskbolic.com?utm_source=help_portal&utm_medium=powered_by", target: "_blank", rel: "noopener", class: "powered-by-badge" do
-        = image_tag "deskbolic_mark.svg", class: "powered-by-icon", alt: "Deskbolic"
+      = link_to "https://capiller.com", target: "_blank", rel: "noopener", class: "powered-by-badge" do
+        = image_tag "deskbolic_mark.svg", class: "powered-by-icon", alt: "Capiller Rely Help"
         span.powered-by-text = t('footer.powered_by', default: 'Powered by')
-        span.powered-by-brand Deskbolic
+        span.powered-by-brand Capiller Rely Help
   .footer-right
     p
       = raw(@current_portal.footer_text.presence || "&copy; #{Time.current.year} #{@current_portal.account.name}. All rights reserved.")

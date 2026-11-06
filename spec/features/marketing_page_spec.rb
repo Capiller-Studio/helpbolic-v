@@ -21,7 +21,7 @@ RSpec.describe 'Marketing Landing Page Feature', type: :feature do
       expect(page).to have_link('Get Started', href: 'https://deskbolic.app/register')
 
       # Hero Section
-      expect(page).to have_text('Deskbolic Help Center Platform')
+      expect(page).to have_text('Capiller Rely Help')
       expect(page).to have_text('Deliver exceptional customer support')
       expect(page).to have_text('Deliver seamless customer self-service')
 

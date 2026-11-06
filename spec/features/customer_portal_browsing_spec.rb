@@ -12,7 +12,7 @@ RSpec.describe 'Customer Portal Browsing Feature', type: :feature do
         :help_center_portal,
         account: account,
         domain: domain,
-        name: 'Deskbolic Help Center',
+        name: 'Capiller Rely Help Center',
         hero_title: 'How can we help you?',
         hero_subtitle: 'Search our knowledge base or browse categories below',
         status: :active,
@@ -39,7 +39,7 @@ RSpec.describe 'Customer Portal Browsing Feature', type: :feature do
         visit root_path
 
         # Portal header & branding
-        expect(page).to have_text('Deskbolic Help Center')
+        expect(page).to have_text('Capiller Rely Help Center')
         expect(page).to have_text('How can we help you?')
         expect(page).to have_text('Search our knowledge base or browse categories below')
 
@@ -57,12 +57,12 @@ RSpec.describe 'Customer Portal Browsing Feature', type: :feature do
 
         # Footer branding badge
         expect(page).to have_css('.powered-by-badge')
-        expect(page).to have_link('Deskbolic', href: 'https://deskbolic.com?utm_source=help_portal&utm_medium=powered_by')
+        expect(page).to have_link('Capiller Rely Help', href: 'https://deskbolic.com?utm_source=help_portal&utm_medium=powered_by')
       end
     end
 
     context 'when custom branding is enabled' do
-      it 'does not show the powered by Deskbolic badge' do
+      it 'does not show the powered by Capiller Rely Help badge' do
         allow_any_instance_of(Account).to receive(:feature_enabled?).with(:custom_branding).and_return(true)
 
         visit root_path
